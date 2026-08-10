@@ -1,0 +1,13 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="800" rx="40" fill="#0C1A2C"/>
+  <rect x="100" y="120" width="1000" height="560" rx="32" fill="#14263E" stroke="#D4AF37" stroke-width="8"/>
+  <rect x="170" y="190" width="250" height="360" rx="24" fill="#20466C"/>
+  <rect x="500" y="190" width="500" height="360" rx="24" fill="#193653"/>
+  <path d="M240 360L330 300L390 360V480H240V360Z" fill="#D4AF37" fill-opacity="0.55"/>
+  <path d="M560 300H900" stroke="#F6DF84" stroke-width="10" stroke-linecap="round"/>
+  <path d="M560 350H820" stroke="#A7D7F5" stroke-width="8" stroke-linecap="round"/>
+  <path d="M560 400H760" stroke="#A7D7F5" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="900" cy="480" r="55" fill="#D4AF37" fill-opacity="0.25"/>
+  <path d="M900 450V510M870 480H930" stroke="#F6DF84" stroke-width="10" stroke-linecap="round"/>
+  <text x="600" y="630" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="42" font-weight="700" fill="#F8FAFC">Customer Education Workshop</text>
+</svg>
