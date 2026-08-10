@@ -16,6 +16,17 @@ button,a,input,select,textarea { max-width:100%; }
 input,textarea,select { min-width:0; }
 button,a { touch-action:manipulation; }
 table { width:100%; }
+
+/* Fluid content system: components can size naturally without forcing fixed desktop widths. */
+.container { width:min(100% - 2rem, 1280px); margin-inline:auto; }
+.fluid-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr)); gap:1rem; }
+.fluid-grid-sm { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr)); gap:1rem; }
+.fluid-flex { display:flex; flex-wrap:wrap; align-items:center; gap:.75rem; }
+.fluid-card { min-width:0; max-width:100%; overflow-wrap:anywhere; }
+.responsive-media { width:100%; height:auto; object-fit:cover; }
+.responsive-table { width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+.responsive-table > table { min-width:560px; }
+
 .glass-card { background:var(--bg-card); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border:1px solid var(--bg-card-border); box-shadow:0 8px 32px rgba(0,0,0,.37); border-radius:1rem; }
 .glass-card-gold { background:linear-gradient(135deg,rgba(212,175,55,.08),rgba(10,17,40,.6)); border:1px solid rgba(212,175,55,.3); backdrop-filter:blur(12px); box-shadow:0 10px 40px -10px rgba(212,175,55,.2); }
 .gold-gradient-text { background:linear-gradient(135deg,#FFE79A,#D4AF37,#997514); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
@@ -39,14 +50,15 @@ select:focus,button:focus-visible,a:focus-visible,input:focus-visible,textarea:f
 
 @media (max-width: 1023px) {
   .overflow-x-auto { -webkit-overflow-scrolling:touch; scrollbar-width:thin; }
-  table { min-width:560px; }
+  .container { width:min(100% - 1.5rem, 960px); }
 }
 @media (max-width: 640px) {
+  .container { width:min(100% - 1rem, 640px); }
   h1 { font-size:clamp(1.65rem,8vw,2.25rem); line-height:1.15; }
   h2 { font-size:clamp(1.3rem,6vw,1.8rem); line-height:1.2; }
   h3 { font-size:clamp(1.05rem,5vw,1.35rem); }
   .glass-card { border-radius:.8rem; }
-  /* Prevent wide content from making mobile pages appear broken. */
+  .fluid-grid,.fluid-grid-sm { grid-template-columns:1fr; }
   pre,code { max-width:100%; overflow-x:auto; }
 }
 @media (prefers-reduced-motion: reduce) {
