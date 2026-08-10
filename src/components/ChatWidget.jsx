@@ -1,28 +1,59 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Bot, CheckCircle2, Send, X, Mic, MicOff, MessageCircle } from 'lucide-react';
+import React, { useState } from 'react';
+import { Bot, Clock3, MessageCircle, Mic, Send, X } from 'lucide-react';
 
-const API_BASE = typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_BASE ? import.meta.env.VITE_API_BASE.replace(/\/$/, '') : '';
 const WHATSAPP_URL = 'https://wa.me/919640352929';
-const QUICK_PROMPTS = ['How does Sree Vriddhi work?', 'What assets are eligible?', 'How can I check eligibility?', 'I want to speak to a human agent'];
+const FEATURES = [
+  { icon: MessageCircle, title: 'AI text chat', detail: 'Ask questions and get guided assistance' },
+  { icon: Mic, title: 'Voice assistance', detail: 'Speak your request using your microphone' },
+  { icon: MessageCircle, title: 'Human support', detail: 'Connect with our support team when available' },
+];
 
 export default function ChatWidget() {
-  const [open,setOpen]=useState(false),[messages,setMessages]=useState([]),[input,setInput]=useState(''),[width,setWidth]=useState(380),[height,setHeight]=useState(540),[status,setStatus]=useState('AI agent ready'),[sending,setSending]=useState(false),[listening,setListening]=useState(false);
-  const recognitionRef=useRef(null),dragging=useRef(false),dragStart=useRef({x:0,y:0,w:0,h:0});
-  useEffect(()=>{const onMove=e=>{if(!dragging.current)return;const dx=e.clientX-dragStart.current.x,dy=e.clientY-dragStart.current.y;setWidth(Math.max(300,Math.min(720,dragStart.current.w+dx)));setHeight(Math.max(300,Math.min(760,dragStart.current.h+dy)));};const onUp=()=>{dragging.current=false};window.addEventListener('mousemove',onMove);window.addEventListener('mouseup',onUp);return()=>{window.removeEventListener('mousemove',onMove);window.removeEventListener('mouseup',onUp);recognitionRef.current?.abort?.();};},[]);
-  const startDrag=e=>{dragging.current=true;dragStart.current={x:e.clientX,y:e.clientY,w:width,h:height};};
-  const toggleVoice=()=>{
-    if(listening){recognitionRef.current?.stop?.();setListening(false);setStatus('AI agent ready');return;}
-    const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-    if(!SR){setStatus('Voice input is not supported in this browser');return;}
-    const r=new SR(); recognitionRef.current=r; r.lang=document.documentElement.lang||'en-IN'; r.interimResults=false; r.continuous=false;
-    r.onstart=()=>{setListening(true);setStatus('Listening… tell me what you need');};
-    r.onresult=e=>{const spoken=e.results?.[0]?.[0]?.transcript||'';setInput(spoken);setStatus('Voice captured — press Send to ask');};
-    r.onerror=()=>{setListening(false);setStatus('Voice input stopped');}; r.onend=()=>setListening(false); r.start();
-  };
-  const sendMessage=async forcedText=>{const text=(forcedText??input).trim();if(!text||sending)return;const userMsg={id:Date.now(),from:'user',text},next=[...messages,userMsg];setMessages(next);setInput('');setSending(true);setStatus('Thinking…');try{const res=await fetch(`${API_BASE}/api/chat`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:next.slice(-12).map(m=>({role:m.from==='user'?'user':'assistant',content:m.text})),page:window.location.pathname})});const data=await res.json().catch(()=>({}));if(!res.ok)throw new Error(data.error||`HTTP ${res.status}`);setMessages(prev=>[...prev,{id:Date.now()+1,from:'bot',text:data.reply}]);setStatus(data.mode==='ai'?'AI agent online':'Support mode');}catch(e){setMessages(prev=>[...prev,{id:Date.now()+1,from:'bot',text:'The AI service is temporarily unavailable. This feature is being enhanced; please try again shortly or contact human support on WhatsApp.'}]);setStatus('AI service temporarily unavailable');}finally{setSending(false)}};
-  return <div style={{position:'fixed',right:12,bottom:12,zIndex:60,maxWidth:'calc(100vw - 24px)'}}>{!open&&<button onClick={()=>setOpen(true)} aria-label="Open Sree Vriddhi AI voice assistant" className="flex items-center gap-2 px-4 py-3 rounded-full bg-emerald-600 text-white shadow-lg hover:bg-emerald-500"><Bot className="h-4 w-4"/> AI Voice Assistant</button>}{open&&<div className="bg-slate-900 border border-slate-800 rounded-xl shadow-2xl overflow-hidden max-w-full" style={{width:'min(380px, calc(100vw - 24px))',height:'min(540px, calc(100vh - 24px))'}}>
-    <div className="flex items-center justify-between p-3 bg-slate-950 border-b border-slate-800 cursor-grab" onMouseDown={startDrag}><div className="flex items-center gap-2"><div className="rounded-full bg-emerald-500/15 p-2"><Bot className="h-4 w-4 text-emerald-400"/></div><div><strong className="text-sm text-white">Sree Vriddhi AI Assistant</strong><div className="flex items-center gap-1 text-[10px] text-emerald-400"><CheckCircle2 className="h-3 w-3"/>{status}</div></div></div><button onClick={()=>setOpen(false)} aria-label="Close assistant" className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-800"><X className="h-4 w-4"/></button></div>
-    <div className="p-3 overflow-auto" style={{height:'calc(100% - 205px)'}}>{messages.length===0&&<div className="space-y-3"><div className="rounded-xl bg-slate-800/70 p-3 text-xs leading-5 text-slate-300">Hi! I’m your Sree Vriddhi AI Assistant. You can type or use the microphone to tell me what you need. I can explain our services, eligible assets, eligibility process and guide you around the website. For account-specific matters, I’ll connect you with human support.</div><div className="grid grid-cols-1 gap-2">{QUICK_PROMPTS.map(p=><button key={p} onClick={()=>sendMessage(p)} className="text-left rounded-lg border border-slate-700 bg-slate-950/60 px-3 py-2 text-[11px] text-slate-300 hover:border-amber-500/50 hover:text-amber-200">{p}</button>)}</div></div>}{messages.map(m=><div key={m.id} className={`mb-3 ${m.from==='user'?'text-right':'text-left'}`}><div className={`inline-block max-w-[90%] px-3 py-2 rounded-lg text-xs leading-5 ${m.from==='user'?'bg-amber-500/20 text-amber-200':'bg-slate-800 text-slate-200'}`}>{m.text}</div></div>)}{sending&&<div className="text-[11px] text-amber-300">AI assistant is preparing a response…</div>}</div>
-    <div className="p-3 border-t border-slate-800 bg-slate-950 space-y-2"><div className="flex gap-2"><button onClick={toggleVoice} title={listening?'Stop listening':'Speak to AI assistant'} aria-label={listening?'Stop listening':'Speak to AI assistant'} className={`p-2 rounded-lg border ${listening?'border-red-500/60 text-red-300 animate-pulse':'border-slate-800 text-slate-300'} hover:text-amber-300`}>{listening?<MicOff className="h-4 w-4"/>:<Mic className="h-4 w-4"/>}</button><input value={input} onChange={e=>setInput(e.target.value)} onKeyDown={e=>e.key==='Enter'&&sendMessage()} placeholder={listening?'Listening…':'Tell the AI what you need…'} aria-label="Message the AI assistant" className="min-w-0 flex-1 bg-slate-900 border border-slate-800 rounded-xl p-2 text-xs text-slate-100 placeholder:text-slate-500"/><button onClick={()=>sendMessage()} disabled={sending||!input.trim()} aria-label="Send message" className="px-3 py-2 rounded-lg bg-amber-500 text-slate-950 font-bold disabled:opacity-50"><Send className="h-4 w-4"/></button></div><a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="w-full flex items-center justify-center gap-2 rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-3 py-2 text-[11px] font-semibold text-emerald-300 hover:bg-emerald-500/20"><MessageCircle className="h-3.5 w-3.5"/> Talk to a human</a><div className="text-[10px] text-slate-500">Never share OTPs, passwords, card details or private documents in chat.</div></div>
-  </div>}</div>;
+  const [open, setOpen] = useState(false);
+  return (
+    <div style={{ position: 'fixed', right: 12, bottom: 12, zIndex: 60, maxWidth: 'calc(100vw - 24px)' }}>
+      {!open && (
+        <button onClick={() => setOpen(true)} aria-label="Open Sree Vriddhi AI Assistant" className="flex items-center gap-2 px-4 py-3 rounded-full bg-emerald-600 text-white shadow-lg hover:bg-emerald-500">
+          <Bot className="h-4 w-4" /> AI Assistant
+        </button>
+      )}
+      {open && (
+        <div className="bg-slate-900 border border-slate-800 rounded-xl shadow-2xl overflow-hidden max-w-full" style={{ width: 'min(380px, calc(100vw - 24px))' }}>
+          <div className="flex items-center justify-between p-3 bg-slate-950 border-b border-slate-800">
+            <div className="flex items-center gap-2">
+              <div className="rounded-full bg-emerald-500/15 p-2"><Bot className="h-4 w-4 text-emerald-400" /></div>
+              <div>
+                <strong className="text-sm text-white">Sree Vriddhi AI Assistant</strong>
+                <div className="flex items-center gap-1 text-[10px] text-amber-300"><Clock3 className="h-3 w-3" /> Coming Soon</div>
+              </div>
+            </div>
+            <button onClick={() => setOpen(false)} aria-label="Close assistant" className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-800"><X className="h-4 w-4" /></button>
+          </div>
+
+          <div className="p-4 space-y-4">
+            <div className="rounded-xl border border-amber-500/30 bg-amber-500/5 p-4 text-center">
+              <Bot className="mx-auto mb-2 h-8 w-8 text-amber-400" />
+              <h3 className="text-sm font-semibold text-white">AI assistance is coming soon</h3>
+              <p className="mt-2 text-xs leading-5 text-slate-400">We’re preparing the Sree Vriddhi AI Assistant to provide reliable website guidance, voice assistance and human-support handoff. These features will be enabled after final testing.</p>
+            </div>
+
+            <div className="space-y-2">
+              {FEATURES.map(({ icon: Icon, title, detail }) => (
+                <div key={title} className="flex items-start gap-3 rounded-lg border border-slate-800 bg-slate-950/60 p-3">
+                  <Icon className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
+                  <div><div className="text-xs font-semibold text-slate-200">{title}</div><div className="mt-1 text-[11px] leading-4 text-slate-500">{detail}</div></div>
+                  <span className="ml-auto shrink-0 rounded-full border border-amber-500/20 px-2 py-0.5 text-[9px] font-semibold text-amber-300">Soon</span>
+                </div>
+              ))}
+            </div>
+
+            <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="w-full flex items-center justify-center gap-2 rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-3 py-2 text-[11px] font-semibold text-emerald-300 hover:bg-emerald-500/20">
+              <MessageCircle className="h-3.5 w-3.5" /> Contact support via WhatsApp
+            </a>
+            <div className="text-[10px] text-center text-slate-500">AI chat, voice input and automated assistance are currently disabled.</div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
