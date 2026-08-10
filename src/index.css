@@ -1,28 +1,21 @@
 @import "tailwindcss";
 
 @layer base {
-  :root {
-    --bg-primary: #050b18;
-    --bg-secondary: #0a1128;
-    --bg-card: rgba(15, 23, 42, 0.75);
-    --bg-card-border: rgba(212, 175, 55, 0.18);
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --accent-gold: #d4af37;
-    --accent-gold-light: #f5d77f;
-    --accent-gold-dark: #aa7c11;
-    --accent-blue: #1e3a8a;
-    --accent-green: #10b981;
-    --navy-dark: #030712;
-  }
-
+  :root { --bg-primary:#050b18; --bg-secondary:#0a1128; --bg-card:rgba(15,23,42,.75); --bg-card-border:rgba(212,175,55,.18); --text-primary:#f8fafc; --text-secondary:#94a3b8; --accent-gold:#d4af37; --accent-gold-light:#f5d77f; --accent-gold-dark:#aa7c11; --accent-blue:#1e3a8a; --accent-green:#10b981; --navy-dark:#030712; }
   [data-theme="light"] { --bg-primary:#f8fafc; --bg-secondary:#fff; --bg-card:rgba(255,255,255,.9); --bg-card-border:rgba(30,58,138,.12); --text-primary:#0f172a; --text-secondary:#475569; --accent-gold:#b48c26; --accent-gold-light:#d4af37; --accent-gold-dark:#886208; --accent-blue:#1d4ed8; --accent-green:#059669; --navy-dark:#0f172a; }
   [data-theme="reading"] { --bg-primary:#f5efe2; --bg-secondary:#fffdf8; --bg-card:rgba(255,252,245,.95); --bg-card-border:rgba(121,85,16,.18); --text-primary:#2f2416; --text-secondary:#5f4f34; --accent-gold:#8e6a17; --accent-gold-light:#c89f35; --accent-gold-dark:#6b4f0c; --accent-blue:#365c9d; --accent-green:#2f7a5b; --navy-dark:#f5efe2; }
 }
 
+html { overflow-x:hidden; }
 body { margin:0; padding:0; background-color:var(--bg-primary); color:var(--text-primary); font-family:'Inter',sans-serif; overflow-x:hidden; transition:background-color .25s ease,color .25s ease; }
 body,p,span,li,label,input,textarea,select,button { color:var(--text-primary); }
 h1,h2,h3,.font-serif-brand { font-family:'Cinzel','Outfit',Georgia,serif; }
+img,svg,video,canvas { max-width:100%; }
+img { height:auto; }
+button,a,input,select,textarea { max-width:100%; }
+input,textarea,select { min-width:0; }
+button,a { touch-action:manipulation; }
+table { width:100%; }
 .glass-card { background:var(--bg-card); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border:1px solid var(--bg-card-border); box-shadow:0 8px 32px rgba(0,0,0,.37); border-radius:1rem; }
 .glass-card-gold { background:linear-gradient(135deg,rgba(212,175,55,.08),rgba(10,17,40,.6)); border:1px solid rgba(212,175,55,.3); backdrop-filter:blur(12px); box-shadow:0 10px 40px -10px rgba(212,175,55,.2); }
 .gold-gradient-text { background:linear-gradient(135deg,#FFE79A,#D4AF37,#997514); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
@@ -40,14 +33,22 @@ h1,h2,h3,.font-serif-brand { font-family:'Cinzel','Outfit',Georgia,serif; }
 .animate-float { animation:float 6s ease-in-out infinite; }
 @keyframes pulseGlow { 0%,100%{opacity:.4} 50%{opacity:.8} }
 .animate-pulse-glow { animation:pulseGlow 4s ease-in-out infinite; }
-
-/* Accessible controls: native select/options can inherit unreadable light text on some browsers. */
 select option { background:#0f172a; color:#f8fafc; }
 select:focus,button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible { outline:2px solid #f5d77f; outline-offset:2px; }
-
-/* Keep interactive overlays above sticky navigation and card overflow. */
 .site-agent-overlay { position:fixed; z-index:70; }
 
+@media (max-width: 1023px) {
+  .overflow-x-auto { -webkit-overflow-scrolling:touch; scrollbar-width:thin; }
+  table { min-width:560px; }
+}
+@media (max-width: 640px) {
+  h1 { font-size:clamp(1.65rem,8vw,2.25rem); line-height:1.15; }
+  h2 { font-size:clamp(1.3rem,6vw,1.8rem); line-height:1.2; }
+  h3 { font-size:clamp(1.05rem,5vw,1.35rem); }
+  .glass-card { border-radius:.8rem; }
+  /* Prevent wide content from making mobile pages appear broken. */
+  pre,code { max-width:100%; overflow-x:auto; }
+}
 @media (prefers-reduced-motion: reduce) {
   *,*::before,*::after { scroll-behavior:auto !important; animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
 }
