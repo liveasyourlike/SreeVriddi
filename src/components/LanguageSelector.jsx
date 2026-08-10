@@ -15,6 +15,24 @@ const LANGS = [
   { code: 'pa', label: 'Punjabi', native: 'ਪੰਜਾਬੀ' }
 ];
 
+const GOOGLE_LANGS = LANGS.map((item) => item.code).join(',');
+
+function setGoogleLanguageCookie(code) {
+  if (code === 'en') {
+    document.cookie = 'googtrans=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/';
+    return;
+  }
+  document.cookie = `googtrans=/en/${code};path=/`;
+}
+
+function triggerGoogleLanguage(code) {
+  const combo = document.querySelector('.goog-te-combo');
+  if (!combo) return false;
+  combo.value = code;
+  combo.dispatchEvent(new Event('change', { bubbles: true }));
+  return true;
+}
+
 export default function LanguageSelector({ className = '' }) {
   const { language, toggleLanguage } = useSreeVriddhi();
   const [open, setOpen] = useState(false);
@@ -31,14 +49,60 @@ export default function LanguageSelector({ className = '' }) {
     return () => document.removeEventListener('pointerdown', onPointerDown);
   }, []);
 
+  // Load Google's page translator once. It translates the rendered DOM, so the
+  // same language selection works on every public, portal and admin route.
+  useEffect(() => {
+    window.googleTranslateElementInit = () => {
+      if (!window.google?.translate || document.getElementById('google_translate_element')) return;
+      new window.google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: GOOGLE_LANGS,
+        autoDisplay: false,
+        multilanguagePage: true
+      }, 'google_translate_element');
+    };
+
+    if (!document.getElementById('google_translate_script')) {
+      const script = document.createElement('script');
+      script.id = 'google_translate_script';
+      script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+      script.async = true;
+      document.head.appendChild(script);
+    } else if (window.google?.translate) {
+      window.googleTranslateElementInit();
+    }
+
+    return () => {
+      // Keep the Google callback while the application is mounted; the script is global.
+      delete window.googleTranslateElementInit;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (language === 'en') return;
+    const timer = window.setTimeout(() => {
+      triggerGoogleLanguage(language);
+    }, 700);
+    return () => window.clearTimeout(timer);
+  }, [language]);
+
   const choose = (code) => {
     toggleLanguage(code);
+    setGoogleLanguageCookie(code);
     setOpen(false);
     setQuery('');
+
+    // Google Translate changes the current DOM immediately when available.
+    // Reloading is the reliable fallback and preserves the current route.
+    window.setTimeout(() => {
+      const translated = triggerGoogleLanguage(code);
+      if (!translated) window.location.reload();
+    }, 100);
   };
 
   return (
     <div ref={rootRef} className={`relative ${className}`}>
+      <div id="google_translate_element" className="absolute -left-[99999px] top-0 h-0 w-0 overflow-hidden" aria-hidden="true" />
       <button
         type="button"
         aria-haspopup="listbox"
@@ -63,6 +127,7 @@ export default function LanguageSelector({ className = '' }) {
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Search language"
+              aria-label="Search languages"
               className="w-full bg-transparent py-2 text-sm text-white outline-none placeholder:text-slate-500"
             />
           </div>
@@ -85,7 +150,7 @@ export default function LanguageSelector({ className = '' }) {
             ))}
             {filtered.length === 0 && <p className="px-3 py-4 text-center text-xs text-slate-500">No language found</p>}
           </div>
-          <div className="border-t border-slate-800 px-2 pt-2 text-[10px] text-slate-500">Choose a language to update the site content.</div>
+          <div className="border-t border-slate-800 px-2 pt-2 text-[10px] text-slate-500">Google Translate will translate the current page and keep the selected language across routes.</div>
         </div>
       )}
     </div>
