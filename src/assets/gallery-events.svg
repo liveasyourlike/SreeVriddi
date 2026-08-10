@@ -1,0 +1,12 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="800" rx="40" fill="#0A1425"/>
+  <rect x="120" y="140" width="960" height="520" rx="32" fill="#13233D" stroke="#2E6B8D" stroke-width="8"/>
+  <rect x="180" y="210" width="840" height="140" rx="24" fill="#1C385A"/>
+  <rect x="180" y="390" width="320" height="220" rx="24" fill="#24486D"/>
+  <rect x="540" y="390" width="480" height="220" rx="24" fill="#1A3457"/>
+  <circle cx="340" cy="500" r="70" fill="#D4AF37" fill-opacity="0.25"/>
+  <path d="M310 500L330 520L380 470" stroke="#F6DF84" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M600 440H920" stroke="#D4AF37" stroke-width="10" stroke-linecap="round"/>
+  <path d="M600 490H860" stroke="#7CB7E5" stroke-width="8" stroke-linecap="round"/>
+  <text x="600" y="670" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="42" font-weight="700" fill="#F8FAFC">Valuation &amp; Education Forum</text>
+</svg>
