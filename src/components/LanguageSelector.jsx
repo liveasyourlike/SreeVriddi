@@ -49,11 +49,14 @@ export default function LanguageSelector({ className = '' }) {
     return () => document.removeEventListener('pointerdown', onPointerDown);
   }, []);
 
-  // Load Google's page translator once. It translates the rendered DOM, so the
-  // same language selection works on every public, portal and admin route.
   useEffect(() => {
+    let mounted = true;
+
     window.googleTranslateElementInit = () => {
-      if (!window.google?.translate || document.getElementById('google_translate_element')) return;
+      if (!mounted || !window.google?.translate) return;
+      // The hidden container already exists; only skip initialization when the
+      // actual Google widget has already created its language select.
+      if (document.querySelector('.goog-te-combo')) return;
       new window.google.translate.TranslateElement({
         pageLanguage: 'en',
         includedLanguages: GOOGLE_LANGS,
@@ -72,17 +75,14 @@ export default function LanguageSelector({ className = '' }) {
       window.googleTranslateElementInit();
     }
 
-    return () => {
-      // Keep the Google callback while the application is mounted; the script is global.
-      delete window.googleTranslateElementInit;
-    };
+    // Keep the callback alive for the global Google script. This is important
+    // in React StrictMode where an effect may mount/unmount during development.
+    return () => { mounted = false; };
   }, []);
 
   useEffect(() => {
     if (language === 'en') return;
-    const timer = window.setTimeout(() => {
-      triggerGoogleLanguage(language);
-    }, 700);
+    const timer = window.setTimeout(() => triggerGoogleLanguage(language), 1000);
     return () => window.clearTimeout(timer);
   }, [language]);
 
@@ -92,12 +92,13 @@ export default function LanguageSelector({ className = '' }) {
     setOpen(false);
     setQuery('');
 
-    // Google Translate changes the current DOM immediately when available.
-    // Reloading is the reliable fallback and preserves the current route.
+    // Translate the currently rendered page immediately when Google is ready.
+    // If its widget is still loading, reload the same route; the googtrans
+    // cookie makes Google translate the page during the next render.
     window.setTimeout(() => {
       const translated = triggerGoogleLanguage(code);
       if (!translated) window.location.reload();
-    }, 100);
+    }, 150);
   };
 
   return (
@@ -150,7 +151,7 @@ export default function LanguageSelector({ className = '' }) {
             ))}
             {filtered.length === 0 && <p className="px-3 py-4 text-center text-xs text-slate-500">No language found</p>}
           </div>
-          <div className="border-t border-slate-800 px-2 pt-2 text-[10px] text-slate-500">Google Translate will translate the current page and keep the selected language across routes.</div>
+          <div className="border-t border-slate-800 px-2 pt-2 text-[10px] text-slate-500">Google Translate translates the current page and keeps the selected language across routes.</div>
         </div>
       )}
     </div>
