@@ -5,6 +5,7 @@ import Footer from './components/layout/Footer'
 import Breadcrumbs from './components/layout/Breadcrumbs'
 import AdminLayout from './components/layout/AdminLayout'
 import CustomerPortalLayout from './components/layout/CustomerPortalLayout'
+import SectionErrorBoundary from './components/SectionErrorBoundary'
 
 import Home from './pages/public/Home'
 import About from './pages/public/About'
@@ -63,32 +64,34 @@ function App() {
           <Header />
           <Breadcrumbs />
           <main className="min-h-[70vh]">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/how-it-works" element={<HowItWorks />} />
-              <Route path="/assets" element={<Assets />} />
-              <Route path="/assets/:type" element={<AssetDetail />} />
-              <Route path="/products" element={<Products />} />
-              <Route path="/products/:slug" element={<ProductDetail />} />
-              <Route path="/eligibility" element={<EligibilityChecker />} />
-              <Route path="/why-us" element={<WhyUs />} />
-              <Route path="/protection" element={<Protection />} />
-              <Route path="/gallery" element={<Gallery />} />
-              <Route path="/faq" element={<FAQ />} />
-              <Route path="/insights" element={<Insights />} />
-              <Route path="/insights/:slug" element={<ArticleDetail />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/grievances" element={<Grievances />} />
-              <Route path="/portal" element={<CustomerPortalLayout />}>
-                <Route index element={<CustomerDashboard />} /><Route path="applications" element={<MyApplications />} /><Route path="applications/new" element={<NewApplication />} /><Route path="assets" element={<MyAssets />} /><Route path="contracts" element={<MyContracts />} /><Route path="settlements" element={<MySettlements />} /><Route path="documents" element={<DocumentsVault />} /><Route path="notifications" element={<Notifications />} /><Route path="profile" element={<Profile />} /><Route path="support" element={<SupportTickets />} />
-              </Route>
-              <Route path="/admin" element={<AdminLayout />}>
-                <Route index element={<AdminDashboard />} /><Route path="leads" element={<LeadManagement />} /><Route path="customers" element={<Customer360 />} /><Route path="assets" element={<AssetManagement />} /><Route path="valuations" element={<ValuationEngine />} /><Route path="applications" element={<ApplicationManager />} /><Route path="products" element={<ProductManager />} /><Route path="contracts" element={<ContractManager />} /><Route path="settlements" element={<SettlementEngine />} /><Route path="risk" element={<RiskMatrix />} /><Route path="compliance" element={<ComplianceManager />} /><Route path="documents" element={<DocumentManager />} /><Route path="content" element={<InsightsCMS />} /><Route path="gallery" element={<GalleryManager />} /><Route path="reports" element={<CRMReports />} /><Route path="audit" element={<AuditLog />} /><Route path="settings" element={<AdminSettings />} /><Route path="translations" element={<AdminTranslations />} />
-              </Route>
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
+            <SectionErrorBoundary>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/how-it-works" element={<HowItWorks />} />
+                <Route path="/assets" element={<Assets />} />
+                <Route path="/assets/:type" element={<AssetDetail />} />
+                <Route path="/products" element={<Products />} />
+                <Route path="/products/:slug" element={<ProductDetail />} />
+                <Route path="/eligibility" element={<EligibilityChecker />} />
+                <Route path="/why-us" element={<WhyUs />} />
+                <Route path="/protection" element={<Protection />} />
+                <Route path="/gallery" element={<Gallery />} />
+                <Route path="/faq" element={<FAQ />} />
+                <Route path="/insights" element={<Insights />} />
+                <Route path="/insights/:slug" element={<ArticleDetail />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/grievances" element={<Grievances />} />
+                <Route path="/portal" element={<CustomerPortalLayout />}>
+                  <Route index element={<CustomerDashboard />} /><Route path="applications" element={<MyApplications />} /><Route path="applications/new" element={<NewApplication />} /><Route path="assets" element={<MyAssets />} /><Route path="contracts" element={<MyContracts />} /><Route path="settlements" element={<MySettlements />} /><Route path="documents" element={<DocumentsVault />} /><Route path="notifications" element={<Notifications />} /><Route path="profile" element={<Profile />} /><Route path="support" element={<SupportTickets />} />
+                </Route>
+                <Route path="/admin" element={<AdminLayout />}>
+                  <Route index element={<AdminDashboard />} /><Route path="leads" element={<LeadManagement />} /><Route path="customers" element={<Customer360 />} /><Route path="assets" element={<AssetManagement />} /><Route path="valuations" element={<ValuationEngine />} /><Route path="applications" element={<ApplicationManager />} /><Route path="products" element={<ProductManager />} /><Route path="contracts" element={<ContractManager />} /><Route path="settlements" element={<SettlementEngine />} /><Route path="risk" element={<RiskMatrix />} /><Route path="compliance" element={<ComplianceManager />} /><Route path="documents" element={<DocumentManager />} /><Route path="content" element={<InsightsCMS />} /><Route path="gallery" element={<GalleryManager />} /><Route path="reports" element={<CRMReports />} /><Route path="audit" element={<AuditLog />} /><Route path="settings" element={<AdminSettings />} /><Route path="translations" element={<AdminTranslations />} />
+                </Route>
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </SectionErrorBoundary>
           </main>
           <Footer />
           <ChatWidget />
