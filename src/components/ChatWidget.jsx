@@ -1,86 +1,28 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Bot, CheckCircle2, Send, X, Mic, MicOff, MessageCircle } from 'lucide-react';
+
+const API_BASE = typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_BASE ? import.meta.env.VITE_API_BASE.replace(/\/$/, '') : '';
+const WHATSAPP_URL = 'https://wa.me/919640352929';
+const QUICK_PROMPTS = ['How does Sree Vriddhi work?', 'What assets are eligible?', 'How can I check eligibility?', 'I want to speak to a human agent'];
 
 export default function ChatWidget() {
-  const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState('');
-  const [width, setWidth] = useState(360);
-  const [height, setHeight] = useState(480);
-  const dragging = useRef(false);
-  const dragStart = useRef({ x: 0, y: 0, w: 0, h: 0 });
-
-  useEffect(() => {
-    const onMove = (e) => {
-      if (!dragging.current) return;
-      const dx = e.clientX - dragStart.current.x;
-      const dy = e.clientY - dragStart.current.y;
-      setWidth(Math.max(280, Math.min(720, dragStart.current.w + dx)));
-      setHeight(Math.max(220, Math.min(720, dragStart.current.h + dy)));
-    };
-    const onUp = () => { dragging.current = false; };
-    window.addEventListener('mousemove', onMove);
-    window.addEventListener('mouseup', onUp);
-    return () => { window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onUp); };
-  }, []);
-
-  const startDrag = (e) => {
-    dragging.current = true;
-    dragStart.current = { x: e.clientX, y: e.clientY, w: width, h: height };
+  const [open,setOpen]=useState(false),[messages,setMessages]=useState([]),[input,setInput]=useState(''),[width,setWidth]=useState(380),[height,setHeight]=useState(540),[status,setStatus]=useState('AI agent ready'),[sending,setSending]=useState(false),[listening,setListening]=useState(false);
+  const recognitionRef=useRef(null),dragging=useRef(false),dragStart=useRef({x:0,y:0,w:0,h:0});
+  useEffect(()=>{const onMove=e=>{if(!dragging.current)return;const dx=e.clientX-dragStart.current.x,dy=e.clientY-dragStart.current.y;setWidth(Math.max(300,Math.min(720,dragStart.current.w+dx)));setHeight(Math.max(300,Math.min(760,dragStart.current.h+dy)));};const onUp=()=>{dragging.current=false};window.addEventListener('mousemove',onMove);window.addEventListener('mouseup',onUp);return()=>{window.removeEventListener('mousemove',onMove);window.removeEventListener('mouseup',onUp);recognitionRef.current?.abort?.();};},[]);
+  const startDrag=e=>{dragging.current=true;dragStart.current={x:e.clientX,y:e.clientY,w:width,h:height};};
+  const toggleVoice=()=>{
+    if(listening){recognitionRef.current?.stop?.();setListening(false);setStatus('AI agent ready');return;}
+    const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+    if(!SR){setStatus('Voice input is not supported in this browser');return;}
+    const r=new SR(); recognitionRef.current=r; r.lang=document.documentElement.lang||'en-IN'; r.interimResults=false; r.continuous=false;
+    r.onstart=()=>{setListening(true);setStatus('Listening… tell me what you need');};
+    r.onresult=e=>{const spoken=e.results?.[0]?.[0]?.transcript||'';setInput(spoken);setStatus('Voice captured — press Send to ask');};
+    r.onerror=()=>{setListening(false);setStatus('Voice input stopped');}; r.onend=()=>setListening(false); r.start();
   };
-
-  const sendMessage = async () => {
-    if (!input.trim()) return;
-    const newMsg = { id: Date.now(), from: 'user', text: input };
-    setMessages(prev => [...prev, newMsg]);
-    setInput('');
-    try {
-      await fetch('/api/chat/send', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: newMsg.text, customerNumber: 'web-user' }) });
-    } catch (e) {
-      console.warn('Failed to forward message', e);
-    }
-  };
-
-  const clearChat = () => setMessages([]);
-  const newChat = () => { setMessages([]); setOpen(true); setWidth(360); setHeight(480); };
-
-  return (
-    <div style={{ position: 'fixed', right: 20, bottom: 20, zIndex: 60 }}>
-      {!open && (
-        <button onClick={() => setOpen(true)} className="flex items-center gap-2 px-4 py-3 rounded-full bg-emerald-600 text-white shadow-lg">
-          <span>Chat</span>
-        </button>
-      )}
-
-      {open && (
-        <div className="bg-slate-900 border border-slate-800 rounded-xl shadow-2xl overflow-hidden" style={{ width, height }}>
-          <div className="flex items-center justify-between p-3 bg-slate-950 border-b border-slate-800 cursor-grab" onMouseDown={startDrag}>
-            <div className="flex items-center gap-2">
-              <strong className="text-sm text-white">Sree Vriddhi Chat</strong>
-              <span className="text-xs text-slate-400">Support</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <button onClick={clearChat} className="text-xs text-slate-300 px-2 py-1 rounded hover:bg-slate-800">Clear</button>
-              <button onClick={newChat} className="text-xs text-amber-400 px-2 py-1 rounded hover:bg-slate-800">New</button>
-              <button onClick={() => setOpen(false)} className="text-xs text-slate-300 px-2 py-1 rounded hover:bg-slate-800">Close</button>
-            </div>
-          </div>
-          <div className="p-3 overflow-auto" style={{ height: height - 130 }}>
-            {messages.length === 0 && <div className="text-xs text-slate-400">Start a conversation — messages are forwarded to WhatsApp.</div>}
-            {messages.map(m => (
-              <div key={m.id} className={`mb-3 ${m.from === 'user' ? 'text-right' : 'text-left'}`}>
-                <div className={`inline-block px-3 py-2 rounded-lg ${m.from === 'user' ? 'bg-amber-500/20 text-amber-200' : 'bg-slate-800 text-slate-200'}`}>{m.text}</div>
-              </div>
-            ))}
-          </div>
-          <div className="p-3 border-t border-slate-800 bg-slate-950">
-            <div className="flex gap-2 items-center">
-              <input value={input} onChange={(e) => setInput(e.target.value)} placeholder="Type a message..." className="flex-1 bg-slate-900 border border-slate-800 rounded-xl p-2 text-slate-100" />
-              <button onClick={sendMessage} className="px-3 py-2 rounded-lg bg-amber-500 text-slate-950 font-bold">Send</button>
-            </div>
-            <div className="text-[11px] text-slate-400 pt-2">Resize by dragging the header. Collapse to hide.</div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
+  const sendMessage=async forcedText=>{const text=(forcedText??input).trim();if(!text||sending)return;const userMsg={id:Date.now(),from:'user',text},next=[...messages,userMsg];setMessages(next);setInput('');setSending(true);setStatus('Thinking…');try{const res=await fetch(`${API_BASE}/api/chat`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:next.slice(-12).map(m=>({role:m.from==='user'?'user':'assistant',content:m.text})),page:window.location.pathname})});const data=await res.json().catch(()=>({}));if(!res.ok)throw new Error(data.error||`HTTP ${res.status}`);setMessages(prev=>[...prev,{id:Date.now()+1,from:'bot',text:data.reply}]);setStatus(data.mode==='ai'?'AI agent online':'Support mode');}catch(e){setMessages(prev=>[...prev,{id:Date.now()+1,from:'bot',text:'I’m temporarily unable to reach the AI service. Please try again or contact human support on WhatsApp.'}]);setStatus('AI service unavailable');}finally{setSending(false)}};
+  return <div style={{position:'fixed',right:20,bottom:20,zIndex:60}}>{!open&&<button onClick={()=>setOpen(true)} aria-label="Open Sree Vriddhi AI voice assistant" className="flex items-center gap-2 px-4 py-3 rounded-full bg-emerald-600 text-white shadow-lg hover:bg-emerald-500"><Bot className="h-4 w-4"/> AI Voice Assistant</button>}{open&&<div className="bg-slate-900 border border-slate-800 rounded-xl shadow-2xl overflow-hidden" style={{width,height}}>
+    <div className="flex items-center justify-between p-3 bg-slate-950 border-b border-slate-800 cursor-grab" onMouseDown={startDrag}><div className="flex items-center gap-2"><div className="rounded-full bg-emerald-500/15 p-2"><Bot className="h-4 w-4 text-emerald-400"/></div><div><strong className="text-sm text-white">Sree Vriddhi AI Assistant</strong><div className="flex items-center gap-1 text-[10px] text-emerald-400"><CheckCircle2 className="h-3 w-3"/>{status}</div></div></div><button onClick={()=>setOpen(false)} aria-label="Close assistant" className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-800"><X className="h-4 w-4"/></button></div>
+    <div className="p-3 overflow-auto" style={{height:height-205}}>{messages.length===0&&<div className="space-y-3"><div className="rounded-xl bg-slate-800/70 p-3 text-xs leading-5 text-slate-300">Hi! I’m your Sree Vriddhi AI Assistant. You can type or use the microphone to tell me what you need. I can explain our services, eligible assets, eligibility process and guide you around the website. For account-specific matters, I’ll connect you with human support.</div><div className="grid grid-cols-1 gap-2">{QUICK_PROMPTS.map(p=><button key={p} onClick={()=>sendMessage(p)} className="text-left rounded-lg border border-slate-700 bg-slate-950/60 px-3 py-2 text-[11px] text-slate-300 hover:border-amber-500/50 hover:text-amber-200">{p}</button>)}</div></div>}{messages.map(m=><div key={m.id} className={`mb-3 ${m.from==='user'?'text-right':'text-left'}`}><div className={`inline-block max-w-[90%] px-3 py-2 rounded-lg text-xs leading-5 ${m.from==='user'?'bg-amber-500/20 text-amber-200':'bg-slate-800 text-slate-200'}`}>{m.text}</div></div>)}{sending&&<div className="text-[11px] text-amber-300">AI assistant is preparing a response…</div>}</div>
+    <div className="p-3 border-t border-slate-800 bg-slate-950 space-y-2"><div className="flex gap-2"><button onClick={toggleVoice} title={listening?'Stop listening':'Speak to AI assistant'} aria-label={listening?'Stop listening':'Speak to AI assistant'} className={`p-2 rounded-lg border ${listening?'border-red-500/60 text-red-300 animate-pulse':'border-slate-800 text-slate-300'} hover:text-amber-300`}>{listening?<MicOff className="h-4 w-4"/>:<Mic className="h-4 w-4"/>}</button><input value={input} onChange={e=>setInput(e.target.value)} onKeyDown={e=>e.key==='Enter'&&sendMessage()} placeholder={listening?'Listening…':'Tell the AI what you need…'} aria-label="Message the AI assistant" className="flex-1 bg-slate-900 border border-slate-800 rounded-xl p-2 text-xs text-slate-100 placeholder:text-slate-500"/><button onClick={()=>sendMessage()} disabled={sending||!input.trim()} aria-label="Send message" className="px-3 py-2 rounded-lg bg-amber-500 text-slate-950 font-bold disabled:opacity-50"><Send className="h-4 w-4"/></button></div><a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="w-full flex items-center justify-center gap-2 rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-3 py-2 text-[11px] font-semibold text-emerald-300 hover:bg-emerald-500/20"><MessageCircle className="h-3.5 w-3.5"/> Talk to a human</a><div className="text-[10px] text-slate-500">Never share OTPs, passwords, card details or private documents in chat.</div></div>
+  </div>}</div>;
 }

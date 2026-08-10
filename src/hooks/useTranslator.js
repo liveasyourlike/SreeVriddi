@@ -1,9 +1,8 @@
 import { useSreeVriddhi } from '../context/SreeVriddhiContext';
 
-const API_BASE = typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_BASE ? import.meta.env.VITE_API_BASE : 'http://localhost:4000';
+const API_BASE = typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_BASE ? import.meta.env.VITE_API_BASE.replace(/\/$/, '') : '';
 
 export async function translateText(text, targetLang) {
-  // Basic cache key
   const key = `sv_trans_${targetLang}_${text.slice(0,120)}`;
   try {
     const cached = localStorage.getItem(key);
@@ -23,7 +22,6 @@ export async function translateText(text, targetLang) {
 
 export default function useTranslator() {
   const { language } = useSreeVriddhi();
-
   const translate = async (text) => {
     if (!text) return '';
     if (!language || language === 'en') return text;
@@ -35,6 +33,5 @@ export default function useTranslator() {
       return text;
     }
   };
-
   return { language, translate };
 }
