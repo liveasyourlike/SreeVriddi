@@ -5,6 +5,7 @@ import Footer from './components/layout/Footer'
 import Breadcrumbs from './components/layout/Breadcrumbs'
 import AdminLayout from './components/layout/AdminLayout'
 import CustomerPortalLayout from './components/layout/CustomerPortalLayout'
+import LiveSiteAgent from './components/LiveSiteAgent'
 
 import Home from './pages/public/Home'
 import About from './pages/public/About'
@@ -81,7 +82,6 @@ function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/login" element={<Login />} />
               <Route path="/grievances" element={<Grievances />} />
-
               <Route path="/portal" element={<CustomerPortalLayout />}>
                 <Route index element={<CustomerDashboard />} />
                 <Route path="applications" element={<MyApplications />} />
@@ -94,7 +94,6 @@ function App() {
                 <Route path="profile" element={<Profile />} />
                 <Route path="support" element={<SupportTickets />} />
               </Route>
-
               <Route path="/admin" element={<AdminLayout />}>
                 <Route index element={<AdminDashboard />} />
                 <Route path="leads" element={<LeadManagement />} />
@@ -115,12 +114,12 @@ function App() {
                 <Route path="settings" element={<AdminSettings />} />
                 <Route path="translations" element={<AdminTranslations />} />
               </Route>
-
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </main>
           <Footer />
           <ChatWidget />
+          <LiveSiteAgent />
         </div>
       </BrowserRouter>
     </SreeVriddhiProvider>
