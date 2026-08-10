@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Bot, CheckCircle2, Send, X, Volume2, Eye } from 'lucide-react';
+import { Bot, CheckCircle2, Send, X, Volume2, Eye, MessageCircle } from 'lucide-react';
 
 const API_BASE = typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_BASE ? import.meta.env.VITE_API_BASE.replace(/\/$/, '') : '';
+const WHATSAPP_URL = 'https://wa.me/919640352929';
 
 const QUICK_PROMPTS = [
   'How does Sree Vriddhi work?',
@@ -71,7 +72,7 @@ export default function ChatWidget() {
       setStatus(data.mode === 'ai' ? 'AI agent online' : 'Support mode');
     } catch (e) {
       console.warn('Chat error', e);
-      setMessages(prev => [...prev, { id: Date.now() + 1, from: 'bot', text: 'I’m temporarily unable to reach the AI service. You can still use the Live Site Agent for page reading, or use WhatsApp Direct to contact support.' }]);
+      setMessages(prev => [...prev, { id: Date.now() + 1, from: 'bot', text: 'I’m temporarily unable to reach the AI service. You can still use Live Site Agent for page reading or contact human support on WhatsApp.' }]);
       setStatus('AI service unavailable');
     } finally {
       setSending(false);
@@ -88,10 +89,10 @@ export default function ChatWidget() {
             <button onClick={() => setOpen(false)} aria-label="Close chat" className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-800"><X className="h-4 w-4" /></button>
           </div>
 
-          <div className="p-3 overflow-auto" style={{ height: height - 170 }}>
+          <div className="p-3 overflow-auto" style={{ height: height - 205 }}>
             {messages.length === 0 && (
               <div className="space-y-3">
-                <div className="rounded-xl bg-slate-800/70 p-3 text-xs leading-5 text-slate-300">Hello! I’m Sree Vriddhi’s website assistant. I can explain the website, products, eligible assets, eligibility process and guide you to the right page. For sensitive or account-specific matters, I’ll route you to a human support channel.</div>
+                <div className="rounded-xl bg-slate-800/70 p-3 text-xs leading-5 text-slate-300">Hello! I’m Sree Vriddhi’s website assistant. I can explain the website, products, eligible assets, eligibility process and guide you to the right page. For sensitive or account-specific matters, I’ll route you to human support.</div>
                 <div className="grid grid-cols-1 gap-2">{QUICK_PROMPTS.map(prompt => <button key={prompt} onClick={() => sendMessage(prompt)} className="text-left rounded-lg border border-slate-700 bg-slate-950/60 px-3 py-2 text-[11px] text-slate-300 hover:border-amber-500/50 hover:text-amber-200">{prompt}</button>)}</div>
               </div>
             )}
@@ -106,6 +107,7 @@ export default function ChatWidget() {
               <input value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && sendMessage()} placeholder="Ask the AI agent…" aria-label="Chat message" className="flex-1 bg-slate-900 border border-slate-800 rounded-xl p-2 text-xs text-slate-100 placeholder:text-slate-500" />
               <button onClick={() => sendMessage()} disabled={sending || !input.trim()} aria-label="Send message" className="px-3 py-2 rounded-lg bg-amber-500 text-slate-950 font-bold disabled:opacity-50"><Send className="h-4 w-4" /></button>
             </div>
+            <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="w-full flex items-center justify-center gap-2 rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-3 py-2 text-[11px] font-semibold text-emerald-300 hover:bg-emerald-500/20"><MessageCircle className="h-3.5 w-3.5" /> Talk to a human on WhatsApp</a>
             <div className="text-[10px] text-slate-500">AI answers are informational. Never share OTPs, passwords, card details or private documents in chat.</div>
           </div>
         </div>
