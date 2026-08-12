@@ -48,6 +48,47 @@ select:focus,button:focus-visible,a:focus-visible,input:focus-visible,textarea:f
 /* Keep interactive overlays above sticky navigation and card overflow. */
 .site-agent-overlay { position:fixed; z-index:70; }
 
+/* Compact, content-led layout. This reduces excessive vertical whitespace without
+   changing routes, cards, forms, or feature behavior. */
+.compact-site main section { scroll-margin-top: 96px; }
+.compact-site main .space-y-24 > :not([hidden]) ~ :not([hidden]) { --tw-space-y-reverse:0; margin-top:3.25rem; margin-bottom:0; }
+.compact-site main .space-y-20 > :not([hidden]) ~ :not([hidden]) { --tw-space-y-reverse:0; margin-top:2.75rem; margin-bottom:0; }
+.compact-site main .space-y-16 > :not([hidden]) ~ :not([hidden]) { --tw-space-y-reverse:0; margin-top:2.5rem; margin-bottom:0; }
+.compact-site main .space-y-12 > :not([hidden]) ~ :not([hidden]) { --tw-space-y-reverse:0; margin-top:2rem; margin-bottom:0; }
+.compact-site main .space-y-10 > :not([hidden]) ~ :not([hidden]) { --tw-space-y-reverse:0; margin-top:1.75rem; margin-bottom:0; }
+.compact-site main .space-y-8 > :not([hidden]) ~ :not([hidden]) { --tw-space-y-reverse:0; margin-top:1.5rem; margin-bottom:0; }
+.compact-site main .py-24 { padding-top:4rem; padding-bottom:4rem; }
+.compact-site main .py-20 { padding-top:3.5rem; padding-bottom:3.5rem; }
+.compact-site main .py-16 { padding-top:3rem; padding-bottom:3rem; }
+.compact-site main .pt-24 { padding-top:4rem; }
+.compact-site main .pb-24 { padding-bottom:4rem; }
+.compact-site main .pb-20 { padding-bottom:3.5rem; }
+.compact-site main .pt-12 { padding-top:2rem; }
+.compact-site main .mb-14 { margin-bottom:2.5rem; }
+.compact-site main .mb-12 { margin-bottom:2rem; }
+
+@media (max-width: 1023px) {
+  .compact-site main .space-y-24 > :not([hidden]) ~ :not([hidden]) { margin-top:2.5rem; }
+  .compact-site main .space-y-20 > :not([hidden]) ~ :not([hidden]) { margin-top:2.25rem; }
+  .compact-site main .py-24 { padding-top:3rem; padding-bottom:3rem; }
+  .compact-site main .py-20 { padding-top:2.75rem; padding-bottom:2.75rem; }
+  .compact-site main .pt-24 { padding-top:3rem; }
+  .compact-site main .pb-24 { padding-bottom:3rem; }
+}
+
+@media (max-width: 640px) {
+  .compact-site main .py-24,
+  .compact-site main .py-20,
+  .compact-site main .py-16 { padding-top:2rem; padding-bottom:2rem; }
+  .compact-site main .pt-24,
+  .compact-site main .pt-12 { padding-top:1.5rem; }
+  .compact-site main .pb-24,
+  .compact-site main .pb-20 { padding-bottom:2rem; }
+  .compact-site main .mb-14,
+  .compact-site main .mb-12 { margin-bottom:1.5rem; }
+  .compact-site .glass-card { border-radius:.875rem; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,*::before,*::after { scroll-behavior:auto !important; animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
 }
