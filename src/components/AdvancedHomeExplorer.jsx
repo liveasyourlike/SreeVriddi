@@ -5,11 +5,11 @@ import { ArrowRight, BarChart3, CheckCircle2, Coins, FileCheck2, Landmark, Shiel
 const topics = [
   { title: 'Instant Assessment', icon: CheckCircle2, to: '/eligibility', label: 'Open assessment' },
   { title: 'Sree Vriddhi Product Frameworks', icon: Landmark, to: '/products', label: 'Explore products' },
-  { title: 'Value Comes in Many Forms', icon: Coins, to: '/home-details#value-forms', label: 'Explore value categories' },
-  { title: 'Transparent Process', icon: FileCheck2, to: '/home-details#transparent-process', label: 'Explore the process' },
-  { title: 'Our Foundation', icon: ShieldCheck, to: '/home-details#our-foundation', label: 'Explore our foundation' },
-  { title: 'India Market Snapshot', icon: BarChart3, to: '/home-details#india-market-snapshot', label: 'View market snapshot' },
-  { title: 'Structured Value-Management & Governance', icon: Sparkles, to: '/home-details#structured-governance', label: 'Explore governance' },
+  { title: 'Value Comes in Many Forms', icon: Coins, to: '/assets', label: 'Explore value categories' },
+  { title: 'Transparent Process', icon: FileCheck2, to: '/how-it-works', label: 'Explore the process' },
+  { title: 'Our Foundation', icon: ShieldCheck, to: '/about', label: 'Explore our foundation' },
+  { title: 'India Market Snapshot', icon: BarChart3, to: '/market-snapshot', label: 'View market snapshot' },
+  { title: 'Structured Value-Management & Governance', icon: Sparkles, to: '/protection', label: 'Explore governance' },
   { title: 'How It Works', icon: ArrowRight, to: '/how-it-works', label: 'View full journey' },
 ];
 
@@ -25,7 +25,7 @@ export default function AdvancedHomeExplorer() {
             <span className="text-[10px] font-extrabold uppercase tracking-[0.24em] text-amber-400">Advanced Exploration</span>
             <h2 id="advanced-explorer-title" className="mt-2 text-2xl sm:text-3xl font-bold font-serif-brand text-white">Explore every Sree Vriddhi topic</h2>
             <p className="mt-2 max-w-2xl text-xs sm:text-sm leading-relaxed text-slate-400">
-              The complete content remains available in its original section. Choose a topic below to open the relevant page or section directly instead of scrolling through the entire homepage.
+              The complete content remains available in its original section. Choose a topic below to open the relevant page directly instead of scrolling through the entire homepage.
             </p>
           </div>
           <span className="shrink-0 rounded-full border border-amber-500/20 bg-amber-500/5 px-3 py-1.5 text-[10px] font-semibold text-amber-300">8 topics • compact navigation</span>
