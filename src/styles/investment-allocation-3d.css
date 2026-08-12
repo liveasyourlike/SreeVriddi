@@ -1,0 +1,11 @@
+.allocation-hero-3d { perspective: 1200px; }
+.allocation-stage { perspective: 1100px; }
+.allocation-orbit { transform-style: preserve-3d; animation: allocationFloat 7s ease-in-out infinite; }
+.allocation-orbit::before { content:""; position:absolute; inset:6%; border:1px solid rgba(212,175,55,.18); border-radius:9999px; transform:rotateX(64deg) rotateZ(-12deg); box-shadow:0 0 55px rgba(212,175,55,.08); }
+.allocation-orbit::after { content:""; position:absolute; inset:14%; border:1px dashed rgba(148,163,184,.16); border-radius:9999px; transform:rotateX(64deg) rotateZ(22deg); }
+.allocation-core { transform-style:preserve-3d; animation:allocationCore 5s ease-in-out infinite; }
+.allocation-orbit-item { position:absolute; left:50%; top:50%; width:42px; height:42px; margin:-21px; display:flex; align-items:center; justify-content:center; border:1px solid rgba(212,175,55,.35); border-radius:14px; background:rgba(15,23,42,.92); color:#f5d77f; box-shadow:0 10px 30px rgba(0,0,0,.28); transform:rotate(var(--angle)) translateY(-142px) rotate(calc(var(--angle) * -1)); transform-style:preserve-3d; }
+@keyframes allocationFloat { 0%,100%{transform:rotateX(7deg) rotateY(-8deg) translateY(0)} 50%{transform:rotateX(10deg) rotateY(8deg) translateY(-8px)} }
+@keyframes allocationCore { 0%,100%{transform:translateZ(10px) scale(1)} 50%{transform:translateZ(24px) scale(1.025)} }
+@media (max-width:640px){ .allocation-orbit{transform:scale(.82)} .allocation-orbit-item{transform:rotate(var(--angle)) translateY(-118px) rotate(calc(var(--angle) * -1));} }
+@media (prefers-reduced-motion:reduce){ .allocation-orbit,.allocation-core{animation:none} }
