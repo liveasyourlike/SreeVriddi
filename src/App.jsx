@@ -60,8 +60,8 @@ import ChatWidget from './components/ChatWidget'
 function HomeStep1() {
   return (
     <>
-      <Home />
       <InvestmentAllocationShowcase />
+      <Home />
     </>
   )
 }
