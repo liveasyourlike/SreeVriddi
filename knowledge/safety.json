@@ -1,0 +1,17 @@
+{
+  "intents":["GENERAL_ENQUIRY","SERVICE_INFORMATION","PRODUCT_INFORMATION","ELIGIBILITY","DOCUMENT_REQUIREMENT","CALLBACK","MEETING","WEBSITE_HELP","APPLICATION_STATUS","FOLLOW_UP","COMPLAINT","GRIEVANCE","FINANCIAL_QUERY","INVESTMENT_QUERY","RETURNS_QUERY","LEGAL_QUERY","TAX_QUERY","PRIVATE_CUSTOMER_QUERY","URGENT","SPAM","UNKNOWN"],
+  "risk_levels": {
+    "LOW":"Public factual website information that can be answered after testing.",
+    "MEDIUM":"Information that should be drafted/reviewed before sending while the workflow is being validated.",
+    "HIGH":"Financial, investment, return, legal, tax, contractual or other sensitive questions requiring human approval.",
+    "CRITICAL":"Disputes, urgent matters, private records, suspected fraud, or situations that should go directly to an appropriate human/compliance process."
+  },
+  "rules":[
+    "Use only public knowledge supplied to the agent.",
+    "If the knowledge does not contain the answer, say so and offer human follow-up.",
+    "Never fabricate a current value or business status.",
+    "Never expose secrets or credentials.",
+    "Never make a guaranteed financial outcome claim.",
+    "For Telugu, Hindi, Tamil or Kannada requests, preserve the meaning and keep financial/legal terminology simple where possible."
+  ]
+}
