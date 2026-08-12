@@ -7,10 +7,11 @@ import AdminLayout from './components/layout/AdminLayout'
 import CustomerPortalLayout from './components/layout/CustomerPortalLayout'
 import SectionErrorBoundary from './components/SectionErrorBoundary'
 import InvestmentAllocationHero3D from './components/InvestmentAllocationHero3D'
-import UXBusinessJourney20 from './components/UXBusinessJourney20'
 import MobileJourneyBar from './components/MobileJourneyBar'
 import ScrollToTop from './components/ScrollToTop'
 import ChatWidget from './components/ChatWidget'
+import AdvancedHomeExplorer from './components/AdvancedHomeExplorer'
+import LiveMarketTable from './components/LiveMarketTable'
 import './styles/ux-business-journey-2.css'
 
 import Home from './pages/public/Home'
@@ -62,8 +63,32 @@ import AuditLog from './pages/admin/AuditLog'
 import AdminSettings from './pages/admin/AdminSettings'
 import AdminTranslations from './pages/admin/AdminTranslations'
 
-function HomeWithPriorityHero() {
-  return <><InvestmentAllocationHero3D /><UXBusinessJourney20 /><Home /></>
+function HomeExplorerLanding() {
+  return (
+    <div className="space-y-8 pb-16">
+      <InvestmentAllocationHero3D />
+      <AdvancedHomeExplorer />
+      <section className="max-w-4xl mx-auto px-4 text-center">
+        <div className="rounded-2xl border border-slate-800 bg-slate-950/60 px-6 py-5">
+          <p className="text-xs text-slate-400">Want to read the complete original homepage content in one place?</p>
+          <a href="/home-details" className="mt-2 inline-flex items-center gap-2 text-xs font-bold text-amber-300 hover:text-amber-200">Open complete homepage details →</a>
+        </div>
+      </section>
+    </div>
+  )
+}
+
+function MarketSnapshot() {
+  return (
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div className="mb-6">
+        <span className="text-xs font-extrabold uppercase tracking-widest text-amber-400">India Market Snapshot</span>
+        <h1 className="mt-2 text-3xl font-bold font-serif-brand text-white">India Market Snapshot</h1>
+        <p className="mt-2 text-sm text-slate-400">The existing market snapshot component is shown here without changing its underlying content or values.</p>
+      </div>
+      <LiveMarketTable />
+    </section>
+  )
 }
 
 function App() {
@@ -77,7 +102,9 @@ function App() {
           <main className="min-h-[70vh]">
             <SectionErrorBoundary>
               <Routes>
-                <Route path="/" element={<HomeWithPriorityHero />} />
+                <Route path="/" element={<HomeExplorerLanding />} />
+                <Route path="/home-details" element={<Home />} />
+                <Route path="/market-snapshot" element={<MarketSnapshot />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/how-it-works" element={<HowItWorks />} />
                 <Route path="/assets" element={<Assets />} />
