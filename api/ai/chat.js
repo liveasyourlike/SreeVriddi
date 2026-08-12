@@ -1,6 +1,10 @@
 import { knowledgeText } from './knowledge.js';
 import { classifyMessage } from './classify.js';
 
+const SUPPORT_EMAIL = 'sreevriddhiforwealth@gmail.com';
+const SUPPORT_PHONE = '+91 9640352929';
+const WHATSAPP_URL = 'https://wa.me/919640352929';
+
 const cors = (res) => {
   res.setHeader('Access-Control-Allow-Origin', process.env.AI_ALLOWED_ORIGIN || '*');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -16,6 +20,16 @@ export default async function handler(req, res) {
   try {
     const { message, history = [], channel = 'website' } = req.body || {};
     if (!message || typeof message !== 'string' || message.length > 4000) return res.status(400).json({ error: 'A message up to 4000 characters is required.' });
+
+    // Public contact details must remain available even when the AI provider is not configured.
+    const normalized = message.toLowerCase();
+    if (/(contact|email|e-mail|phone|mobile|whatsapp|support|reach|talk to someone|human)/i.test(normalized)) {
+      return res.status(200).json({
+        answer: `You can contact Sree Vriddhi support directly:\n\nEmail: ${SUPPORT_EMAIL}\nPhone: ${SUPPORT_PHONE}\nWhatsApp: ${WHATSAPP_URL}`,
+        intent: 'GENERAL_ENQUIRY', risk: 'LOW', confidence: 1, requiresHuman: false
+      });
+    }
+
     const classification = await classifyMessage(message);
     const key = process.env.OPENAI_API_KEY;
     if (!key) throw new Error('OPENAI_API_KEY is not configured');
@@ -37,6 +51,6 @@ export default async function handler(req, res) {
     return res.status(200).json({ answer, intent: classification.intent || 'UNKNOWN', risk: classification.risk || 'HIGH', confidence: Number(classification.confidence) || null, requiresHuman: ['HIGH','CRITICAL'].includes(classification.risk) });
   } catch (error) {
     console.error('Sree Vriddhi AI error', error);
-    return res.status(500).json({ error: 'AI assistant is temporarily unavailable. Please contact Sree Vriddhi support.' });
+    return res.status(500).json({ error: 'AI assistant is temporarily unavailable. Please contact Sree Vriddhi support at sreevriddhiforwealth@gmail.com or +91 9640352929.' });
   }
 }
