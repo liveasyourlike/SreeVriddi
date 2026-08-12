@@ -1,0 +1,9 @@
+{
+  "name": "Sree Vriddhi",
+  "tagline": "Your Value. Our Responsibility.",
+  "website": "https://sree-vriddi.vercel.app/",
+  "support_email": "sreevriddhiforwealth@gmail.com",
+  "language_support": ["English", "Telugu", "Hindi", "Tamil", "Kannada"],
+  "public_ai_role": "Provide public website information, explain published processes, guide visitors to the appropriate page, collect a request for human follow-up, and escalate sensitive questions.",
+  "important_boundary": "The AI is not a financial adviser, legal adviser, tax adviser, investment guarantor, or decision maker."
+}
