@@ -8,7 +8,7 @@ import CustomerPortalLayout from './components/layout/CustomerPortalLayout'
 import SectionErrorBoundary from './components/SectionErrorBoundary'
 import InvestmentAllocationHero3D from './components/InvestmentAllocationHero3D'
 
-import Home from './pages/public/Home'
+import HomeUX2 from './pages/public/HomeUX2'
 import About from './pages/public/About'
 import HowItWorks from './pages/public/HowItWorks'
 import Assets from './pages/public/Assets'
@@ -61,7 +61,7 @@ function HomeWithPriorityHero() {
   return (
     <>
       <InvestmentAllocationHero3D />
-      <Home />
+      <HomeUX2 />
     </>
   )
 }
