@@ -9,6 +9,7 @@ import SectionErrorBoundary from './components/SectionErrorBoundary'
 import InvestmentAllocationHero3D from './components/InvestmentAllocationHero3D'
 import UXBusinessJourney20 from './components/UXBusinessJourney20'
 import MobileJourneyBar from './components/MobileJourneyBar'
+import ScrollToTop from './components/ScrollToTop'
 import ChatWidget from './components/ChatWidget'
 import './styles/ux-business-journey-2.css'
 
@@ -62,19 +63,14 @@ import AdminSettings from './pages/admin/AdminSettings'
 import AdminTranslations from './pages/admin/AdminTranslations'
 
 function HomeWithPriorityHero() {
-  return (
-    <>
-      <InvestmentAllocationHero3D />
-      <UXBusinessJourney20 />
-      <Home />
-    </>
-  )
+  return <><InvestmentAllocationHero3D /><UXBusinessJourney20 /><Home /></>
 }
 
 function App() {
   return (
     <SreeVriddhiProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <div className="compact-site min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
           <Header />
           <Breadcrumbs />
