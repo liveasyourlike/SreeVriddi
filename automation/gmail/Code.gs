@@ -1,8 +1,13 @@
 const CONFIG = {
-  AI_URL: 'https://sree-vriddi.vercel.app/api/ai/chat',
   MAX_THREADS_PER_RUN: 10,
   PROCESSED_PREFIX: 'processed_message_'
 };
+
+function getAiUrl_() {
+  const url = PropertiesService.getScriptProperties().getProperty('SREE_VRIDDHI_AI_URL');
+  if (!url) throw new Error('Set Script Property SREE_VRIDDHI_AI_URL to the deployed /api/ai/chat URL before enabling the Gmail trigger.');
+  return url;
+}
 
 function processSreeVriddhiGmail() {
   const threads = GmailApp.search('in:inbox is:unread newer_than:7d', 0, CONFIG.MAX_THREADS_PER_RUN);
@@ -16,7 +21,7 @@ function processSreeVriddhiGmail() {
     const sender = latest.getFrom();
     const subject = latest.getSubject() || '(No subject)';
     const body = latest.getPlainBody().slice(0, 12000);
-    const history = messages.slice(-6).map(m => ({ role: m.getId() === messageId ? 'user' : 'user', content: m.getPlainBody().slice(0, 3000) }));
+    const history = messages.slice(-6).map(m => ({ role: 'user', content: m.getPlainBody().slice(0, 3000) }));
 
     const result = callAi(body, history, 'gmail');
     const subjectLine = subject.startsWith('Re:') ? subject : 'Re: ' + subject;
@@ -33,7 +38,7 @@ function processSreeVriddhiGmail() {
 }
 
 function callAi(message, history, channel) {
-  const response = UrlFetchApp.fetch(CONFIG.AI_URL, {
+  const response = UrlFetchApp.fetch(getAiUrl_(), {
     method: 'post', contentType: 'application/json', muteHttpExceptions: true,
     payload: JSON.stringify({ message: message, history: history, channel: channel })
   });
