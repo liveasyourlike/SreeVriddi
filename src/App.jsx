@@ -7,6 +7,11 @@ import AdminLayout from './components/layout/AdminLayout'
 import CustomerPortalLayout from './components/layout/CustomerPortalLayout'
 import SectionErrorBoundary from './components/SectionErrorBoundary'
 import InvestmentAllocationHero3D from './components/InvestmentAllocationHero3D'
+import UXBusinessJourney20 from './components/UXBusinessJourney20'
+import MobileJourneyBar from './components/MobileJourneyBar'
+import ScrollToTop from './components/ScrollToTop'
+import ChatWidget from './components/ChatWidget'
+import './styles/ux-business-journey-2.css'
 
 import Home from './pages/public/Home'
 import About from './pages/public/About'
@@ -25,6 +30,7 @@ import ArticleDetail from './pages/public/ArticleDetail'
 import Contact from './pages/public/Contact'
 import Login from './pages/public/Login'
 import Grievances from './pages/public/Grievances'
+import Privacy from './pages/public/Privacy'
 
 import CustomerDashboard from './pages/portal/CustomerDashboard'
 import MyApplications from './pages/portal/MyApplications'
@@ -55,21 +61,16 @@ import CRMReports from './pages/admin/CRMReports'
 import AuditLog from './pages/admin/AuditLog'
 import AdminSettings from './pages/admin/AdminSettings'
 import AdminTranslations from './pages/admin/AdminTranslations'
-import ChatWidget from './components/ChatWidget'
 
 function HomeWithPriorityHero() {
-  return (
-    <>
-      <InvestmentAllocationHero3D />
-      <Home />
-    </>
-  )
+  return <><InvestmentAllocationHero3D /><UXBusinessJourney20 /><Home /></>
 }
 
 function App() {
   return (
     <SreeVriddhiProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <div className="compact-site min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
           <Header />
           <Breadcrumbs />
@@ -93,6 +94,7 @@ function App() {
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/grievances" element={<Grievances />} />
+                <Route path="/privacy" element={<Privacy />} />
                 <Route path="/portal" element={<CustomerPortalLayout />}>
                   <Route index element={<CustomerDashboard />} /><Route path="applications" element={<MyApplications />} /><Route path="applications/new" element={<NewApplication />} /><Route path="assets" element={<MyAssets />} /><Route path="contracts" element={<MyContracts />} /><Route path="settlements" element={<MySettlements />} /><Route path="documents" element={<DocumentsVault />} /><Route path="notifications" element={<Notifications />} /><Route path="profile" element={<Profile />} /><Route path="support" element={<SupportTickets />} />
                 </Route>
@@ -105,6 +107,7 @@ function App() {
           </main>
           <Footer />
           <ChatWidget />
+          <MobileJourneyBar />
         </div>
       </BrowserRouter>
     </SreeVriddhiProvider>
