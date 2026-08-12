@@ -1,4 +1,5 @@
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
 import { SreeVriddhiProvider } from './context/SreeVriddhiContext'
 import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
@@ -57,6 +58,16 @@ import AdminSettings from './pages/admin/AdminSettings'
 import AdminTranslations from './pages/admin/AdminTranslations'
 import ChatWidget from './components/ChatWidget'
 
+function ScrollToTop() {
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+  }, [pathname])
+
+  return null
+}
+
 function HomeWithPriorityHero() {
   return (
     <>
@@ -70,6 +81,7 @@ function App() {
   return (
     <SreeVriddhiProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <div className="compact-site min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
           <Header />
           <Breadcrumbs />
