@@ -60,7 +60,7 @@ function App() {
   return (
     <SreeVriddhiProvider>
       <BrowserRouter>
-        <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
+        <div className="compact-site min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
           <Header />
           <Breadcrumbs />
           <main className="min-h-[70vh]">
