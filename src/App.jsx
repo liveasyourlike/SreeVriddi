@@ -6,6 +6,7 @@ import Breadcrumbs from './components/layout/Breadcrumbs'
 import AdminLayout from './components/layout/AdminLayout'
 import CustomerPortalLayout from './components/layout/CustomerPortalLayout'
 import SectionErrorBoundary from './components/SectionErrorBoundary'
+import InvestmentAllocationHero3D from './components/InvestmentAllocationHero3D'
 
 import Home from './pages/public/Home'
 import About from './pages/public/About'
@@ -56,6 +57,15 @@ import AdminSettings from './pages/admin/AdminSettings'
 import AdminTranslations from './pages/admin/AdminTranslations'
 import ChatWidget from './components/ChatWidget'
 
+function HomeWithPriorityHero() {
+  return (
+    <>
+      <InvestmentAllocationHero3D />
+      <Home />
+    </>
+  )
+}
+
 function App() {
   return (
     <SreeVriddhiProvider>
@@ -66,7 +76,7 @@ function App() {
           <main className="min-h-[70vh]">
             <SectionErrorBoundary>
               <Routes>
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<HomeWithPriorityHero />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/how-it-works" element={<HowItWorks />} />
                 <Route path="/assets" element={<Assets />} />
