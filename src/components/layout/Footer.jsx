@@ -1,35 +1,112 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSreeVriddhi } from '../../context/SreeVriddhiContext';
-import { Shield, Phone, Mail, MessageSquare, ArrowUpRight, Scale, Lock } from 'lucide-react';
+import { Shield, Phone, Mail, MessageSquare, ArrowUpRight, Scale, Lock, ChevronUp, ChevronDown, X } from 'lucide-react';
 
 const SUPPORT_EMAIL = 'sreevriddhiforwealth@gmail.com';
+const POPUP_INTERVAL_MS = 5 * 60 * 1000;
+const POPUP_VISIBLE_MS = 15000;
 
 const Footer = () => {
   const { brandSettings } = useSreeVriddhi();
+  const [expanded, setExpanded] = useState(false);
+  const [autoOpened, setAutoOpened] = useState(false);
+
+  useEffect(() => {
+    const openPopup = () => {
+      setExpanded(true);
+      setAutoOpened(true);
+      window.setTimeout(() => {
+        setExpanded(false);
+        setAutoOpened(false);
+      }, POPUP_VISIBLE_MS);
+    };
+
+    const interval = window.setInterval(openPopup, POPUP_INTERVAL_MS);
+    return () => window.clearInterval(interval);
+  }, []);
+
+  const collapse = () => {
+    setExpanded(false);
+    setAutoOpened(false);
+  };
 
   return (
-    <footer className="bg-slate-950 border-t border-amber-500/20 text-slate-400 pt-16 pb-12 relative overflow-hidden">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-32 bg-amber-500/5 blur-3xl pointer-events-none" />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-slate-800">
-          <div className="lg:col-span-2 space-y-4">
-            <Link to="/" className="flex items-center gap-3">
-              <div><img src={brandSettings.primaryLogo} alt="Sree Vriddhi" className="w-36 object-contain" /></div>
-              <div><div className="font-serif-brand text-2xl font-bold tracking-widest text-white">SREE <span className="text-amber-400">VRIDDHI</span></div><p className="text-[10px] text-amber-200/80 tracking-widest uppercase font-medium">{brandSettings.tagline}</p></div>
-            </Link>
-            <p className="text-xs text-slate-400 leading-relaxed max-w-sm">Sree Vriddhi provides structured value-management and asset growth solutions engineered around rigorous valuation, title security, transparent legal agreements, and responsible risk management.</p>
-            <div className="p-3.5 rounded-xl bg-slate-900/80 border border-amber-500/20"><p className="text-xs text-amber-300 font-serif italic mb-1">"{brandSettings.alternativeQuotes[4]}"</p><p className="text-[11px] text-slate-400">Where Value Finds Growth — Trust Built on Prosperity.</p></div>
-            <div className="pt-2 space-y-2"><a href={brandSettings.whatsappUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600/90 hover:bg-emerald-500 text-white text-xs font-bold transition-all shadow-md"><MessageSquare className="w-4 h-4" /><span>Chat on WhatsApp (+91 9640352929)</span></a><div className="flex items-center gap-4 text-xs text-slate-300"><a href={`tel:${brandSettings.phone}`} className="flex items-center gap-1.5 hover:text-amber-400"><Phone className="w-3.5 h-3.5 text-amber-400" /><span>{brandSettings.phone}</span></a><a href={`mailto:${SUPPORT_EMAIL}`} className="flex items-center gap-1.5 hover:text-amber-400"><Mail className="w-3.5 h-3.5 text-amber-400" /><span>{SUPPORT_EMAIL}</span></a></div></div>
+    <>
+      {/* Compact footer keeps every page short; the full footer is an overlay instead of document-height content. */}
+      <footer className="bg-slate-950 border-t border-amber-500/20 text-slate-400 relative z-30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-14 py-2.5 flex flex-col sm:flex-row items-center justify-between gap-2 text-[10px] sm:text-[11px]">
+          <div className="flex items-center gap-3 min-w-0">
+            <Link to="/" className="font-serif-brand font-bold tracking-widest text-white whitespace-nowrap">SREE <span className="text-amber-400">VRIDDHI</span></Link>
+            <span className="hidden sm:inline text-slate-700">•</span>
+            <span className="truncate">© {new Date().getFullYear()} Sree Vriddhi Value Management</span>
           </div>
-          <div><h4 className="text-xs font-bold uppercase tracking-widest text-amber-300 mb-4 flex items-center gap-1.5"><Shield className="w-3.5 h-3.5 text-amber-400" /><span>Navigation</span></h4><ul className="space-y-2.5 text-xs"><li><Link to="/about" className="hover:text-amber-400 transition-colors">About Sree Vriddhi</Link></li><li><Link to="/how-it-works" className="hover:text-amber-400 transition-colors">How It Works (7 Steps)</Link></li><li><Link to="/assets" className="hover:text-amber-400 transition-colors">Eligible Asset Categories</Link></li><li><Link to="/products" className="hover:text-amber-400 transition-colors">Dynamic Product Catalogue</Link></li><li><Link to="/eligibility" className="hover:text-amber-400 transition-colors">Eligibility Checker</Link></li><li><Link to="/why-us" className="hover:text-amber-400 transition-colors">Why Choose Us</Link></li></ul></div>
-          <div><h4 className="text-xs font-bold uppercase tracking-widest text-amber-300 mb-4 flex items-center gap-1.5"><Lock className="w-3.5 h-3.5 text-amber-400" /><span>Trust & Safety</span></h4><ul className="space-y-2.5 text-xs"><li><Link to="/protection" className="hover:text-amber-400 transition-colors">How We Protect Value</Link></li><li><Link to="/gallery" className="hover:text-amber-400 transition-colors">Corporate Gallery</Link></li><li><Link to="/insights" className="hover:text-amber-400 transition-colors">Knowledge & Insights</Link></li><li><Link to="/faq" className="hover:text-amber-400 transition-colors">Frequently Asked Questions</Link></li><li><Link to="/grievances" className="hover:text-amber-400 transition-colors font-semibold text-amber-400">Customer Grievance Portal</Link></li><li><Link to="/contact" className="hover:text-amber-400 transition-colors">Contact Us</Link></li></ul></div>
-          <div><h4 className="text-xs font-bold uppercase tracking-widest text-amber-300 mb-4 flex items-center gap-1.5"><Scale className="w-3.5 h-3.5 text-amber-400" /><span>Access & Governance</span></h4><div className="space-y-3"><Link to="/portal" className="block p-3 rounded-xl bg-slate-900 border border-slate-800 hover:border-amber-500/40 group transition-all"><div className="text-xs font-bold text-white group-hover:text-amber-400 flex items-center justify-between"><span>Customer Portal</span><ArrowUpRight className="w-3.5 h-3.5 text-slate-500 group-hover:text-amber-400" /></div><p className="text-[11px] text-slate-400 mt-1">Track applications, assets & contractual settlements.</p></Link><Link to="/admin" className="block p-3 rounded-xl bg-slate-900 border border-slate-800 hover:border-amber-500/40 group transition-all"><div className="text-xs font-bold text-white group-hover:text-amber-400 flex items-center justify-between"><span>Admin & CRM Portal</span><ArrowUpRight className="w-3.5 h-3.5 text-slate-500 group-hover:text-amber-400" /></div><p className="text-[11px] text-slate-400 mt-1">Manage leads, valuation, risk scoring & contracts.</p></Link></div></div>
+          <div className="flex items-center gap-2.5 sm:gap-4">
+            <a href={`tel:${brandSettings.phone}`} className="hidden md:inline hover:text-amber-400">{brandSettings.phone}</a>
+            <a href={`mailto:${SUPPORT_EMAIL}`} className="hidden lg:inline hover:text-amber-400">{SUPPORT_EMAIL}</a>
+            <Link to="/faq" className="hidden sm:inline hover:text-amber-400">Terms & Privacy</Link>
+            <button
+              type="button"
+              onClick={() => { setExpanded((value) => !value); setAutoOpened(false); }}
+              aria-expanded={expanded}
+              aria-controls="sree-vriddhi-footer-panel"
+              className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-slate-900 px-3 py-1.5 text-amber-200 hover:bg-slate-800 hover:text-amber-300 transition-colors font-semibold"
+            >
+              {expanded ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronUp className="w-3.5 h-3.5" />}
+              More
+            </button>
+          </div>
         </div>
-        <div className="py-8 border-b border-slate-900 text-[11px] text-slate-500 leading-relaxed space-y-3"><div className="flex items-start gap-2"><Shield className="w-4 h-4 text-amber-500/80 flex-shrink-0 mt-0.5" /><p><strong className="text-slate-300">REGULATORY DISCLOSURE & LEGAL NOTICE:</strong> Sree Vriddhi operates as a structured value-management platform. Sree Vriddhi does not accept public deposits, nor does it function as a collective investment scheme or stock brokerage. All submitted assets are subject to mandatory legal title verification, independent professional valuation, risk assessment, and legal eligibility matching.</p></div><p>Commercial return structures, monthly payout frequencies, notice periods, and contract tenures presented on this platform represent proposed commercial assumptions and illustrative parameters. Final terms are governed exclusively by the legally binding agreement executed following formal approval by the risk and legal committee.</p></div>
-        <div className="pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-500"><p>© {new Date().getFullYear()} Sree Vriddhi Value Management. All Rights Reserved.</p><div className="flex items-center gap-6"><Link to="/faq" className="hover:text-slate-400">Terms of Service</Link><Link to="/faq" className="hover:text-slate-400">Privacy Policy</Link><Link to="/grievances" className="hover:text-slate-400">Grievance Mechanism</Link></div></div>
-      </div>
-    </footer>
+      </footer>
+
+      {expanded && (
+        <div id="sree-vriddhi-footer-panel" className="fixed inset-x-0 bottom-3 z-[80] px-3 sm:px-5 pointer-events-none" role="dialog" aria-label="Sree Vriddhi quick information">
+          <div className="pointer-events-auto max-w-6xl mx-auto rounded-2xl border border-amber-500/20 bg-slate-950/95 backdrop-blur-xl shadow-2xl shadow-black/30 overflow-hidden">
+            <div className="flex items-center justify-between gap-3 px-4 py-2.5 border-b border-slate-800">
+              <div className="flex items-center gap-2 text-xs font-bold text-white"><Shield className="w-4 h-4 text-amber-400" /> Sree Vriddhi Quick Access</div>
+              <button type="button" onClick={collapse} aria-label="Collapse footer" className="p-1.5 rounded-full hover:bg-slate-800 text-slate-400 hover:text-white"><X className="w-4 h-4" /></button>
+            </div>
+
+            <div className="p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+              <div className="space-y-2">
+                <Link to="/about" onClick={collapse} className="block hover:text-amber-400">About Sree Vriddhi</Link>
+                <Link to="/how-it-works" onClick={collapse} className="block hover:text-amber-400">How It Works</Link>
+                <Link to="/assets" onClick={collapse} className="block hover:text-amber-400">Eligible Asset Categories</Link>
+                <Link to="/products" onClick={collapse} className="block hover:text-amber-400">Products</Link>
+                <Link to="/eligibility" onClick={collapse} className="block hover:text-amber-400">10-Point Evaluation</Link>
+              </div>
+
+              <div className="space-y-2">
+                <Link to="/why-us" onClick={collapse} className="block hover:text-amber-400">Why Choose Us</Link>
+                <Link to="/protection" onClick={collapse} className="block hover:text-amber-400">How We Protect Value</Link>
+                <Link to="/gallery" onClick={collapse} className="block hover:text-amber-400">Corporate Gallery</Link>
+                <Link to="/insights" onClick={collapse} className="block hover:text-amber-400">Knowledge & Insights</Link>
+                <Link to="/faq" onClick={collapse} className="block hover:text-amber-400">FAQs</Link>
+              </div>
+
+              <div className="space-y-2">
+                <Link to="/grievances" onClick={collapse} className="block font-semibold text-amber-300 hover:text-amber-400">Customer Grievance Portal</Link>
+                <Link to="/contact" onClick={collapse} className="block hover:text-amber-400">Contact Us</Link>
+                <Link to="/portal" onClick={collapse} className="block p-2 rounded-lg bg-slate-900 border border-slate-800 hover:border-amber-500/40"><span className="font-semibold text-white flex items-center justify-between">Customer Portal <ArrowUpRight className="w-3 h-3" /></span><span className="text-[10px] text-slate-500">Track applications & settlements</span></Link>
+                <Link to="/admin" onClick={collapse} className="block p-2 rounded-lg bg-slate-900 border border-slate-800 hover:border-amber-500/40"><span className="font-semibold text-white flex items-center justify-between">Admin & CRM <ArrowUpRight className="w-3 h-3" /></span><span className="text-[10px] text-slate-500">Management access</span></Link>
+              </div>
+
+              <div className="space-y-3">
+                <a href={brandSettings.whatsappUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-emerald-600/90 hover:bg-emerald-500 text-white font-bold transition-colors"><MessageSquare className="w-4 h-4" /> WhatsApp</a>
+                <div className="space-y-1.5 text-slate-300">
+                  <a href={`tel:${brandSettings.phone}`} className="flex items-center gap-2 hover:text-amber-400"><Phone className="w-3.5 h-3.5 text-amber-400" /> {brandSettings.phone}</a>
+                  <a href={`mailto:${SUPPORT_EMAIL}`} className="flex items-center gap-2 hover:text-amber-400 break-all"><Mail className="w-3.5 h-3.5 text-amber-400 flex-shrink-0" /> {SUPPORT_EMAIL}</a>
+                </div>
+                <div className="text-[10px] text-slate-500 leading-relaxed border-t border-slate-800 pt-2">Commercial terms are subject to formal approval and the legally binding agreement. Submitted assets remain subject to verification, valuation, risk assessment and legal eligibility.</div>
+              </div>
+            </div>
+
+            {autoOpened && <div className="px-4 pb-2 text-[10px] text-slate-600 text-right">Quick information will collapse automatically.</div>}
+          </div>
+        </div>
+      )}
+    </>
   );
 };
+
 export default Footer;
