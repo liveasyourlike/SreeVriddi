@@ -1,11 +1,48 @@
-.allocation-hero-3d { perspective: 1200px; }
-.allocation-stage { perspective: 1100px; }
-.allocation-orbit { transform-style: preserve-3d; animation: allocationFloat 7s ease-in-out infinite; }
-.allocation-orbit::before { content:""; position:absolute; inset:6%; border:1px solid rgba(212,175,55,.18); border-radius:9999px; transform:rotateX(64deg) rotateZ(-12deg); box-shadow:0 0 55px rgba(212,175,55,.08); }
-.allocation-orbit::after { content:""; position:absolute; inset:14%; border:1px dashed rgba(148,163,184,.16); border-radius:9999px; transform:rotateX(64deg) rotateZ(22deg); }
-.allocation-core { transform-style:preserve-3d; animation:allocationCore 5s ease-in-out infinite; }
-.allocation-orbit-item { position:absolute; left:50%; top:50%; width:42px; height:42px; margin:-21px; display:flex; align-items:center; justify-content:center; border:1px solid rgba(212,175,55,.35); border-radius:14px; background:rgba(15,23,42,.92); color:#f5d77f; box-shadow:0 10px 30px rgba(0,0,0,.28); transform:rotate(var(--angle)) translateY(-142px) rotate(calc(var(--angle) * -1)); transform-style:preserve-3d; }
-@keyframes allocationFloat { 0%,100%{transform:rotateX(7deg) rotateY(-8deg) translateY(0)} 50%{transform:rotateX(10deg) rotateY(8deg) translateY(-8px)} }
-@keyframes allocationCore { 0%,100%{transform:translateZ(10px) scale(1)} 50%{transform:translateZ(24px) scale(1.025)} }
-@media (max-width:640px){ .allocation-orbit{transform:scale(.82)} .allocation-orbit-item{transform:rotate(var(--angle)) translateY(-118px) rotate(calc(var(--angle) * -1));} }
-@media (prefers-reduced-motion:reduce){ .allocation-orbit,.allocation-core{animation:none} }
+.allocation-hero-3d { perspective: 1400px; }
+.allocation-stage { perspective: 1400px; }
+.allocation-light { position:absolute; width:22rem; height:22rem; border-radius:9999px; filter:blur(70px); pointer-events:none; opacity:.55; }
+.allocation-light-one { left:-7rem; top:-5rem; background:rgba(245,158,11,.12); animation:allocationLightOne 9s ease-in-out infinite; }
+.allocation-light-two { right:-8rem; bottom:-7rem; background:rgba(59,130,246,.10); animation:allocationLightTwo 11s ease-in-out infinite; }
+.allocation-orbit { transform-style:preserve-3d; animation:allocationFloat 9s ease-in-out infinite; }
+.allocation-orbit-enhanced::before { content:""; position:absolute; inset:3%; border:1px solid rgba(212,175,55,.20); border-radius:9999px; transform:rotateX(64deg) rotateZ(-12deg); box-shadow:0 0 75px rgba(212,175,55,.10); animation:allocationRing 16s linear infinite; }
+.allocation-orbit-enhanced::after { content:""; position:absolute; inset:13%; border:1px dashed rgba(148,163,184,.17); border-radius:9999px; transform:rotateX(64deg) rotateZ(22deg); animation:allocationRingReverse 22s linear infinite; }
+.allocation-orbit-plane { position:absolute; inset:9%; border-radius:9999px; border:1px solid rgba(212,175,55,.10); transform-style:preserve-3d; pointer-events:none; }
+.allocation-orbit-plane-one { transform:rotateX(67deg) rotateY(8deg); animation:allocationPlaneOne 12s linear infinite; }
+.allocation-orbit-plane-two { inset:18%; transform:rotateX(70deg) rotateY(-18deg); border-color:rgba(96,165,250,.10); animation:allocationPlaneTwo 15s linear infinite reverse; }
+.allocation-core { transform-style:preserve-3d; animation:allocationCore 5s ease-in-out infinite; transition:box-shadow .45s ease, transform .45s ease; }
+.allocation-core:hover { box-shadow:0 0 110px rgba(212,175,55,.34); }
+.allocation-orbit-item { position:absolute; left:50%; top:50%; width:48px; height:48px; margin:-24px; display:flex; align-items:center; justify-content:center; border:1px solid rgba(212,175,55,.30); border-radius:16px; background:rgba(15,23,42,.94); color:#f5d77f; box-shadow:0 10px 30px rgba(0,0,0,.30); transform:rotate(var(--angle)) translateY(-157px) rotate(calc(var(--angle) * -1)); transform-style:preserve-3d; transition:all .55s cubic-bezier(.2,.8,.2,1); }
+.allocation-orbit-item::before { content:""; position:absolute; inset:-5px; border-radius:18px; border:1px solid rgba(245,158,11,0); transition:all .5s ease; }
+.allocation-orbit-item:hover { transform:rotate(var(--angle)) translateY(-164px) rotate(calc(var(--angle) * -1)) scale(1.16) translateZ(18px); border-color:rgba(251,191,36,.75); color:#fde68a; box-shadow:0 0 35px rgba(245,158,11,.22); }
+.allocation-orbit-item.is-active { transform:rotate(var(--angle)) translateY(-166px) rotate(calc(var(--angle) * -1)) scale(1.22) translateZ(24px); border-color:rgba(251,191,36,.85); background:rgba(245,158,11,.15); color:#fde68a; box-shadow:0 0 45px rgba(245,158,11,.30); }
+.allocation-orbit-item.is-active::before { border-color:rgba(245,158,11,.30); animation:allocationNodePulse 1.8s ease-in-out infinite; }
+.allocation-orbit-number { position:absolute; right:-4px; top:-7px; min-width:16px; height:16px; padding:0 3px; border-radius:9999px; background:rgba(15,23,42,.98); border:1px solid rgba(212,175,55,.28); color:#fcd34d; font-size:7px; font-weight:800; line-height:14px; text-align:center; }
+.allocation-sector-card-wrap { width:100%; max-width:510px; margin:0 auto; }
+.allocation-sector-card { position:relative; min-height:420px; transform-style:preserve-3d; transition:transform .85s cubic-bezier(.2,.75,.15,1); }
+.allocation-sector-card.is-flipped { transform:rotateY(180deg); }
+.allocation-sector-face { position:absolute; inset:0; min-height:420px; backface-visibility:hidden; -webkit-backface-visibility:hidden; border:1px solid rgba(212,175,55,.22); border-radius:28px; padding:24px; background:linear-gradient(145deg,rgba(15,23,42,.98),rgba(2,6,23,.94)); box-shadow:0 30px 80px rgba(0,0,0,.35), inset 0 1px rgba(255,255,255,.04); overflow:hidden; }
+.allocation-sector-face::after { content:""; position:absolute; width:180px; height:180px; right:-90px; top:-90px; border-radius:9999px; background:rgba(245,158,11,.09); filter:blur(12px); pointer-events:none; }
+.allocation-sector-back { transform:rotateY(180deg); }
+.allocation-image-stage { position:relative; height:150px; display:flex; align-items:center; justify-content:center; overflow:hidden; border-radius:22px; border:1px solid rgba(212,175,55,.14); background:radial-gradient(circle at 50% 50%,rgba(245,158,11,.13),transparent 48%),linear-gradient(145deg,rgba(30,41,59,.75),rgba(2,6,23,.92)); transform-style:preserve-3d; }
+.allocation-image-orbit { position:absolute; border-radius:9999px; border:1px solid rgba(212,175,55,.16); transform-style:preserve-3d; }
+.allocation-image-orbit-a { width:180px; height:70px; transform:rotateX(66deg) rotateZ(-12deg); animation:allocationImageOrbitA 7s linear infinite; }
+.allocation-image-orbit-b { width:125px; height:55px; transform:rotateX(66deg) rotateZ(35deg); border-color:rgba(96,165,250,.14); animation:allocationImageOrbitB 9s linear infinite reverse; }
+.allocation-visual-symbol { position:absolute; font-size:48px; line-height:1; filter:drop-shadow(0 12px 18px rgba(245,158,11,.25)); animation:allocationSymbolFloat 3.8s ease-in-out infinite; transform:translateZ(35px); }
+.allocation-icon-ring { position:relative; z-index:2; display:flex; align-items:center; justify-content:center; width:62px; height:62px; margin-top:85px; border-radius:20px; border:1px solid rgba(245,158,11,.28); background:rgba(2,6,23,.86); color:#fcd34d; box-shadow:0 0 30px rgba(245,158,11,.15); transform:translateZ(45px); }
+.allocation-sector-pill { display:flex; align-items:center; justify-content:center; gap:6px; min-height:42px; border:1px solid rgba(51,65,85,.85); border-radius:14px; background:rgba(15,23,42,.72); padding:7px 9px; color:#94a3b8; font-size:9px; font-weight:700; line-height:1.25; transition:all .35s ease; }
+.allocation-sector-pill:hover { transform:translateY(-2px); border-color:rgba(245,158,11,.35); color:#fff; background:rgba(245,158,11,.06); }
+.allocation-sector-pill.is-active { border-color:rgba(245,158,11,.50); color:#fde68a; background:rgba(245,158,11,.10); box-shadow:0 8px 28px rgba(245,158,11,.08); }
+@keyframes allocationFloat { 0%,100%{transform:rotateX(7deg) rotateY(-7deg) translateY(0)} 50%{transform:rotateX(12deg) rotateY(8deg) translateY(-10px)} }
+@keyframes allocationCore { 0%,100%{transform:translateZ(10px) scale(1)} 50%{transform:translateZ(30px) scale(1.035)} }
+@keyframes allocationRing { to { transform:rotateX(64deg) rotateZ(348deg); } }
+@keyframes allocationRingReverse { to { transform:rotateX(64deg) rotateZ(-338deg); } }
+@keyframes allocationPlaneOne { to { transform:rotateX(67deg) rotateY(8deg) rotateZ(360deg); } }
+@keyframes allocationPlaneTwo { to { transform:rotateX(70deg) rotateY(-18deg) rotateZ(-360deg); } }
+@keyframes allocationNodePulse { 0%,100%{transform:scale(1);opacity:.45} 50%{transform:scale(1.28);opacity:1} }
+@keyframes allocationSymbolFloat { 0%,100%{transform:translate3d(0,0,35px) rotate(-2deg)} 50%{transform:translate3d(0,-8px,55px) rotate(2deg)} }
+@keyframes allocationImageOrbitA { to { transform:rotateX(66deg) rotateZ(348deg); } }
+@keyframes allocationImageOrbitB { to { transform:rotateX(66deg) rotateZ(-325deg); } }
+@keyframes allocationLightOne { 50%{transform:translate(45px,25px) scale(1.1)} }
+@keyframes allocationLightTwo { 50%{transform:translate(-35px,-25px) scale(1.08)} }
+@media (max-width:640px){ .allocation-orbit-enhanced{transform:scale(.78)} .allocation-orbit-item{transform:rotate(var(--angle)) translateY(-122px) rotate(calc(var(--angle) * -1));} .allocation-orbit-item:hover,.allocation-orbit-item.is-active{transform:rotate(var(--angle)) translateY(-128px) rotate(calc(var(--angle) * -1)) scale(1.14) translateZ(14px);} .allocation-sector-face{padding:19px;min-height:390px}.allocation-sector-card{min-height:390px}.allocation-image-stage{height:125px}.allocation-visual-symbol{font-size:40px}.allocation-icon-ring{width:54px;height:54px;margin-top:68px}.allocation-sector-pill{font-size:8px;min-height:40px;padding:6px 7px} }
+@media (prefers-reduced-motion:reduce){ .allocation-orbit,.allocation-core,.allocation-image-orbit-a,.allocation-image-orbit-b,.allocation-visual-symbol,.allocation-light-one,.allocation-light-two,.allocation-orbit-plane-one,.allocation-orbit-plane-two{animation:none}.allocation-sector-card{transition:none}.allocation-orbit-item,.allocation-sector-pill{transition:none} }
