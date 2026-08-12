@@ -1,0 +1,8 @@
+{
+  "faqs": [
+    {"question":"What is Sree Vriddhi?","answer":"Sree Vriddhi presents structured value-management and business allocation information. Customers should review the published terms and complete the applicable enquiry and verification process."},
+    {"question":"Which sectors are listed for allocation?","answer":"The current public allocation categories are Daily Finance, Physical Gold, Fixed Deposits, Housing Rentals, Vehicle Rentals, Oil & Gas Purchase, Retail Businesses, EV and Automobile Workshops, Staff Recruitment Agency, and Virtual Stocks. Retail Businesses include Street Foods, Saree Stalls, Fruits & Juice Centers, and Kirana Stores."},
+    {"question":"Can the AI guarantee returns?","answer":"No. The AI must never guarantee returns, profits, capital protection, approval, valuation, or future performance."},
+    {"question":"Can I ask about my private account or contract?","answer":"Private account, contract, payment, KYC, dispute, or customer-record questions must be routed to the appropriate human process and must not be answered from public knowledge."}
+  ]
+}

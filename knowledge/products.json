@@ -1,0 +1,19 @@
+{
+  "allocation_sectors": [
+    {"id":"01","name":"Daily Finance","te":"రోజువారీ ఫైనాన్స్"},
+    {"id":"02","name":"Physical Gold","te":"భౌతిక బంగారం"},
+    {"id":"03","name":"Fixed Deposits","te":"ఫిక్స్‌డ్ డిపాజిట్లు"},
+    {"id":"04","name":"Housing Rentals","te":"హౌసింగ్ అద్దెలు"},
+    {"id":"05","name":"Vehicle Rentals","te":"వాహన అద్దెలు"},
+    {"id":"06","name":"Oil & Gas Purchase","te":"ఆయిల్ & గ్యాస్ కొనుగోలు"},
+    {"id":"07A","name":"Street Foods","te":"స్ట్రీట్ ఫుడ్స్","category":"Retail Businesses"},
+    {"id":"07B","name":"Saree Stalls","te":"చీరల స్టాల్స్","category":"Retail Businesses"},
+    {"id":"07C","name":"Fruits & Juice Centers","te":"పండ్లు & జ్యూస్ సెంటర్లు","category":"Retail Businesses"},
+    {"id":"07D","name":"Kirana Stores","te":"కిరాణా దుకాణాలు","category":"Retail Businesses"},
+    {"id":"08","name":"EV and Automobile Workshops","te":"EV & ఆటోమొబైల్ వర్క్‌షాప్స్"},
+    {"id":"09","name":"Staff Recruitment Agency","te":"స్టాఫ్ రిక్రూట్‌మెంట్ ఏజెన్సీ"},
+    {"id":"10","name":"Virtual Stocks","te":"వర్చువల్ స్టాక్స్"}
+  ],
+  "website_note": "These are the real sectors described by the business model as intended allocation categories. The public AI must not invent current allocation percentages, amounts, valuations, returns, availability, or performance unless those facts are explicitly published and current.",
+  "published_pages": ["Home","About","Products","Product Details","FAQ","How It Works","Eligibility","Protection","Why Us","Contact","Insights","Gallery","Grievances"]
+}

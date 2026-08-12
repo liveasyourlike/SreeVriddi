@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { MessageSquare, Phone, Sun, Moon, Menu, X, ShieldCheck, Lock, BookOpen } from 'lucide-react';
 import { useSreeVriddhi } from '../../context/SreeVriddhiContext';
-import { MessageSquare, Phone, Sun, Moon, Menu, X, ShieldCheck, UserCheck, Lock, BookOpen } from 'lucide-react';
 import LanguageSelector from '../LanguageSelector';
 
 const Header = () => {
-  const { brandSettings, theme, language, toggleTheme, toggleLanguage } = useSreeVriddhi();
+  const { brandSettings, theme, language, toggleTheme } = useSreeVriddhi();
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
@@ -30,7 +30,7 @@ const Header = () => {
       languageLabel: 'भाषा'
     },
     te: {
-      banner: 'క్రమబద్ధత మొదట: ఉత్పత్తి నిర్మాణాలు మరియు రిటర్న్లు कानूनी ధ్రువీకరణ మరియు réglementationకు లోబడి ఉంటాయి.',
+      banner: 'క్రమబద్ధత మొదట: ఉత్పత్తి నిర్మాణాలు మరియు రిటర్న్లు कानूनी ధ్రुवీకరణ మరియు réglementationకు లోబడి ఉంటాయి.',
       whatsapp: 'వాట్సాప్ డైరెక్ట్',
       login: 'లాగిన్ / CRM',
       eligibility: 'అర్హత తనిఖీ',
@@ -52,7 +52,7 @@ const Header = () => {
     { name: language === 'hi' ? 'स्री व्रिद्धी क्यों' : language === 'te' ? 'Sree Vriddhi ఎందుకు' : 'Why Sree Vriddhi', path: '/why-us' },
     { name: language === 'hi' ? 'सुरक्षा' : language === 'te' ? 'రక్షణ' : 'Protection', path: '/protection' },
     { name: language === 'hi' ? 'गैलरी' : language === 'te' ? 'గ్యాలరీ' : 'Gallery', path: '/gallery' },
-    { name: language === 'hi' ? 'FAQ' : language === 'te' ? 'FAQ' : 'FAQ', path: '/faq' },
+    { name: 'FAQ', path: '/faq' },
     { name: language === 'hi' ? 'अंतर्दृष्टियाँ' : language === 'te' ? 'ఇన్‌సైట్ల్' : 'Insights', path: '/insights' },
     { name: language === 'hi' ? 'संपर्क' : language === 'te' ? 'సంపర్కం' : 'Contact', path: '/contact' }
   ];
@@ -65,20 +65,18 @@ const Header = () => {
 
   return (
     <header className="sticky top-0 z-50 bg-slate-950/90 backdrop-blur-md border-b border-amber-500/20 shadow-2xl">
-      {/* Top Banner Notice */}
-      <div className="bg-gradient-to-r from-navy-950 via-slate-900 to-navy-950 border-b border-amber-500/10 py-1.5 px-4 text-xs text-slate-300">
-        <div className="max-w-7xl mx-auto flex justify-between items-center flex-wrap gap-2">
-          <div className="flex items-center gap-2 text-amber-300/90 font-medium">
-            <ShieldCheck className="w-4 h-4 text-amber-400" />
-            <span>{t.banner}</span>
+      <div className="bg-gradient-to-r from-navy-950 via-slate-900 to-navy-950 border-b border-amber-500/10 py-1 px-3 sm:px-4 text-[10px] sm:text-xs text-slate-300">
+        <div className="max-w-7xl mx-auto flex justify-between items-center flex-wrap gap-1.5">
+          <div className="flex items-center gap-1.5 text-amber-300/90 font-medium min-w-0">
+            <ShieldCheck className="w-3.5 h-3.5 shrink-0 text-amber-400" />
+            <span className="truncate">{t.banner}</span>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="hidden sm:flex items-center gap-3 shrink-0">
             <a href={`tel:${brandSettings.phone}`} className="hover:text-amber-400 transition-colors flex items-center gap-1">
               <Phone className="w-3.5 h-3.5 text-amber-400" />
               <span>{brandSettings.phone}</span>
             </a>
-            <a href={brandSettings.whatsappUrl} target="_blank" rel="noopener noreferrer" 
-               className="bg-emerald-600/90 hover:bg-emerald-500 text-white px-2.5 py-0.5 rounded-full flex items-center gap-1 font-semibold transition-all text-[11px] shadow-sm">
+            <a href={brandSettings.whatsappUrl} target="_blank" rel="noopener noreferrer" className="bg-emerald-600/90 hover:bg-emerald-500 text-white px-2.5 py-0.5 rounded-full flex items-center gap-1 font-semibold transition-all text-[10px] shadow-sm">
               <MessageSquare className="w-3 h-3" />
               <span>{t.whatsapp}</span>
             </a>
@@ -86,59 +84,31 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Main Header Nav */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
-        {/* Brand Logo: small mark for compact header, full primary logo for larger displays */}
-        <Link to="/" className="flex items-center gap-3 group">
-          <img src={brandSettings.logoMark || brandSettings.primaryLogo} alt="Sree Vriddhi Mark" className="h-10 object-contain block sm:hidden" />
-          <img src={brandSettings.primaryLogo || brandSettings.logoMark} alt="Sree Vriddhi" className="h-10 object-contain hidden sm:block" />
-          <div className="hidden sm:block">
-            <div className="font-serif-brand text-xl sm:text-2xl font-bold tracking-widest text-white flex items-center gap-1">
-              <span>SREE</span>
-              <span className="text-amber-400">VRIDDHI</span>
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3 flex items-center justify-between">
+        <Link to="/" className="flex items-center gap-2.5 group min-w-0">
+          <img src={brandSettings.logoMark || brandSettings.primaryLogo} alt="Sree Vriddhi Mark" className="h-9 object-contain block sm:hidden" />
+          <img src={brandSettings.primaryLogo || brandSettings.logoMark} alt="Sree Vriddhi" className="h-9 object-contain hidden sm:block" />
+          <div className="hidden sm:block min-w-0">
+            <div className="font-serif-brand text-lg sm:text-xl font-bold tracking-widest text-white flex items-center gap-1">
+              <span>SREE</span><span className="text-amber-400">VRIDDHI</span>
             </div>
-            <p className="text-[10px] text-amber-200/80 tracking-widest uppercase font-medium">
-              {brandSettings.tagline}
-            </p>
+            <p className="text-[9px] text-amber-200/80 tracking-widest uppercase font-medium truncate">{brandSettings.tagline}</p>
           </div>
         </Link>
 
-        {/* Desktop Nav Links (compact with More dropdown) */}
         <nav className="hidden lg:flex items-center gap-1.5">
           {navLinks.slice(0, 6).map((link) => (
-            <Link
-              key={link.path}
-              to={link.path}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold tracking-wider uppercase transition-all ${
-                isActive(link.path)
-                  ? 'bg-amber-500/15 text-amber-300 border border-amber-500/30'
-                  : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
-              }`}
-            >
+            <Link key={link.path} to={link.path} className={`px-3 py-1.5 rounded-lg text-xs font-semibold tracking-wider uppercase transition-all ${isActive(link.path) ? 'bg-amber-500/15 text-amber-300 border border-amber-500/30' : 'text-slate-300 hover:text-white hover:bg-slate-800/60'}`}>
               {link.name}
             </Link>
           ))}
-
           {navLinks.length > 6 && (
             <div className="relative">
-              <button
-                onClick={() => setMoreOpen(!moreOpen)}
-                className="px-3 py-1.5 rounded-lg text-xs font-semibold tracking-wider uppercase transition-all text-slate-300 hover:text-white hover:bg-slate-800/60"
-              >
-                More
-              </button>
-
+              <button onClick={() => setMoreOpen(!moreOpen)} className="px-3 py-1.5 rounded-lg text-xs font-semibold tracking-wider uppercase transition-all text-slate-300 hover:text-white hover:bg-slate-800/60">More</button>
               {moreOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-slate-900 border border-slate-800 rounded-lg shadow-lg z-50">
                   {navLinks.slice(6).map((m) => (
-                    <Link
-                      key={m.path}
-                      to={m.path}
-                      onClick={() => setMoreOpen(false)}
-                      className="block px-3 py-2 text-xs text-slate-300 hover:bg-slate-800/60 hover:text-white"
-                    >
-                      {m.name}
-                    </Link>
+                    <Link key={m.path} to={m.path} onClick={() => setMoreOpen(false)} className="block px-3 py-2 text-xs text-slate-300 hover:bg-slate-800/60 hover:text-white">{m.name}</Link>
                   ))}
                 </div>
               )}
@@ -146,82 +116,37 @@ const Header = () => {
           )}
         </nav>
 
-        {/* Action Buttons */}
-        <div className="hidden lg:flex items-center gap-3">
-          <div className="p-0">
-            <LanguageSelector className="bg-transparent text-slate-300" />
-          </div>
-
-          <button 
-            onClick={toggleTheme}
-            className="p-2 rounded-lg bg-slate-900 border border-slate-700 text-slate-300 hover:text-amber-400 transition-colors"
-            title={t.themeLabel}
-          >
+        <div className="hidden lg:flex items-center gap-2.5">
+          <LanguageSelector className="bg-transparent text-slate-300" />
+          <button onClick={toggleTheme} className="p-2 rounded-lg bg-slate-900 border border-slate-700 text-slate-300 hover:text-amber-400 transition-colors" title={t.themeLabel} aria-label={t.themeLabel}>
             {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : theme === 'light' ? <Moon className="w-4 h-4 text-slate-300" /> : <BookOpen className="w-4 h-4 text-amber-400" />}
           </button>
-
-          <Link
-            to="/login"
-            className="px-3.5 py-1.5 rounded-lg bg-slate-900 border border-amber-500/30 text-amber-300 hover:bg-amber-500/10 text-xs font-bold tracking-wider uppercase transition-all flex items-center gap-1.5"
-          >
-            <Lock className="w-3.5 h-3.5" />
-            <span>{t.login}</span>
-          </Link>
-
-          <Link
-            to="/eligibility"
-            className="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 hover:from-amber-400 hover:to-amber-600 text-slate-950 text-xs font-extrabold uppercase tracking-wider shadow-lg shadow-amber-500/20 hover:scale-[1.02] transition-all"
-          >
-            {t.eligibility}
-          </Link>
+          <Link to="/login" className="px-3.5 py-1.5 rounded-lg bg-slate-900 border border-amber-500/30 text-amber-300 hover:bg-amber-500/10 text-xs font-bold tracking-wider uppercase transition-all flex items-center gap-1.5"><Lock className="w-3.5 h-3.5" /><span>{t.login}</span></Link>
+          <Link to="/eligibility" className="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 hover:from-amber-400 hover:to-amber-600 text-slate-950 text-xs font-extrabold uppercase tracking-wider shadow-lg shadow-amber-500/20 hover:scale-[1.02] transition-all">{t.eligibility}</Link>
         </div>
 
-        {/* Mobile menu button */}
         <div className="lg:hidden flex items-center gap-2">
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-lg bg-slate-900 border border-amber-500/30 text-amber-400"
-          >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          <a href={brandSettings.whatsappUrl} target="_blank" rel="noopener noreferrer" aria-label={t.whatsapp} className="p-2 rounded-lg bg-emerald-600/15 border border-emerald-500/30 text-emerald-300"><MessageSquare className="w-4 h-4" /></a>
+          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'} className="p-2 rounded-lg bg-slate-900 border border-amber-500/30 text-amber-400">{mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}</button>
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-slate-950 border-b border-amber-500/20 px-4 pt-2 pb-6 space-y-2">
-          <div className="grid grid-cols-2 gap-2 mb-4">
+        <div className="lg:hidden bg-slate-950 border-b border-amber-500/20 px-3 pt-2 pb-4 space-y-3 max-h-[75vh] overflow-y-auto">
+          <div className="grid grid-cols-2 gap-1.5">
             {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                onClick={() => setMobileMenuOpen(false)}
-                className={`p-2.5 rounded-lg text-xs font-semibold tracking-wider transition-all ${
-                  isActive(link.path)
-                    ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
-                    : 'text-slate-300 bg-slate-900/60'
-                }`}
-              >
-                {link.name}
-              </Link>
+              <Link key={link.path} to={link.path} onClick={() => setMobileMenuOpen(false)} className={`p-2 rounded-lg text-[11px] font-semibold tracking-wide transition-all ${isActive(link.path) ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30' : 'text-slate-300 bg-slate-900/60 hover:bg-slate-800'}`}>{link.name}</Link>
             ))}
           </div>
-
-          <div className="pt-2 border-t border-slate-800 space-y-2">
-            <Link
-              to="/login"
-              onClick={() => setMobileMenuOpen(false)}
-              className="w-full py-2.5 rounded-lg bg-slate-900 text-amber-300 border border-amber-500/30 text-xs font-bold text-center block"
-            >
-              {t.mobileLogin}
-            </Link>
-            <Link
-              to="/eligibility"
-              onClick={() => setMobileMenuOpen(false)}
-              className="w-full py-2.5 rounded-lg bg-gradient-to-r from-amber-500 to-amber-700 text-slate-950 font-extrabold text-xs text-center block shadow-lg"
-            >
-              {t.eligibility}
-            </Link>
+          <div className="pt-2 border-t border-slate-800 grid grid-cols-2 gap-2 items-center">
+            <div className="min-w-0"><LanguageSelector className="w-full bg-slate-900 text-slate-200" /></div>
+            <button onClick={toggleTheme} className="w-full py-2 rounded-lg bg-slate-900 border border-slate-700 text-slate-300 flex items-center justify-center gap-2 text-xs" title={t.themeLabel}>
+              {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : theme === 'light' ? <Moon className="w-4 h-4" /> : <BookOpen className="w-4 h-4 text-amber-400" />} {t.themeLabel}
+            </button>
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            <Link to="/login" onClick={() => setMobileMenuOpen(false)} className="py-2.5 rounded-lg bg-slate-900 text-amber-300 border border-amber-500/30 text-[11px] font-bold text-center">{t.mobileLogin}</Link>
+            <Link to="/eligibility" onClick={() => setMobileMenuOpen(false)} className="py-2.5 rounded-lg bg-gradient-to-r from-amber-500 to-amber-700 text-slate-950 font-extrabold text-[11px] text-center shadow-lg">{t.eligibility}</Link>
           </div>
         </div>
       )}
