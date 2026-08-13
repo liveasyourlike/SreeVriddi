@@ -18,7 +18,7 @@ export default function handler(req, res) {
 
   const [payload, signature] = parts
   const expected = sign(payload)
-  if (!expected || !crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expected))) {
+  if (!expected || signature.length !== expected.length || !crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expected))) {
     return res.status(401).json({ error: 'Invalid CRM session.' })
   }
 
