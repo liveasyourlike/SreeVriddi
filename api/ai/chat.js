@@ -36,18 +36,6 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'A message up to 4000 characters is required.' });
     }
 
-    const normalized = message.toLowerCase();
-    if (/(contact|email|e-mail|phone|mobile|support|reach|talk to someone|human)/i.test(normalized)) {
-      return res.status(200).json({
-        answer: `You can contact Sree Vriddhi support directly:\n\nEmail: ${SUPPORT_EMAIL}\nPhone: ${SUPPORT_PHONE}`,
-        category: 'BUSINESS',
-        intent: 'GENERAL_ENQUIRY',
-        risk: 'LOW',
-        confidence: 1,
-        requiresHuman: false
-      });
-    }
-
     const classification = await classifyMessage(message);
     const key = process.env.OPENAI_API_KEY;
     if (!key) throw new Error('OPENAI_API_KEY is not configured');
