@@ -1,0 +1,77 @@
+name: Apply chatbot polish
+
+on:
+  push:
+    branches:
+      - enhance-ai-chatbot-general-business
+
+permissions:
+  contents: write
+
+jobs:
+  polish:
+    if: ${{ !contains(github.event.head_commit.message, 'Apply chatbot polish') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: enhance-ai-chatbot-general-business
+
+      - name: Patch chatbot behavior and styling
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          api = Path('api/ai/chat.js')
+          s = api.read_text()
+          old = "  if (/(what time is it|what is the time|current time|time now|time right now|what's the time)/i.test(t)) return `The current time is ${new Intl.DateTimeFormat('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }).format(new Date())} (IST).`;"
+          new = "  if (/(what time is it|what is the time|current time|time now|time right now|what's the time)/i.test(t)) return `The current time is ${new Intl.DateTimeFormat('en-IN', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }).format(new Date())} (IST).`;\n  if (/(date today|today's date|what is today's date|what's today's date|today date|current date|what date is it|what day is today)/i.test(t)) { const now = new Date(); const date = new Intl.DateTimeFormat('en-IN', { timeZone: 'Asia/Kolkata', day: '2-digit', month: 'long', year: 'numeric' }).format(now); const day = new Intl.DateTimeFormat('en-IN', { timeZone: 'Asia/Kolkata', weekday: 'long' }).format(now); return `Today is ${day}, ${date} (IST).`; }"
+          if old not in s:
+              raise SystemExit('Expected time-answer line not found')
+          api.write_text(s.replace(old, new, 1))
+
+          widget = Path('src/components/ChatWidgetEnhanced.jsx')
+          s = widget.read_text()
+          old = "const [scheduleOpen,setScheduleOpen] = useState(true);"
+          if old not in s:
+              raise SystemExit('Expected schedule state line not found')
+          widget.write_text(s.replace(old, "const [scheduleOpen,setScheduleOpen] = useState(false);", 1))
+
+          css = Path('src/components/ChatWidget.css')
+          s = css.read_text()
+          replacements = {
+            '.sv-chat-shell{position:relative;width:100%;height:100%;display:flex;flex-direction:column;overflow:hidden;border:1px solid #cbd5e1;border-radius:18px;background:#f8fafc;color:#0f172a;box-shadow:0 24px 70px rgba(2,6,23,.35);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}': '.sv-chat-shell{position:relative;width:100%;height:100%;display:flex;flex-direction:column;overflow:hidden;border:1px solid #c6a44a;border-radius:18px;background:#f8fafc;color:#172033;box-shadow:0 24px 70px rgba(2,6,23,.35);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}',
+            '.sv-chat-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;background:#ffffff;border-bottom:1px solid #cbd5e1;cursor:move;user-select:none}': '.sv-chat-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 14px;background:#071226;color:#fff;border-bottom:2px solid #c6a44a;cursor:move;user-select:none}',
+            '.sv-chat-brand strong{display:block;color:#0f172a;font-size:14px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}': '.sv-chat-brand strong{display:block;color:#fff;font-size:14px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.01em}',
+            '.sv-chat-brand span:not(.sv-chat-bot){display:block;color:#475569;font-size:11px;margin-top:3px}': '.sv-chat-brand span:not(.sv-chat-bot){display:block;color:#cbd5e1;font-size:11px;margin-top:3px}',
+            '.sv-chat-bot{width:34px;height:34px;display:grid;place-items:center;border-radius:10px;background:#e6fffb;color:#0f766e;border:1px solid #99f6e4;flex:none}': '.sv-chat-bot{width:36px;height:36px;display:grid;place-items:center;border-radius:10px;background:#fff;border:1px solid #c6a44a;flex:none;overflow:hidden}.sv-chat-bot svg{display:none}.sv-chat-bot::before{content:"";width:100%;height:100%;background:url("/brand/logo-mark.jpeg") center/contain no-repeat}',
+            '.sv-chat-actions button,.sv-icon-btn{display:grid;place-items:center;width:34px;height:34px;border:1px solid #cbd5e1;border-radius:9px;background:#fff;color:#334155}': '.sv-chat-actions button,.sv-icon-btn{display:grid;place-items:center;width:35px;height:35px;border:1px solid #d8b85c;border-radius:9px;background:#10203a;color:#fff}',
+            '.sv-chat-actions button:hover,.sv-icon-btn:hover{background:#f1f5f9;color:#0f172a;border-color:#94a3b8}': '.sv-chat-actions button:hover,.sv-icon-btn:hover{background:#c6a44a;color:#071226;border-color:#c6a44a}',
+            '.sv-message-list{min-height:0;flex:1;overflow:auto;padding:16px 14px 10px;display:flex;flex-direction:column;gap:13px}': '.sv-message-list{min-height:0;flex:1;overflow:auto;padding:18px 16px 12px;display:flex;flex-direction:column;gap:14px;background:#f5f7fb}',
+            '.sv-message-meta{font-size:10px;font-weight:800;color:#64748b;padding:0 3px}': '.sv-message-meta{font-size:10px;font-weight:800;color:#52627a;padding:0 3px;letter-spacing:.02em}',
+            '.sv-message-bubble{padding:10px 12px;border-radius:13px;border:1px solid #cbd5e1;background:#fff;color:#0f172a;font-size:13px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere}': '.sv-message-bubble{padding:11px 13px;border-radius:14px;border:1px solid #d5dce8;background:#fff;color:#172033;font-size:13px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere;box-shadow:0 2px 8px rgba(15,23,42,.05)}',
+            '.sv-user .sv-message-bubble{background:#e6fffb;border-color:#99f6e4;color:#134e4a}': '.sv-user .sv-message-bubble{background:#e5f4f1;border-color:#8ccfc5;color:#123f3a}',
+            '.sv-schedule{border-top:1px solid #cbd5e1;background:#fff}': '.sv-schedule{border-top:1px solid #d7dee9;background:#fff;flex:none}',
+            '.sv-schedule-head{width:100%;display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border:0;background:#fff;color:#0f172a;font-weight:800;font-size:12px;cursor:pointer}': '.sv-schedule-head{width:100%;display:flex;justify-content:space-between;align-items:center;padding:11px 13px;border:0;background:#fff;color:#172033;font-weight:850;font-size:12px;cursor:pointer;letter-spacing:.01em}.sv-schedule-head:hover{background:#f8fafc;color:#7a5b00}',
+            '.sv-chat-footer{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:8px 12px;background:#fff;border-top:1px solid #cbd5e1;color:#475569;font-size:10px}': '.sv-chat-footer{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:8px 12px;background:#071226;border-top:1px solid #c6a44a;color:#cbd5e1;font-size:10px}',
+            '.sv-chat-footer span:first-child{display:flex;align-items:center;gap:4px;color:#0f766e;font-weight:800}': '.sv-chat-footer span:first-child{display:flex;align-items:center;gap:4px;color:#e0bd55;font-weight:800}',
+            '.sv-composer{display:grid;grid-template-columns:36px 1fr 36px 36px;gap:6px;padding:9px 12px 4px;background:#fff;border-top:1px solid #cbd5e1}': '.sv-composer{display:grid;grid-template-columns:36px 1fr 36px 36px;gap:7px;padding:10px 12px 4px;background:#fff;border-top:1px solid #d7dee9}',
+            '.sv-composer textarea{resize:none;min-height:42px;padding:10px 11px;font:inherit;font-size:13px;line-height:1.35}': '.sv-composer textarea{resize:none;min-height:44px;padding:11px 12px;font:inherit;font-size:13px;line-height:1.45;font-weight:500}',
+            '.sv-send{display:grid;place-items:center;border:1px solid #0f766e;background:#0f766e;color:#fff;border-radius:9px}': '.sv-send{display:grid;place-items:center;border:1px solid #b38a21;background:#b38a21;color:#071226;border-radius:9px}.sv-send:hover{background:#d1ad45}',
+            '.sv-resize-handle{position:absolute;right:4px;bottom:4px;width:28px;height:28px;display:grid;place-items:center;border:1px solid #94a3b8;background:#fff;color:#0f766e;border-radius:7px;cursor:nwse-resize;z-index:5;box-shadow:0 2px 6px rgba(15,23,42,.14)}': '.sv-resize-handle{position:absolute;right:5px;bottom:5px;width:30px;height:30px;display:grid;place-items:center;border:2px solid #b38a21;background:#071226;color:#e0bd55;border-radius:7px;cursor:nwse-resize;z-index:20;box-shadow:0 3px 9px rgba(15,23,42,.2)}'
+          }
+          for a,b in replacements.items():
+              if a in s: s=s.replace(a,b,1)
+          s += '\n.sv-chat-shell button,.sv-chat-shell input,.sv-chat-shell select,.sv-chat-shell textarea{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}\n.sv-chat-shell ::placeholder{color:#64748b;opacity:1}\n.sv-chat-collapsed .sv-chat-body,.sv-chat-collapsed .sv-chat-footer{display:none}\n'
+          css.write_text(s)
+          PY
+
+      - name: Commit chatbot polish
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add api/ai/chat.js src/components/ChatWidgetEnhanced.jsx src/components/ChatWidget.css
+          git diff --cached --quiet && exit 0
+          git commit -m "Apply chatbot polish"
+          git push origin enhance-ai-chatbot-general-business
