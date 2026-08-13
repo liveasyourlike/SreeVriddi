@@ -1,16 +1,45 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
-import { CalendarDays, ChevronRight, Clock3, Download, LogOut, MessageSquare, Search, ShieldCheck, UserPlus, Users } from 'lucide-react'
+import { CalendarDays, ChevronRight, Clock3, LogOut, MessageSquare, Search, ShieldCheck, Users } from 'lucide-react'
 
 const STORE = 'sv_ai_workspace_v4'
 const readStore = () => { try { return JSON.parse(localStorage.getItem(STORE) || '{}') } catch { return {} } }
-const writeStore = (value) => localStorage.setItem(STORE, JSON.stringify(value))
 const money = (value) => value ? `₹${Number(String(value).replace(/[^0-9.]/g, '') || 0).toLocaleString('en-IN')}` : '—'
 
 function Protected({ children }) {
-  const token = localStorage.getItem('sv_crm_token')
-  if (!token) return <Navigate to="/crm/login" replace />
-  return children
+  const navigate = useNavigate()
+  const [state, setState] = useState('checking')
+  const [session, setSession] = useState(null)
+
+  useEffect(() => {
+    const token = localStorage.getItem('sv_crm_token')
+    if (!token) { setState('unauthenticated'); return }
+
+    fetch('/api/crm/session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token }),
+    })
+      .then(async response => {
+        const data = await response.json().catch(() => ({}))
+        if (!response.ok) throw new Error(data.error || 'Invalid CRM session')
+        return data
+      })
+      .then(data => {
+        localStorage.setItem('sv_crm_role', data.role)
+        setSession(data)
+        setState('authenticated')
+      })
+      .catch(() => {
+        localStorage.removeItem('sv_crm_token')
+        localStorage.removeItem('sv_crm_role')
+        setState('unauthenticated')
+      })
+  }, [])
+
+  if (state === 'checking') return <div className="min-h-screen bg-slate-950 text-slate-300 flex items-center justify-center text-sm">Checking CRM session…</div>
+  if (state === 'unauthenticated') return <Navigate to="/crm/login" replace />
+  return React.cloneElement(children, { authenticatedSession: session, navigate })
 }
 
 export default function CRMWorkspace() {
@@ -62,5 +91,5 @@ export default function CRMWorkspace() {
 
       {selected && <div className="fixed inset-0 z-[100] bg-black/60 p-4 flex items-center justify-center" onClick={() => setSelected(null)}><div className="w-full max-w-xl rounded-2xl border border-amber-500/30 bg-slate-950 shadow-2xl p-6" onClick={e => e.stopPropagation()}><div className="flex justify-between"><div><div className="text-[10px] uppercase tracking-widest text-amber-400 font-bold">Customer 360</div><h2 className="text-xl font-black mt-1">{selected.name}</h2><p className="text-xs text-slate-400">{selected.email}</p></div><button onClick={() => setSelected(null)} className="text-slate-500">×</button></div><div className="grid sm:grid-cols-2 gap-3 mt-6">{[['Asset / Interest',selected.asset],['Money investing',money(selected.amount)],['Created',selected.createdAt ? new Date(selected.createdAt).toLocaleString('en-IN') : '—'],['Updated',selected.updatedAt ? new Date(selected.updatedAt).toLocaleString('en-IN') : '—']].map(([a,b]) => <div key={a} className="rounded-xl bg-slate-900 p-3"><div className="text-[10px] text-slate-500">{a}</div><div className="text-sm font-bold mt-1">{b || '—'}</div></div>)}</div><div className="mt-5 flex gap-2"><a href={`mailto:${selected.email}`} className="px-3 py-2 rounded-xl bg-amber-500 text-slate-950 text-xs font-bold">Email customer</a>{selected.phone && <a href={`tel:${selected.phone}`} className="px-3 py-2 rounded-xl border border-slate-700 text-xs">Call</a>}</div></div></div>}
     </main>
-  </div></Protected>
+  </div>
 }
