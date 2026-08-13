@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Bot, CalendarDays, ChevronLeft, ChevronRight, Clock3, Download, ExternalLink,
-  FileUp, Maximize2, Mic, Minus, Move, Paperclip, Phone, Plus, Send,
+  FileUp, History, Maximize2, Mic, Minus, Move, Paperclip, Phone, Plus, Send,
   UserRound, X
 } from 'lucide-react';
 
@@ -182,7 +182,12 @@ export default function ChatWidget() {
 
   useEffect(() => {
     const s = readStore();
-    const storedSessions = s.sessions || [];
+    let storedSessions = s.sessions || [];
+    if (!storedSessions.length && s.profile) {
+      const legacy = { id: id(), email: s.profile.email, name: s.profile.name, title: 'Imported conversation', status: 'active', startedAt: new Date().toISOString(), messages: s.messages || [], attachments: s.attachments || [] };
+      storedSessions = [legacy];
+      writeStore({ ...s, sessions: storedSessions, currentSessionId: legacy.id });
+    }
     setSessions(storedSessions);
     setGeometry({ ...defaultGeometry, ...(s.geometry || {}) });
     if (s.currentSessionId) {
@@ -375,8 +380,8 @@ export default function ChatWidget() {
     {open && <div className={`sv-chat ${min ? 'collapsed' : ''}`} style={style}>
       <header className="sv-header" onPointerDown={beginDrag}>
         <div className="sv-brand"><div className="sv-logo"><img src="/brand/logo-mark.jpeg" alt="Sree Vriddhi" /></div><div><b>Sree Vriddhi AI</b><small>Business + General AI · {activeCount} active</small></div></div>
-        <div className="sv-actions">
-          <button title="Conversation history" onClick={() => setHistoryOpen((v) => !v)}><Move /></button>
+        <div className="sv-actions"><span className="sv-drag-hint" title="Drag the chat window"><Move /> Drag</span>
+          <button title="Conversation history" onClick={() => setHistoryOpen((v) => !v)}><History /></button>
           <button title="Download conversation" onClick={downloadConversation} disabled={!messages.length}><Download /></button>
           <button title="Start new conversation" onClick={newChat}><Plus /></button>
           <button title={min ? 'Expand' : 'Collapse'} onClick={() => setMin((v) => !v)}>{min ? <Maximize2 /> : <Minus />}</button>
@@ -410,7 +415,7 @@ export default function ChatWidget() {
           <footer className="sv-footer"><a href="tel:+919640352929"><Phone /> {PHONE}</a><span>{EMAIL}</span><button type="button" onClick={end} disabled={!currentSession || currentSession.status === 'ended'}>{currentSession?.status === 'ended' ? 'Conversation ended' : 'End conversation'}</button></footer>
         </>}
       </>}
-      {open && !min && <div className="sv-resize-handle" title="Drag to resize" onPointerDown={beginResize}><Maximize2 /></div>}
+      {open && !min && <div className="sv-resize-handle" title="Drag to resize" onPointerDown={beginResize}><Maximize2 /><span>Resize</span></div>}
     </div>}
   </div>;
 }
