@@ -20,7 +20,7 @@ const contactSources = [
   source('Open WhatsApp', WHATSAPP_URL),
 ];
 
-const safetyPrefix = `You are the Sree Vriddhi AI Assistant. Answer only from the supplied public knowledge. Be concise, professional and easy to understand. Never invent current values, customer records, approvals, returns, valuations or availability. Never provide personalized investment, legal or tax advice. Never guarantee profit, return, approval or capital protection. Any published commercial figures are indicative/proposed and subject to applicable legal, regulatory and contractual terms. For private customer records, disputes, grievances, urgent matters, legal/tax questions, or personalized financial/return questions, clearly state that human review is required. If the answer is not in the knowledge, say you do not have that information and offer human follow-up.`;
+const safetyPrefix = `You are the Sree Vriddhi AI Assistant. Answer like a helpful, capable general-purpose assistant while staying within the supplied Sree Vriddhi knowledge for business questions. For general knowledge, answer from your model knowledge and clearly avoid pretending a current fact is live unless it is supplied. Be concise, professional and easy to understand. Never invent customer records, approvals, returns, valuations or availability. Never provide personalized investment, legal or tax advice. Never guarantee profit, return, approval or capital protection. Any published commercial figures are indicative/proposed and subject to applicable legal, regulatory and contractual terms. For private customer records, disputes, grievances, urgent matters, legal/tax questions, or personalized financial/return questions, clearly state that human review is required. If a Sree Vriddhi business answer is not in the supplied knowledge, say you do not have that information and offer human follow-up. When a useful action link is available, return it as a plain URL so the website can render it as a clickable link.`;
 
 function localDateTime() {
   const now = new Date();
@@ -34,34 +34,41 @@ function deterministicAnswer(message) {
   const normalized = message.toLowerCase().replace(/\s+/g, ' ').trim();
 
   if (/(what is|tell me|give me|show me|how can i).*(contact|phone|mobile|email|whatsapp)|\b(contact details|contact number|phone number|mobile number|whatsapp number|email address)\b/i.test(normalized)) {
-    return {
-      answer: `You can contact Sree Vriddhi directly:\n\nEmail: ${SUPPORT_EMAIL}\nPhone: ${SUPPORT_PHONE}\nWhatsApp: ${WHATSAPP_URL}`,
-      intent: 'CONTACT', risk: 'LOW', confidence: 1, requiresHuman: false, sources: contactSources,
-    };
+    return { answer: `You can contact Sree Vriddhi directly:\n\nEmail: ${SUPPORT_EMAIL}\nPhone: ${SUPPORT_PHONE}\nWhatsApp: ${WHATSAPP_URL}`, intent: 'CONTACT', risk: 'LOW', confidence: 1, requiresHuman: false, sources: contactSources };
   }
 
   if (/(what('?s| is) )?(today'?s date|date today|current date|today)/i.test(normalized)) {
     const current = localDateTime();
-    return {
-      answer: `Today is ${current.date}.`,
-      intent: 'GENERAL_DATE', risk: 'LOW', confidence: 1, requiresHuman: false, sources: [],
-    };
+    return { answer: `Today is ${current.date}.`, intent: 'GENERAL_DATE', risk: 'LOW', confidence: 1, requiresHuman: false, sources: [] };
   }
 
   if (/(what('?s| is) )?(the )?(time now|current time|time right now|current time in india|time in india)/i.test(normalized)) {
     const current = localDateTime();
-    return {
-      answer: `The current time is ${current.time} (IST).`,
-      intent: 'GENERAL_TIME', risk: 'LOW', confidence: 1, requiresHuman: false, sources: [],
-    };
+    return { answer: `The current time is ${current.time} (IST).`, intent: 'GENERAL_TIME', risk: 'LOW', confidence: 1, requiresHuman: false, sources: [] };
+  }
+
+  if (/\b(biggest|largest|highest) prime number\b/i.test(normalized)) {
+    return { answer: 'There is no biggest prime number. Prime numbers are infinite: for any finite list of primes, a larger prime can be found.', intent: 'GENERAL_MATH', risk: 'LOW', confidence: 1, requiresHuman: false, sources: [] };
+  }
+
+  if (/\b(array|arrays)\b.*\b(meaning|mean|what is|definition)\b|\bwhat is an array\b/i.test(normalized)) {
+    return { answer: 'In programming, an array is a collection of values stored under one variable name and accessed by position (index). For example, [10, 20, 30] is an array with three values.', intent: 'GENERAL_PROGRAMMING', risk: 'LOW', confidence: 1, requiresHuman: false, sources: [] };
+  }
+
+  if (/\bcapital of india\b/i.test(normalized)) {
+    return { answer: 'The capital of India is New Delhi.', intent: 'GENERAL_GEOGRAPHY', risk: 'LOW', confidence: 1, requiresHuman: false, sources: [] };
+  }
+
+  if (/\bwhat is (artificial intelligence|ai)\b|\bdefine artificial intelligence\b/i.test(normalized)) {
+    return { answer: 'Artificial intelligence (AI) is technology that enables computers to perform tasks that normally require human-like abilities, such as understanding language, recognizing patterns, reasoning and generating content.', intent: 'GENERAL_AI', risk: 'LOW', confidence: 1, requiresHuman: false, sources: [] };
+  }
+
+  if (/\bwhat is python\b|\bpython meaning\b/i.test(normalized)) {
+    return { answer: 'Python is a high-level programming language known for readable syntax. It is widely used for web development, automation, data analysis, AI and machine learning.', intent: 'GENERAL_PROGRAMMING', risk: 'LOW', confidence: 1, requiresHuman: false, sources: [] };
   }
 
   if (/(interest rate|rate of interest|monthly interest|how much interest|return rate|5\s*%|five percent)/i.test(normalized)) {
-    return {
-      answer: `The Sree Vriddhi information currently provided to this assistant describes a proposed/published rate of 5% per month for the relevant offering. This should not be treated as a guaranteed return or personalized financial advice; customers should review the applicable written terms, eligibility, verification and legal/regulatory requirements before making any decision. For confirmation of the current applicable terms, please contact Sree Vriddhi directly.`,
-      intent: 'COMMERCIAL_TERMS', risk: 'HIGH', confidence: 0.99, requiresHuman: true,
-      sources: [source('Contact Sree Vriddhi for current terms', SUPPORT_MAILTO), source('Call support', SUPPORT_TEL)],
-    };
+    return { answer: `The Sree Vriddhi information currently provided to this assistant describes a proposed/published rate of 5% per month for the relevant offering. This should not be treated as a guaranteed return or personalized financial advice; customers should review the applicable written terms, eligibility, verification and legal/regulatory requirements before making any decision. For confirmation of the current applicable terms, please contact Sree Vriddhi directly.`, intent: 'COMMERCIAL_TERMS', risk: 'HIGH', confidence: 0.99, requiresHuman: true, sources: [source('Email Sree Vriddhi', SUPPORT_MAILTO), source('Call support', SUPPORT_TEL), source('Open WhatsApp', WHATSAPP_URL)] };
   }
 
   return null;
@@ -80,7 +87,13 @@ export default async function handler(req, res) {
 
     const classification = await classifyMessage(message);
     const key = process.env.OPENAI_API_KEY;
-    if (!key) throw new Error('OPENAI_API_KEY is not configured');
+    if (!key) {
+      return res.status(200).json({
+        answer: `I can handle common questions, but my advanced AI service is not configured right now. For Sree Vriddhi support, please contact ${SUPPORT_PHONE} or ${SUPPORT_EMAIL}.`,
+        intent: classification.intent || 'UNKNOWN', risk: classification.risk || 'LOW', confidence: Number(classification.confidence) || null,
+        requiresHuman: true, sources: contactSources,
+      });
+    }
 
     const current = localDateTime();
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -90,11 +103,8 @@ export default async function handler(req, res) {
         model: process.env.OPENAI_MODEL || 'gpt-4o-mini',
         temperature: 0.2,
         messages: [
-          {
-            role: 'system',
-            content: `${safetyPrefix}\nChannel: ${channel}\nCurrent India date: ${current.date}\nCurrent India time: ${current.time}\nCustomer profile (use only for conversational context; do not expose private fields unless necessary): ${JSON.stringify(profile || {})}\nClassification: ${JSON.stringify(classification)}\nKnowledge: ${knowledgeText()}`,
-          },
-          ...history.slice(-8).filter(m => m && (m.role === 'user' || m.role === 'assistant')).map(m => ({ role: m.role, content: String(m.content).slice(0, 4000) })),
+          { role: 'system', content: `${safetyPrefix}\nChannel: ${channel}\nCurrent India date: ${current.date}\nCurrent India time: ${current.time}\nCustomer profile (use only for conversational context; do not expose private fields unless necessary): ${JSON.stringify(profile || {})}\nClassification: ${JSON.stringify(classification)}\nKnowledge: ${knowledgeText()}` },
+          ...history.slice(-10).filter(m => m && (m.role === 'user' || m.role === 'assistant')).map(m => ({ role: m.role, content: String(m.content).slice(0, 4000) })),
           { role: 'user', content: message },
         ],
       }),
@@ -105,16 +115,12 @@ export default async function handler(req, res) {
     const answer = data.choices?.[0]?.message?.content?.trim();
     if (!answer) throw new Error('AI returned an empty response');
 
-    return res.status(200).json({
-      answer,
-      intent: classification.intent || 'UNKNOWN',
-      risk: classification.risk || 'HIGH',
-      confidence: Number(classification.confidence) || null,
-      requiresHuman: ['HIGH', 'CRITICAL'].includes(classification.risk),
-      sources: [],
-    });
+    return res.status(200).json({ answer, intent: classification.intent || 'UNKNOWN', risk: classification.risk || 'LOW', confidence: Number(classification.confidence) || null, requiresHuman: ['HIGH', 'CRITICAL'].includes(classification.risk), sources: [] });
   } catch (error) {
     console.error('Sree Vriddhi AI error', error);
-    return res.status(500).json({ error: 'AI assistant is temporarily unavailable. Please contact Sree Vriddhi support at sreevriddhiforwealth@gmail.com or +91 9640352929.' });
+    return res.status(200).json({
+      answer: `I’m unable to complete that advanced AI request right now. You can continue with a general question or contact Sree Vriddhi support at ${SUPPORT_PHONE} or ${SUPPORT_EMAIL}.`,
+      intent: 'FALLBACK', risk: 'LOW', confidence: null, requiresHuman: true, sources: contactSources,
+    });
   }
 }
