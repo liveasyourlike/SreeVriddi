@@ -15,11 +15,9 @@
     --accent-green: #10b981;
     --navy-dark: #030712;
   }
-
   [data-theme="light"] { --bg-primary:#f8fafc; --bg-secondary:#fff; --bg-card:rgba(255,255,255,.9); --bg-card-border:rgba(30,58,138,.12); --text-primary:#0f172a; --text-secondary:#475569; --accent-gold:#b48c26; --accent-gold-light:#d4af37; --accent-gold-dark:#886208; --accent-blue:#1d4ed8; --accent-green:#059669; --navy-dark:#0f172a; }
   [data-theme="reading"] { --bg-primary:#f5efe2; --bg-secondary:#fffdf8; --bg-card:rgba(255,252,245,.95); --bg-card-border:rgba(121,85,16,.18); --text-primary:#2f2416; --text-secondary:#5f4f34; --accent-gold:#8e6a17; --accent-gold-light:#c89f35; --accent-gold-dark:#6b4f0c; --accent-blue:#365c9d; --accent-green:#2f7a5b; --navy-dark:#f5efe2; }
 }
-
 body { margin:0; padding:0; background-color:var(--bg-primary); color:var(--text-primary); font-family:'Inter',sans-serif; overflow-x:hidden; transition:background-color .25s ease,color .25s ease; }
 body,p,span,li,label,input,textarea,select,button { color:var(--text-primary); }
 h1,h2,h3,.font-serif-brand { font-family:'Cinzel','Outfit',Georgia,serif; }
@@ -40,7 +38,6 @@ h1,h2,h3,.font-serif-brand { font-family:'Cinzel','Outfit',Georgia,serif; }
 .animate-float { animation:float 6s ease-in-out infinite; }
 @keyframes pulseGlow { 0%,100%{opacity:.4} 50%{opacity:.8} }
 .animate-pulse-glow { animation:pulseGlow 4s ease-in-out infinite; }
-
 select option { background:#0f172a; color:#f8fafc; }
 select:focus,button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible { outline:2px solid #f5d77f; outline-offset:2px; }
 .site-agent-overlay { position:fixed; z-index:70; }
@@ -60,7 +57,6 @@ select:focus,button:focus-visible,a:focus-visible,input:focus-visible,textarea:f
 .compact-site main .pt-12 { padding-top:2rem; }
 .compact-site main .mb-14 { margin-bottom:2.5rem; }
 .compact-site main .mb-12 { margin-bottom:2rem; }
-
 @media (max-width: 1023px) {
   .compact-site main .space-y-24 > :not([hidden]) ~ :not([hidden]) { margin-top:2.5rem; }
   .compact-site main .space-y-20 > :not([hidden]) ~ :not([hidden]) { margin-top:2.25rem; }
@@ -69,82 +65,58 @@ select:focus,button:focus-visible,a:focus-visible,input:focus-visible,textarea:f
   .compact-site main .pt-24 { padding-top:3rem; }
   .compact-site main .pb-24 { padding-bottom:3rem; }
 }
-
 @media (max-width: 640px) {
-  .compact-site main .py-24,
-  .compact-site main .py-20,
-  .compact-site main .py-16 { padding-top:2rem; padding-bottom:2rem; }
-  .compact-site main .pt-24,
-  .compact-site main .pt-12 { padding-top:1.5rem; }
-  .compact-site main .pb-24,
-  .compact-site main .pb-20 { padding-bottom:2rem; }
-  .compact-site main .mb-14,
-  .compact-site main .mb-12 { margin-bottom:1.5rem; }
+  .compact-site main .py-24,.compact-site main .py-20,.compact-site main .py-16 { padding-top:2rem; padding-bottom:2rem; }
+  .compact-site main .pt-24,.compact-site main .pt-12 { padding-top:1.5rem; }
+  .compact-site main .pb-24,.compact-site main .pb-20 { padding-bottom:2rem; }
+  .compact-site main .mb-14,.compact-site main .mb-12 { margin-bottom:1.5rem; }
   .compact-site .glass-card { border-radius:.875rem; }
 }
-
 @media (prefers-reduced-motion: reduce) {
   *,*::before,*::after { scroll-behavior:auto !important; animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
 }
 
-/* Sree Vriddhi AI Assistant — high-contrast communication palette.
-   Keeps the website's deep navy + gold identity while making the messaging
-   channel intentionally separate, bright and easy to read. */
-div:has(> [title="Drag the header to move the assistant"]) {
-  background:#f8fafc !important;
-  border-color:#cbd5e1 !important;
-  color:#0f172a !important;
-  box-shadow:0 24px 70px rgba(3,7,18,.35), 0 0 0 1px rgba(212,175,55,.22) !important;
-}
-div:has(> [title="Drag the header to move the assistant"]) > [title="Drag the header to move the assistant"] {
-  background:#071226 !important;
-  border-bottom:2px solid #d4af37 !important;
-  min-height:62px;
-}
+/* AI messaging channel: intentionally separate from the dark website surface. */
+div:has(> [title="Drag the header to move the assistant"]) { background:#f8fafc !important; border-color:#cbd5e1 !important; color:#0f172a !important; box-shadow:0 24px 70px rgba(3,7,18,.35),0 0 0 1px rgba(212,175,55,.22) !important; }
+div:has(> [title="Drag the header to move the assistant"]) > [title="Drag the header to move the assistant"] { background:#071226 !important; border-bottom:2px solid #d4af37 !important; min-height:62px; cursor:grab !important; }
+div:has(> [title="Drag the header to move the assistant"]) > [title="Drag the header to move the assistant"]:active { cursor:grabbing !important; }
 div:has(> [title="Drag the header to move the assistant"]) [title="Drag the header to move the assistant"] strong { color:#ffffff !important; font-size:14px !important; letter-spacing:.01em; }
 div:has(> [title="Drag the header to move the assistant"]) [title="Drag the header to move the assistant"] span { color:#8de0d5 !important; }
 div:has(> [title="Drag the header to move the assistant"]) [title="Drag the header to move the assistant"] button { color:#dbe5f0 !important; }
-div:has(> [title="Drag the header to move the assistant"]) [title="Drag the header to move the assistant"] button:hover { background:#17233b !important; color:#ffffff !important; }
+div:has(> [title="Drag the header to move the assistant"]) [title="Drag the header to move the assistant"] button:hover { background:#17233b !important; color:#fff !important; }
 div:has(> [title="Drag the header to move the assistant"]) .bg-slate-950 { background:#071226 !important; color:#e7edf5 !important; }
 div:has(> [title="Drag the header to move the assistant"]) .border-slate-800 { border-color:#d8e0e9 !important; }
-div:has(> [title="Drag the header to move the assistant"]) .text-slate-500,
-div:has(> [title="Drag the header to move the assistant"]) .text-slate-600 { color:#64748b !important; }
+div:has(> [title="Drag the header to move the assistant"]) .text-slate-500,.text-slate-600 { color:#64748b !important; }
 div:has(> [title="Drag the header to move the assistant"]) .text-slate-400 { color:#475569 !important; }
 div:has(> [title="Drag the header to move the assistant"]) .text-slate-300 { color:#334155 !important; }
 div:has(> [title="Drag the header to move the assistant"]) .text-slate-200 { color:#1e293b !important; }
 div:has(> [title="Drag the header to move the assistant"]) .text-white { color:#0f172a !important; }
 div:has(> [title="Drag the header to move the assistant"]) .text-amber-300 { color:#8a6500 !important; }
 div:has(> [title="Drag the header to move the assistant"]) .text-amber-400 { color:#9a7100 !important; }
-div:has(> [title="Drag the header to move the assistant"]) .text-emerald-300,
-div:has(> [title="Drag the header to move the assistant"]) .text-emerald-400 { color:#087f72 !important; }
-
+div:has(> [title="Drag the header to move the assistant"]) .text-emerald-300,.text-emerald-400 { color:#087f72 !important; }
 div:has(> [title="Drag the header to move the assistant"]) .min-h-0.flex-1.space-y-3.overflow-y-auto { background:#f8fafc !important; color:#0f172a !important; padding:16px !important; }
 div:has(> [title="Drag the header to move the assistant"]) .min-h-0.flex-1.space-y-3.overflow-y-auto > div { font-size:13px !important; line-height:1.6 !important; }
 div:has(> [title="Drag the header to move the assistant"]) .min-h-0.flex-1.space-y-3.overflow-y-auto > div > div { box-shadow:0 2px 8px rgba(15,23,42,.06); }
 div:has(> [title="Drag the header to move the assistant"]) .bg-emerald-600\/20 { background:#dff5f2 !important; border:1px solid #9ddbd4 !important; color:#123b39 !important; }
 div:has(> [title="Drag the header to move the assistant"]) .bg-emerald-600\/20 .text-slate-500 { color:#28736c !important; }
-div:has(> [title="Drag the header to move the assistant"]) .bg-slate-950\/80 { background:#ffffff !important; border:1px solid #d5dde7 !important; color:#172033 !important; }
+div:has(> [title="Drag the header to move the assistant"]) .bg-slate-950\/80 { background:#fff !important; border:1px solid #d5dde7 !important; color:#172033 !important; }
 div:has(> [title="Drag the header to move the assistant"]) .bg-slate-950\/80 .text-slate-500 { color:#9a7100 !important; }
-
-div:has(> [title="Drag the header to move the assistant"]) form { background:#ffffff !important; border-top:1px solid #d8e0e9 !important; }
-div:has(> [title="Drag the header to move the assistant"]) textarea { background:#ffffff !important; color:#0f172a !important; border:1px solid #b9c6d5 !important; box-shadow:inset 0 1px 2px rgba(15,23,42,.04); font-size:13px !important; }
+div:has(> [title="Drag the header to move the assistant"]) form { background:#fff !important; border-top:1px solid #d8e0e9 !important; }
+div:has(> [title="Drag the header to move the assistant"]) textarea { background:#fff !important; color:#0f172a !important; border:1px solid #b9c6d5 !important; box-shadow:inset 0 1px 2px rgba(15,23,42,.04); font-size:13px !important; }
 div:has(> [title="Drag the header to move the assistant"]) textarea::placeholder { color:#64748b !important; }
 div:has(> [title="Drag the header to move the assistant"]) textarea:focus { border-color:#b48c26 !important; box-shadow:0 0 0 3px rgba(212,175,55,.16) !important; }
-div:has(> [title="Drag the header to move the assistant"]) form button[type="submit"] { background:#b48c26 !important; color:#ffffff !important; border:1px solid #8a6500 !important; }
-div:has(> [title="Drag the header to move the assistant"]) form button[type="button"] { background:#ffffff !important; border-color:#b9c6d5 !important; color:#334155 !important; }
-
-div:has(> [title="Drag the header to move the assistant"]) form + div { background:#ffffff !important; border-top:1px solid #d8e0e9 !important; }
+div:has(> [title="Drag the header to move the assistant"]) form button[type="submit"] { background:#b48c26 !important; color:#fff !important; border:1px solid #8a6500 !important; }
+div:has(> [title="Drag the header to move the assistant"]) form button[type="button"] { background:#fff !important; border-color:#b9c6d5 !important; color:#334155 !important; }
+div:has(> [title="Drag the header to move the assistant"]) form + div { background:#fff !important; border-top:1px solid #d8e0e9 !important; }
 div:has(> [title="Drag the header to move the assistant"]) form + div button { color:#1e293b !important; }
-div:has(> [title="Drag the header to move the assistant"]) form + div .bg-slate-900,
-div:has(> [title="Drag the header to move the assistant"]) form + div .bg-slate-900\/70 { background:#fffaf0 !important; border-color:#dcc27a !important; }
+div:has(> [title="Drag the header to move the assistant"]) form + div .bg-slate-900,.form + div .bg-slate-900\/70 { background:#fffaf0 !important; border-color:#dcc27a !important; }
 div:has(> [title="Drag the header to move the assistant"]) form + div .bg-slate-950 { background:#f8fafc !important; color:#1e293b !important; border:1px solid #d5dde7 !important; }
-div:has(> [title="Drag the header to move the assistant"]) form + div button.bg-amber-500 { background:#b48c26 !important; color:#ffffff !important; border-color:#8a6500 !important; }
-div:has(> [title="Drag the header to move the assistant"]) form + div .bg-amber-500 { background:#b48c26 !important; color:#ffffff !important; }
+div:has(> [title="Drag the header to move the assistant"]) form + div button.bg-amber-500,div:has(> [title="Drag the header to move the assistant"]) form + div .bg-amber-500 { background:#b48c26 !important; color:#fff !important; }
 div:has(> [title="Drag the header to move the assistant"]) form + div .hover\:bg-amber-500\/20:hover { background:#fff4cf !important; }
-
-div:has(> [title="Drag the header to move the assistant"]) > div:last-child:not([title="Drag to resize"]) { background:#ffffff !important; border-top:1px solid #d8e0e9 !important; }
-div:has(> [title="Drag the header to move the assistant"]) > div:last-child:not([title="Drag to resize"]) a { color:#245c57 !important; }
-div:has(> [title="Drag the header to move the assistant"]) > [title="Drag the header to move the assistant"] { cursor:grab !important; }
-div:has(> [title="Drag the header to move the assistant"]) > [title="Drag the header to move the assistant"]:active { cursor:grabbing !important; }
-div:has(> [title="Drag the header to move the assistant"]) > [title="Drag to resize"] { width:34px !important; height:34px !important; border-left:2px solid #b48c26 !important; border-top:2px solid #b48c26 !important; background:#071226 !important; color:#f5d77f !important; box-shadow:-4px -4px 14px rgba(7,18,38,.18); }
+div:has(> [title="Drag the header to move the assistant"]) > div:nth-last-child(2) { background:#fff !important; border-top:1px solid #d8e0e9 !important; }
+div:has(> [title="Drag the header to move the assistant"]) > div:nth-last-child(2) a { color:#245c57 !important; }
+div:has(> [title="Drag the header to move the assistant"]) > [title="Drag to resize"] { width:34px !important; height:34px !important; border-left:2px solid #b48c26 !important; border-top:2px solid #b48c26 !important; background:#071226 !important; color:#f5d77f !important; box-shadow:-4px -4px 14px rgba(7,18,38,.18); cursor:nwse-resize !important; }
 div:has(> [title="Drag the header to move the assistant"]) > [title="Drag to resize"] svg { color:#f5d77f !important; width:18px !important; height:18px !important; }
+/* Reassert header contrast after generic text overrides. */
+div:has(> [title="Drag the header to move the assistant"]) > [title="Drag the header to move the assistant"] strong { color:#fff !important; }
+div:has(> [title="Drag the header to move the assistant"]) > [title="Drag the header to move the assistant"] span { color:#8de0d5 !important; }
