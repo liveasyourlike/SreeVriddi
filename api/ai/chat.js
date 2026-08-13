@@ -10,6 +10,26 @@ const cors = (res) => {
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
 };
 
+function directAnswer(message) {
+  const text = message.toLowerCase().trim();
+
+  if (/(contact|phone|mobile|telephone|call|support number|contact number|reach you)/i.test(text)) {
+    return `You can contact Sree Vriddhi support directly:\n\nPhone: ${SUPPORT_PHONE}\nEmail: ${SUPPORT_EMAIL}`;
+  }
+
+  if (/(capital of india|capital city of india|what is india's capital|what is the capital city of india)/i.test(text)) {
+    return 'The capital of India is New Delhi.';
+  }
+
+  if (/(what time is it|what is the time|current time|time now|time right now|what's the time)/i.test(text)) {
+    return `The current time is ${new Intl.DateTimeFormat('en-IN', {
+      timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true
+    }).format(new Date())} (IST).`;
+  }
+
+  return null;
+}
+
 const safetyPrefix = `You are the Sree Vriddhi AI Assistant.
 
 You have TWO answer modes:
@@ -36,6 +56,21 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'A message up to 4000 characters is required.' });
     }
 
+    // Reliable local answers for simple, deterministic questions.
+    // These work even if an LLM/API is unavailable.
+    const direct = directAnswer(message);
+    if (direct) {
+      return res.status(200).json({
+        answer: direct,
+        category: /contact|phone|mobile|telephone|call|support number|contact number|reach you/i.test(message) ? 'BUSINESS' : 'GENERAL',
+        intent: 'GENERAL_ENQUIRY',
+        risk: 'LOW',
+        confidence: 1,
+        requiresHuman: false,
+        source: 'direct'
+      });
+    }
+
     const classification = await classifyMessage(message);
     const key = process.env.OPENAI_API_KEY;
     if (!key) throw new Error('OPENAI_API_KEY is not configured');
@@ -46,22 +81,13 @@ export default async function handler(req, res) {
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${key}`
-      },
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
       body: JSON.stringify({
         model: process.env.OPENAI_MODEL || 'gpt-4o-mini',
         temperature: classification.category === 'BUSINESS' ? 0.2 : 0.5,
         messages: [
-          {
-            role: 'system',
-            content: `${safetyPrefix}\nChannel: ${channel}\nCategory: ${classification.category}\nIntent: ${classification.intent}\nRisk: ${classification.risk}\n${categoryInstruction}\n\nPublic Sree Vriddhi knowledge:\n${knowledgeText()}`
-          },
-          ...history
-            .slice(-8)
-            .filter((m) => m && (m.role === 'user' || m.role === 'assistant'))
-            .map((m) => ({ role: m.role, content: String(m.content).slice(0, 4000) })),
+          { role: 'system', content: `${safetyPrefix}\nChannel: ${channel}\nCategory: ${classification.category}\nIntent: ${classification.intent}\nRisk: ${classification.risk}\n${categoryInstruction}\n\nPublic Sree Vriddhi knowledge:\n${knowledgeText()}` },
+          ...history.slice(-8).filter((m) => m && (m.role === 'user' || m.role === 'assistant')).map((m) => ({ role: m.role, content: String(m.content).slice(0, 4000) })),
           { role: 'user', content: message }
         ]
       })
@@ -78,7 +104,8 @@ export default async function handler(req, res) {
       intent: classification.intent,
       risk: classification.risk,
       confidence: classification.confidence,
-      requiresHuman: ['HIGH', 'CRITICAL'].includes(classification.risk)
+      requiresHuman: ['HIGH', 'CRITICAL'].includes(classification.risk),
+      source: 'llm'
     });
   } catch (error) {
     console.error('Sree Vriddhi AI error', error);
