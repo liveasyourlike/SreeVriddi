@@ -102,7 +102,7 @@ export default function ChatWidgetEnhanced() {
   const [loading,setLoading] = useState(false);
   const [error,setError] = useState('');
   const [listening,setListening] = useState(false);
-  const [scheduleOpen,setScheduleOpen] = useState(true);
+  const [scheduleOpen,setScheduleOpen] = useState(false);
   const [calendarMonth,setCalendarMonth] = useState(()=>new Date(new Date().getFullYear(),new Date().getMonth(),1));
   const [position,setPosition] = useState({x:null,y:null});
   const [size,setSize] = useState({width:520,height:760});
