@@ -14,27 +14,27 @@ const Header = () => {
     en: {
       banner: 'Compliance First: Product structures & returns subject to legal verification and regulatory terms.',
       whatsapp: 'WhatsApp Direct',
-      login: 'Login / CRM',
+      login: 'Login',
       eligibility: 'Check Eligibility',
-      mobileLogin: 'Customer & Admin Portal Login',
+      mobileLogin: 'Customer Portal Login',
       themeLabel: 'Theme',
       languageLabel: 'Language'
     },
     hi: {
       banner: 'अनुशंसा प्रथम: उत्पाद संरचनाएँ और रिटर्न कानूनी सत्यापन एवं नियमों के अधीन हैं।',
       whatsapp: 'व्हाट्सएप डायरेक्ट',
-      login: 'लॉगिन / CRM',
+      login: 'लॉगिन',
       eligibility: 'पात्रता जांचें',
-      mobileLogin: 'ग्राहक एवं व्यवस्थापक पोर्टल लॉगिन',
+      mobileLogin: 'ग्राहक पोर्टल लॉगिन',
       themeLabel: 'थीम',
       languageLabel: 'भाषा'
     },
     te: {
-      banner: 'క్రమబద్ధత మొదట: ఉత్పత్తి నిర్మాణాలు మరియు రిటర్న్లు कानूनी ధ్రुवీకరణ మరియు réglementationకు లోబడి ఉంటాయి.',
+      banner: 'క్రమబద్ధత మొదట: ఉత్పత్తి నిర్మాణాలు మరియు రిటర్న్లు कानूनी ध्रुवీకరణ మరియు réglementationకు లోబడి ఉంటాయి.',
       whatsapp: 'వాట్సాప్ డైరెక్ట్',
-      login: 'లాగిన్ / CRM',
+      login: 'లాగిన్',
       eligibility: 'అర్హత తనిఖీ',
-      mobileLogin: 'వినియోగదారు మరియు అడ్మిన్ పోర్టల్ లాగిన్',
+      mobileLogin: 'వినియోగదారు పోర్టల్ లాగిన్',
       themeLabel: 'థీమ్',
       languageLabel: 'భాష'
     }
