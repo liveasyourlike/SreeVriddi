@@ -1,1 +1,0 @@
-OTP endpoints are implemented in send.js and verify.js. Configure FAST2SMS_API_KEY and FAST2SMS_OTP_ID in Vercel before enabling this flow.
