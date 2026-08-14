@@ -30,7 +30,6 @@ import FAQ from './pages/public/FAQ'
 import Insights from './pages/public/Insights'
 import ArticleDetail from './pages/public/ArticleDetail'
 import Contact from './pages/public/Contact'
-import Login from './pages/public/Login'
 import Grievances from './pages/public/Grievances'
 import Privacy from './pages/public/Privacy'
 
@@ -128,19 +127,22 @@ function App() {
                 <Route path="/insights" element={<Insights />} />
                 <Route path="/insights/:slug" element={<ArticleDetail />} />
                 <Route path="/contact" element={<Contact />} />
-                <Route path="/login" element={<Login />} />
+                <Route path="/login" element={<CRMComingSoon title="Portal & CRM Login — Coming Soon" message="Portal and CRM login are temporarily unavailable in this preview. The existing login, CRM and customer-management implementation is preserved and will be re-enabled in a future release." />} />
                 <Route path="/grievances" element={<Grievances />} />
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/portal" element={<CustomerPortalLayout />}>
-                  <Route index element={<CustomerDashboard />} /><Route path="applications" element={<MyApplications />} /><Route path="applications/new" element={<NewApplication />} /><Route path="assets" element={<MyAssets />} /><Route path="contracts" element={<MyContracts />} /><Route path="settlements" element={<MySettlements />} /><Route path="documents" element={<DocumentsVault />} /><Route path="notifications" element={<Notifications />} /><Route path="profile" element={<Profile />} /><Route path="support" element={<SupportTickets />} />
+                  <Route index element={<CustomerDashboard />} />
+                  <Route path="applications" element={<MyApplications />} />
+                  <Route path="applications/new" element={<NewApplication />} />
+                  <Route path="assets" element={<MyAssets />} />
+                  <Route path="contracts" element={<MyContracts />} />
+                  <Route path="settlements" element={<MySettlements />} />
+                  <Route path="documents" element={<DocumentsVault />} />
+                  <Route path="notifications" element={<Notifications />} />
+                  <Route path="profile" element={<Profile />} />
+                  <Route path="support" element={<SupportTickets />} />
                 </Route>
-                <Route path="/admin" element={<AdminLayout />}>
-                  <Route index element={<AdminDashboard />} />
-                  <Route path="leads" element={<CRMComingSoon title="Leads CRM — Coming Soon" message="The Leads CRM is temporarily unavailable while we complete the secure customer-management and workflow integrations. Your existing CRM implementation remains preserved for the future release." />} />
-                  <Route path="customers" element={<CRMComingSoon title="Customers 360 — Coming Soon" message="Customers 360 is being prepared for the next CRM release, including customer history, conversations, documents and relationship views." />} />
-                  <Route path="reports" element={<CRMComingSoon title="CRM Reports — Coming Soon" message="CRM reporting and analytics are being prepared for the next release. The reporting implementation remains preserved while this feature is temporarily unavailable." />} />
-                  <Route path="assets" element={<AssetManagement />} /><Route path="valuations" element={<ValuationEngine />} /><Route path="applications" element={<ApplicationManager />} /><Route path="products" element={<ProductManager />} /><Route path="contracts" element={<ContractManager />} /><Route path="settlements" element={<SettlementEngine />} /><Route path="risk" element={<RiskMatrix />} /><Route path="compliance" element={<ComplianceManager />} /><Route path="documents" element={<DocumentManager />} /><Route path="content" element={<InsightsCMS />} /><Route path="gallery" element={<GalleryManager />} /><Route path="audit" element={<AuditLog />} /><Route path="settings" element={<AdminSettings />} /><Route path="translations" element={<AdminTranslations />} />
-                </Route>
+                <Route path="/admin" element={<CRMComingSoon title="Admin & CRM — Coming Soon" message="The Admin and CRM workspace is temporarily unavailable while the secure release is being prepared. The existing CRM features, customer records, workflows and reports remain preserved for the future release." />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </SectionErrorBoundary>
