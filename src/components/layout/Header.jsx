@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { MessageSquare, Phone, Sun, Moon, Menu, X, ShieldCheck, Lock, BookOpen } from 'lucide-react';
+import { MessageSquare, Phone, Sun, Moon, Menu, X, ShieldCheck, BookOpen } from 'lucide-react';
 import { useSreeVriddhi } from '../../context/SreeVriddhiContext';
 import LanguageSelector from '../LanguageSelector';
 
@@ -14,27 +14,21 @@ const Header = () => {
     en: {
       banner: 'Compliance First: Product structures & returns subject to legal verification and regulatory terms.',
       whatsapp: 'WhatsApp Direct',
-      login: 'Login',
       eligibility: 'Check Eligibility',
-      mobileLogin: 'Customer Portal Login',
       themeLabel: 'Theme',
       languageLabel: 'Language'
     },
     hi: {
       banner: 'अनुशंसा प्रथम: उत्पाद संरचनाएँ और रिटर्न कानूनी सत्यापन एवं नियमों के अधीन हैं।',
       whatsapp: 'व्हाट्सएप डायरेक्ट',
-      login: 'लॉगिन',
       eligibility: 'पात्रता जांचें',
-      mobileLogin: 'ग्राहक पोर्टल लॉगिन',
       themeLabel: 'थीम',
       languageLabel: 'भाषा'
     },
     te: {
       banner: 'క్రమబద్ధత మొదట: ఉత్పత్తి నిర్మాణాలు మరియు రిటర్న్లు कानूनी ध्रुवీకరణ మరియు réglementationకు లోబడి ఉంటాయి.',
       whatsapp: 'వాట్సాప్ డైరెక్ట్',
-      login: 'లాగిన్',
       eligibility: 'అర్హత తనిఖీ',
-      mobileLogin: 'వినియోగదారు పోర్టల్ లాగిన్',
       themeLabel: 'థీమ్',
       languageLabel: 'భాష'
     }
@@ -121,7 +115,6 @@ const Header = () => {
           <button onClick={toggleTheme} className="p-2 rounded-lg bg-slate-900 border border-slate-700 text-slate-300 hover:text-amber-400 transition-colors" title={t.themeLabel} aria-label={t.themeLabel}>
             {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : theme === 'light' ? <Moon className="w-4 h-4 text-slate-300" /> : <BookOpen className="w-4 h-4 text-amber-400" />}
           </button>
-          <Link to="/login" className="px-3.5 py-1.5 rounded-lg bg-slate-900 border border-amber-500/30 text-amber-300 hover:bg-amber-500/10 text-xs font-bold tracking-wider uppercase transition-all flex items-center gap-1.5"><Lock className="w-3.5 h-3.5" /><span>{t.login}</span></Link>
           <Link to="/eligibility" className="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 hover:from-amber-400 hover:to-amber-600 text-slate-950 text-xs font-extrabold uppercase tracking-wider shadow-lg shadow-amber-500/20 hover:scale-[1.02] transition-all">{t.eligibility}</Link>
         </div>
 
@@ -144,8 +137,7 @@ const Header = () => {
               {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : theme === 'light' ? <Moon className="w-4 h-4" /> : <BookOpen className="w-4 h-4 text-amber-400" />} {t.themeLabel}
             </button>
           </div>
-          <div className="grid grid-cols-2 gap-2">
-            <Link to="/login" onClick={() => setMobileMenuOpen(false)} className="py-2.5 rounded-lg bg-slate-900 text-amber-300 border border-amber-500/30 text-[11px] font-bold text-center">{t.mobileLogin}</Link>
+          <div className="grid grid-cols-1 gap-2">
             <Link to="/eligibility" onClick={() => setMobileMenuOpen(false)} className="py-2.5 rounded-lg bg-gradient-to-r from-amber-500 to-amber-700 text-slate-950 font-extrabold text-[11px] text-center shadow-lg">{t.eligibility}</Link>
           </div>
         </div>
