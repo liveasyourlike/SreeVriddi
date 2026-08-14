@@ -14,6 +14,7 @@ import AdvancedHomeExplorer from './components/AdvancedHomeExplorer'
 import LiveMarketTable from './components/LiveMarketTable'
 import MobileOtpGate from './components/MobileOtpGate'
 import EvaluationFormRoute from './pages/public/EvaluationFormRoute'
+import ComingSoonNotice from './components/ComingSoonNotice'
 import './styles/ux-business-journey-2.css'
 
 import Home from './pages/public/Home'
@@ -92,6 +93,14 @@ function MarketSnapshot() {
   )
 }
 
+function CRMComingSoon({ title, message }) {
+  return (
+    <section className="min-h-[70vh] flex items-center justify-center px-4 py-12">
+      <ComingSoonNotice title={title} message={message} />
+    </section>
+  )
+}
+
 function App() {
   return (
     <SreeVriddhiProvider>
@@ -121,15 +130,13 @@ function App() {
                 <Route path="/insights" element={<Insights />} />
                 <Route path="/insights/:slug" element={<ArticleDetail />} />
                 <Route path="/contact" element={<Contact />} />
-                <Route path="/login" element={<Login />} />
+                <Route path="/login" element={<CRMComingSoon title="Portal & CRM Login — Coming Soon" message="Portal and CRM login are temporarily unavailable. The existing CRM implementation is preserved and will be re-enabled in a future release." />} />
                 <Route path="/grievances" element={<Grievances />} />
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/portal" element={<CustomerPortalLayout />}>
                   <Route index element={<CustomerDashboard />} /><Route path="applications" element={<MyApplications />} /><Route path="applications/new" element={<NewApplication />} /><Route path="assets" element={<MyAssets />} /><Route path="contracts" element={<MyContracts />} /><Route path="settlements" element={<MySettlements />} /><Route path="documents" element={<DocumentsVault />} /><Route path="notifications" element={<Notifications />} /><Route path="profile" element={<Profile />} /><Route path="support" element={<SupportTickets />} />
                 </Route>
-                <Route path="/admin" element={<AdminLayout />}>
-                  <Route index element={<AdminDashboard />} /><Route path="leads" element={<LeadManagement />} /><Route path="customers" element={<Customer360 />} /><Route path="assets" element={<AssetManagement />} /><Route path="valuations" element={<ValuationEngine />} /><Route path="applications" element={<ApplicationManager />} /><Route path="products" element={<ProductManager />} /><Route path="contracts" element={<ContractManager />} /><Route path="settlements" element={<SettlementEngine />} /><Route path="risk" element={<RiskMatrix />} /><Route path="compliance" element={<ComplianceManager />} /><Route path="documents" element={<DocumentManager />} /><Route path="content" element={<InsightsCMS />} /><Route path="gallery" element={<GalleryManager />} /><Route path="reports" element={<CRMReports />} /><Route path="audit" element={<AuditLog />} /><Route path="settings" element={<AdminSettings />} /><Route path="translations" element={<AdminTranslations />} />
-                </Route>
+                <Route path="/admin" element={<CRMComingSoon title="Admin & CRM — Coming Soon" message="The Admin and CRM workspace is temporarily unavailable. Existing CRM features are preserved for a future release." />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </SectionErrorBoundary>
