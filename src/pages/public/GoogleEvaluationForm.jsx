@@ -1,6 +1,7 @@
 import { ExternalLink, FileText, ShieldCheck } from 'lucide-react'
 
 const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdyVSKymLVij2aCDVk1ewr29_mF0Zij6hX0e6yjS3smJro_xw/viewform'
+const GOOGLE_FORM_EMBED_URL = `${GOOGLE_FORM_URL}?embedded=true`
 
 export default function GoogleEvaluationForm() {
   return (
@@ -29,7 +30,7 @@ export default function GoogleEvaluationForm() {
 
       <div className="overflow-hidden rounded-2xl border border-slate-700 bg-white shadow-2xl">
         <iframe
-          src={GOOGLE_FORM_URL}
+          src={GOOGLE_FORM_EMBED_URL}
           title="Sree Vriddhi Preliminary Evaluation Form"
           className="block h-[78vh] min-h-[720px] w-full border-0 bg-white"
           loading="eager"
@@ -37,7 +38,13 @@ export default function GoogleEvaluationForm() {
         />
       </div>
 
-      <p className="mt-3 text-center text-[10px] text-slate-500">If the form does not display inside the page, use <a className="font-bold text-amber-300 hover:text-amber-200" href={GOOGLE_FORM_URL} target="_blank" rel="noopener noreferrer">Open Form</a> above.</p>
+      <div className="mt-3 rounded-xl border border-slate-800 bg-slate-950/60 px-4 py-3 text-center text-[10px] leading-relaxed text-slate-500">
+        <span>If the embedded form is blocked by the browser or Google account settings, use </span>
+        <a className="font-bold text-amber-300 hover:text-amber-200" href={GOOGLE_FORM_URL} target="_blank" rel="noopener noreferrer">Open Form in a new tab</a>
+        <span>. The new-tab link is the official responder link; the </span>
+        <code className="text-slate-400">formResponse</code>
+        <span> URL is only a submission endpoint and should not be used as the customer-facing form URL.</span>
+      </div>
     </section>
   )
 }
