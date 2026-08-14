@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSreeVriddhi } from '../../context/SreeVriddhiContext';
-import { Shield, Phone, Mail, MessageSquare, ArrowUpRight, Scale, Lock, ChevronUp, ChevronDown, X } from 'lucide-react';
+import { Shield, Phone, Mail, MessageSquare, ArrowUpRight, ShieldAlert, ChevronUp, ChevronDown, X } from 'lucide-react';
 
 const SUPPORT_EMAIL = 'sreevriddhiforwealth@gmail.com';
 const POPUP_INTERVAL_MS = 5 * 60 * 1000;
@@ -33,8 +33,19 @@ const Footer = () => {
 
   return (
     <>
-      {/* Compact footer keeps every page short; the full footer is an overlay instead of document-height content. */}
       <footer className="bg-slate-950 border-t border-amber-500/20 text-slate-400 relative z-30">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2.5">
+          <div className="rounded-xl border border-amber-500/25 bg-gradient-to-r from-amber-500/10 via-slate-900/80 to-amber-500/10 px-3 py-2.5 sm:px-4">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5">
+              <div className="flex items-start gap-2 text-[10px] sm:text-[11px] leading-relaxed text-slate-300">
+                <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0 text-amber-300" />
+                <span><strong className="text-white">Before proceeding:</strong> returns and payouts are subject to applicable written terms and financial participation involves risk. Please review the <Link to="/terms" className="font-bold text-amber-300 underline underline-offset-2 hover:text-amber-200">Terms &amp; Conditions</Link> and <Link to="/privacy" className="font-bold text-amber-300 underline underline-offset-2 hover:text-amber-200">Privacy Policy</Link>.</span>
+              </div>
+              <Link to="/terms" className="shrink-0 rounded-lg border border-amber-400/30 bg-slate-950/60 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-wider text-amber-200 hover:bg-amber-400/10">Read Policies</Link>
+            </div>
+          </div>
+        </div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-14 py-2.5 flex flex-col sm:flex-row items-center justify-between gap-2 text-[10px] sm:text-[11px]">
           <div className="flex items-center gap-3 min-w-0">
             <Link to="/" className="font-serif-brand font-bold tracking-widest text-white whitespace-nowrap">SREE <span className="text-amber-400">VRIDDHI</span></Link>
@@ -44,14 +55,9 @@ const Footer = () => {
           <div className="flex items-center gap-2.5 sm:gap-4">
             <a href={`tel:${brandSettings.phone}`} className="hidden md:inline hover:text-amber-400">{brandSettings.phone}</a>
             <a href={`mailto:${SUPPORT_EMAIL}`} className="hidden lg:inline hover:text-amber-400">{SUPPORT_EMAIL}</a>
-            <Link to="/faq" className="hidden sm:inline hover:text-amber-400">Terms & Privacy</Link>
-            <button
-              type="button"
-              onClick={() => { setExpanded((value) => !value); setAutoOpened(false); }}
-              aria-expanded={expanded}
-              aria-controls="sree-vriddhi-footer-panel"
-              className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-slate-900 px-3 py-1.5 text-amber-200 hover:bg-slate-800 hover:text-amber-300 transition-colors font-semibold"
-            >
+            <Link to="/privacy" className="hover:text-amber-400">Privacy</Link>
+            <Link to="/terms" className="hover:text-amber-400">Terms</Link>
+            <button type="button" onClick={() => { setExpanded((value) => !value); setAutoOpened(false); }} aria-expanded={expanded} aria-controls="sree-vriddhi-footer-panel" className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-slate-900 px-3 py-1.5 text-amber-200 hover:bg-slate-800 hover:text-amber-300 transition-colors font-semibold">
               {expanded ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronUp className="w-3.5 h-3.5" />}
               More
             </button>
@@ -80,15 +86,16 @@ const Footer = () => {
                 <Link to="/why-us" onClick={collapse} className="block hover:text-amber-400">Why Choose Us</Link>
                 <Link to="/protection" onClick={collapse} className="block hover:text-amber-400">How We Protect Value</Link>
                 <Link to="/gallery" onClick={collapse} className="block hover:text-amber-400">Corporate Gallery</Link>
-                <Link to="/insights" onClick={collapse} className="block hover:text-amber-400">Knowledge & Insights</Link>
+                <Link to="/insights" onClick={collapse} className="block hover:text-amber-400">Knowledge &amp; Insights</Link>
                 <Link to="/faq" onClick={collapse} className="block hover:text-amber-400">FAQs</Link>
               </div>
 
               <div className="space-y-2">
                 <Link to="/grievances" onClick={collapse} className="block font-semibold text-amber-300 hover:text-amber-400">Customer Grievance Portal</Link>
                 <Link to="/contact" onClick={collapse} className="block hover:text-amber-400">Contact Us</Link>
-                <Link to="/portal" onClick={collapse} className="block p-2 rounded-lg bg-slate-900 border border-slate-800 hover:border-amber-500/40"><span className="font-semibold text-white flex items-center justify-between">Customer Portal <ArrowUpRight className="w-3 h-3" /></span><span className="text-[10px] text-slate-500">Track applications & settlements</span></Link>
-                <Link to="/admin" onClick={collapse} className="block p-2 rounded-lg bg-slate-900 border border-slate-800 hover:border-amber-500/40"><span className="font-semibold text-white flex items-center justify-between">Admin & CRM <ArrowUpRight className="w-3 h-3" /></span><span className="text-[10px] text-slate-500">Management access</span></Link>
+                <Link to="/privacy" onClick={collapse} className="block hover:text-amber-400">Privacy Policy</Link>
+                <Link to="/terms" onClick={collapse} className="block hover:text-amber-400">Terms &amp; Conditions</Link>
+                <Link to="/portal" onClick={collapse} className="block p-2 rounded-lg bg-slate-900 border border-slate-800 hover:border-amber-500/40"><span className="font-semibold text-white flex items-center justify-between">Customer Portal <ArrowUpRight className="w-3 h-3" /></span><span className="text-[10px] text-slate-500">Track applications &amp; settlements</span></Link>
               </div>
 
               <div className="space-y-3">
@@ -97,7 +104,7 @@ const Footer = () => {
                   <a href={`tel:${brandSettings.phone}`} className="flex items-center gap-2 hover:text-amber-400"><Phone className="w-3.5 h-3.5 text-amber-400" /> {brandSettings.phone}</a>
                   <a href={`mailto:${SUPPORT_EMAIL}`} className="flex items-center gap-2 hover:text-amber-400 break-all"><Mail className="w-3.5 h-3.5 text-amber-400 flex-shrink-0" /> {SUPPORT_EMAIL}</a>
                 </div>
-                <div className="text-[10px] text-slate-500 leading-relaxed border-t border-slate-800 pt-2">Commercial terms are subject to formal approval and the legally binding agreement. Submitted assets remain subject to verification, valuation, risk assessment and legal eligibility.</div>
+                <div className="text-[10px] text-slate-500 leading-relaxed border-t border-slate-800 pt-2">Commercial terms are subject to formal approval and the legally binding agreement. Submitted information and documents remain subject to verification, valuation, risk assessment and applicable eligibility requirements.</div>
               </div>
             </div>
 
