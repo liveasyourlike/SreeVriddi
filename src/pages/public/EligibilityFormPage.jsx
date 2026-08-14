@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Coins, Landmark, MapPinned, ShieldCheck, Sparkles, WalletCards, ArrowRight, Check, ExternalLink } from 'lucide-react'
 
 const FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdyVSKymLVij2aCDVk1ewr29_mF0Zij6hX0e6yjS3smJro_xw/viewform'
@@ -15,8 +16,6 @@ export default function EligibilityFormPage() {
   const ActiveIcon = active.icon
 
   const openForm = () => {
-    // Google Forms does not reliably allow third-party iframe embedding.
-    // Navigate in the same tab so the customer gets the actual interactive form.
     window.location.assign(FORM_URL)
   }
 
@@ -95,14 +94,10 @@ export default function EligibilityFormPage() {
         </div>
         <div className="px-5 py-10 sm:px-8 sm:py-14">
           <div className="mx-auto max-w-3xl rounded-[1.75rem] border border-amber-400/20 bg-slate-950/80 p-6 sm:p-10 text-center shadow-[0_0_70px_rgba(245,158,11,.08)]">
-            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl border border-amber-300/30 bg-amber-400/10 shadow-lg shadow-amber-500/10">
-              <Sparkles className="h-9 w-9 text-amber-300" />
-            </div>
+            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl border border-amber-300/30 bg-amber-400/10 shadow-lg shadow-amber-500/10"><Sparkles className="h-9 w-9 text-amber-300" /></div>
             <h3 className="mt-6 text-xl sm:text-2xl font-extrabold text-white">Ready to submit your preliminary details?</h3>
             <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-400">You selected <span className="font-bold text-amber-300">{active.title}</span>. Please continue to the form and provide the requested information accurately and completely.</p>
-            <button type="button" onClick={openForm} className="mt-7 inline-flex min-w-[240px] items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 px-7 py-4 text-sm font-extrabold text-slate-950 shadow-lg shadow-amber-500/20 transition hover:scale-[1.02] hover:shadow-amber-500/30">
-              Open Evaluation Form <ArrowRight className="h-4 w-4" />
-            </button>
+            <button type="button" onClick={openForm} className="mt-7 inline-flex min-w-[240px] items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 px-7 py-4 text-sm font-extrabold text-slate-950 shadow-lg shadow-amber-500/20 transition hover:scale-[1.02] hover:shadow-amber-500/30">Open Evaluation Form <ArrowRight className="h-4 w-4" /></button>
             <p className="mt-4 flex items-center justify-center gap-1.5 text-[11px] text-slate-500"><ExternalLink className="h-3.5 w-3.5" /> Secure Google-hosted form · Opens in this tab</p>
             <a href={FORM_URL} className="mt-5 inline-flex items-center gap-1 text-xs font-semibold text-slate-500 underline decoration-slate-700 underline-offset-4 hover:text-amber-300">Having trouble? Open the form directly <ExternalLink className="h-3 w-3" /></a>
           </div>
