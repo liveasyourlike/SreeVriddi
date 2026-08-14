@@ -3,7 +3,6 @@ import { SreeVriddhiProvider } from './context/SreeVriddhiContext'
 import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
 import Breadcrumbs from './components/layout/Breadcrumbs'
-import AdminLayout from './components/layout/AdminLayout'
 import CustomerPortalLayout from './components/layout/CustomerPortalLayout'
 import SectionErrorBoundary from './components/SectionErrorBoundary'
 import InvestmentAllocationHero3D from './components/InvestmentAllocationHero3D'
@@ -12,9 +11,9 @@ import ScrollToTop from './components/ScrollToTop'
 import ChatWidget from './components/ChatWidget'
 import AdvancedHomeExplorer from './components/AdvancedHomeExplorer'
 import LiveMarketTable from './components/LiveMarketTable'
-import MobileOtpGate from './components/MobileOtpGate'
-import EvaluationFormRoute from './pages/public/EvaluationFormRoute'
+import GoogleEvaluationForm from './pages/public/GoogleEvaluationForm'
 import ComingSoonNotice from './components/ComingSoonNotice'
+import PolicyLaunchNotice from './components/PolicyLaunchNotice'
 import './styles/ux-business-journey-2.css'
 
 import Home from './pages/public/Home'
@@ -31,9 +30,9 @@ import FAQ from './pages/public/FAQ'
 import Insights from './pages/public/Insights'
 import ArticleDetail from './pages/public/ArticleDetail'
 import Contact from './pages/public/Contact'
-import Login from './pages/public/Login'
 import Grievances from './pages/public/Grievances'
 import Privacy from './pages/public/Privacy'
+import Terms from './pages/public/Terms'
 
 import CustomerDashboard from './pages/portal/CustomerDashboard'
 import MyApplications from './pages/portal/MyApplications'
@@ -45,25 +44,6 @@ import DocumentsVault from './pages/portal/DocumentsVault'
 import Notifications from './pages/portal/Notifications'
 import Profile from './pages/portal/Profile'
 import SupportTickets from './pages/portal/SupportTickets'
-
-import AdminDashboard from './pages/admin/AdminDashboard'
-import LeadManagement from './pages/admin/LeadManagement'
-import Customer360 from './pages/admin/Customer360'
-import AssetManagement from './pages/admin/AssetManagement'
-import ValuationEngine from './pages/admin/ValuationEngine'
-import ApplicationManager from './pages/admin/ApplicationManager'
-import ProductManager from './pages/admin/ProductManager'
-import ContractManager from './pages/admin/ContractManager'
-import SettlementEngine from './pages/admin/SettlementEngine'
-import RiskMatrix from './pages/admin/RiskMatrix'
-import ComplianceManager from './pages/admin/ComplianceManager'
-import DocumentManager from './pages/admin/DocumentManager'
-import InsightsCMS from './pages/admin/InsightsCMS'
-import GalleryManager from './pages/admin/GalleryManager'
-import CRMReports from './pages/admin/CRMReports'
-import AuditLog from './pages/admin/AuditLog'
-import AdminSettings from './pages/admin/AdminSettings'
-import AdminTranslations from './pages/admin/AdminTranslations'
 
 function HomeExplorerLanding() {
   return (
@@ -121,8 +101,8 @@ function App() {
                 <Route path="/assets/:type" element={<AssetDetail />} />
                 <Route path="/products" element={<Products />} />
                 <Route path="/products/:slug" element={<ProductDetail />} />
-                <Route path="/eligibility" element={<MobileOtpGate />} />
-                <Route path="/eligibility/evaluation" element={<EvaluationFormRoute />} />
+                <Route path="/eligibility" element={<GoogleEvaluationForm />} />
+                <Route path="/eligibility/evaluation" element={<GoogleEvaluationForm />} />
                 <Route path="/why-us" element={<WhyUs />} />
                 <Route path="/protection" element={<Protection />} />
                 <Route path="/gallery" element={<Gallery />} />
@@ -130,13 +110,14 @@ function App() {
                 <Route path="/insights" element={<Insights />} />
                 <Route path="/insights/:slug" element={<ArticleDetail />} />
                 <Route path="/contact" element={<Contact />} />
-                <Route path="/login" element={<CRMComingSoon title="Portal & CRM Login — Coming Soon" message="Portal and CRM login are temporarily unavailable. The existing CRM implementation is preserved and will be re-enabled in a future release." />} />
+                <Route path="/login" element={<CRMComingSoon title="Portal & CRM Login — Coming Soon" message="Portal and CRM login are temporarily unavailable. CRM features are reserved for a future release. CRM and email verification are intentionally deferred to the next phase." />} />
                 <Route path="/grievances" element={<Grievances />} />
                 <Route path="/privacy" element={<Privacy />} />
+                <Route path="/terms" element={<Terms />} />
                 <Route path="/portal" element={<CustomerPortalLayout />}>
                   <Route index element={<CustomerDashboard />} /><Route path="applications" element={<MyApplications />} /><Route path="applications/new" element={<NewApplication />} /><Route path="assets" element={<MyAssets />} /><Route path="contracts" element={<MyContracts />} /><Route path="settlements" element={<MySettlements />} /><Route path="documents" element={<DocumentsVault />} /><Route path="notifications" element={<Notifications />} /><Route path="profile" element={<Profile />} /><Route path="support" element={<SupportTickets />} />
                 </Route>
-                <Route path="/admin" element={<CRMComingSoon title="Admin & CRM — Coming Soon" message="The Admin and CRM workspace is temporarily unavailable. Existing CRM features are preserved for a future release." />} />
+                <Route path="/admin" element={<CRMComingSoon title="Admin & CRM — Coming Soon" message="The Admin and CRM workspace is temporarily unavailable. CRM and email verification are reserved for the next phase." />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </SectionErrorBoundary>
@@ -144,6 +125,7 @@ function App() {
           <Footer />
           <ChatWidget />
           <MobileJourneyBar />
+          <PolicyLaunchNotice />
         </div>
       </BrowserRouter>
     </SreeVriddhiProvider>
