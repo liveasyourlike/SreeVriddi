@@ -3,7 +3,6 @@ import { SreeVriddhiProvider } from './context/SreeVriddhiContext'
 import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
 import Breadcrumbs from './components/layout/Breadcrumbs'
-import AdminLayout from './components/layout/AdminLayout'
 import CustomerPortalLayout from './components/layout/CustomerPortalLayout'
 import SectionErrorBoundary from './components/SectionErrorBoundary'
 import InvestmentAllocationHero3D from './components/InvestmentAllocationHero3D'
@@ -12,9 +11,8 @@ import ScrollToTop from './components/ScrollToTop'
 import ChatWidget from './components/ChatWidget'
 import AdvancedHomeExplorer from './components/AdvancedHomeExplorer'
 import LiveMarketTable from './components/LiveMarketTable'
-import MobileOtpGate from './components/MobileOtpGate'
-import EvaluationFormRoute from './pages/public/EvaluationFormRoute'
 import ComingSoonNotice from './components/ComingSoonNotice'
+import EligibilityFormPage from './pages/public/EligibilityFormPage'
 import './styles/ux-business-journey-2.css'
 
 import Home from './pages/public/Home'
@@ -31,7 +29,6 @@ import FAQ from './pages/public/FAQ'
 import Insights from './pages/public/Insights'
 import ArticleDetail from './pages/public/ArticleDetail'
 import Contact from './pages/public/Contact'
-import Login from './pages/public/Login'
 import Grievances from './pages/public/Grievances'
 import Privacy from './pages/public/Privacy'
 
@@ -45,25 +42,6 @@ import DocumentsVault from './pages/portal/DocumentsVault'
 import Notifications from './pages/portal/Notifications'
 import Profile from './pages/portal/Profile'
 import SupportTickets from './pages/portal/SupportTickets'
-
-import AdminDashboard from './pages/admin/AdminDashboard'
-import LeadManagement from './pages/admin/LeadManagement'
-import Customer360 from './pages/admin/Customer360'
-import AssetManagement from './pages/admin/AssetManagement'
-import ValuationEngine from './pages/admin/ValuationEngine'
-import ApplicationManager from './pages/admin/ApplicationManager'
-import ProductManager from './pages/admin/ProductManager'
-import ContractManager from './pages/admin/ContractManager'
-import SettlementEngine from './pages/admin/SettlementEngine'
-import RiskMatrix from './pages/admin/RiskMatrix'
-import ComplianceManager from './pages/admin/ComplianceManager'
-import DocumentManager from './pages/admin/DocumentManager'
-import InsightsCMS from './pages/admin/InsightsCMS'
-import GalleryManager from './pages/admin/GalleryManager'
-import CRMReports from './pages/admin/CRMReports'
-import AuditLog from './pages/admin/AuditLog'
-import AdminSettings from './pages/admin/AdminSettings'
-import AdminTranslations from './pages/admin/AdminTranslations'
 
 function HomeExplorerLanding() {
   return (
@@ -121,8 +99,8 @@ function App() {
                 <Route path="/assets/:type" element={<AssetDetail />} />
                 <Route path="/products" element={<Products />} />
                 <Route path="/products/:slug" element={<ProductDetail />} />
-                <Route path="/eligibility" element={<MobileOtpGate />} />
-                <Route path="/eligibility/evaluation" element={<EvaluationFormRoute />} />
+                <Route path="/eligibility" element={<EligibilityFormPage />} />
+                <Route path="/eligibility/evaluation" element={<Navigate to="/eligibility" replace />} />
                 <Route path="/why-us" element={<WhyUs />} />
                 <Route path="/protection" element={<Protection />} />
                 <Route path="/gallery" element={<Gallery />} />
