@@ -12,6 +12,7 @@ import ScrollToTop from './components/ScrollToTop'
 import ChatWidget from './components/ChatWidget'
 import AdvancedHomeExplorer from './components/AdvancedHomeExplorer'
 import LiveMarketTable from './components/LiveMarketTable'
+import ComingSoonNotice from './components/ComingSoonNotice'
 import './styles/ux-business-journey-2.css'
 
 import Home from './pages/public/Home'
@@ -91,6 +92,14 @@ function MarketSnapshot() {
   )
 }
 
+function CRMComingSoon({ title, message }) {
+  return (
+    <section className="min-h-[70vh] flex items-center justify-center px-4 py-12">
+      <ComingSoonNotice title={title} message={message} />
+    </section>
+  )
+}
+
 function App() {
   return (
     <SreeVriddhiProvider>
@@ -126,7 +135,11 @@ function App() {
                   <Route index element={<CustomerDashboard />} /><Route path="applications" element={<MyApplications />} /><Route path="applications/new" element={<NewApplication />} /><Route path="assets" element={<MyAssets />} /><Route path="contracts" element={<MyContracts />} /><Route path="settlements" element={<MySettlements />} /><Route path="documents" element={<DocumentsVault />} /><Route path="notifications" element={<Notifications />} /><Route path="profile" element={<Profile />} /><Route path="support" element={<SupportTickets />} />
                 </Route>
                 <Route path="/admin" element={<AdminLayout />}>
-                  <Route index element={<AdminDashboard />} /><Route path="leads" element={<LeadManagement />} /><Route path="customers" element={<Customer360 />} /><Route path="assets" element={<AssetManagement />} /><Route path="valuations" element={<ValuationEngine />} /><Route path="applications" element={<ApplicationManager />} /><Route path="products" element={<ProductManager />} /><Route path="contracts" element={<ContractManager />} /><Route path="settlements" element={<SettlementEngine />} /><Route path="risk" element={<RiskMatrix />} /><Route path="compliance" element={<ComplianceManager />} /><Route path="documents" element={<DocumentManager />} /><Route path="content" element={<InsightsCMS />} /><Route path="gallery" element={<GalleryManager />} /><Route path="reports" element={<CRMReports />} /><Route path="audit" element={<AuditLog />} /><Route path="settings" element={<AdminSettings />} /><Route path="translations" element={<AdminTranslations />} />
+                  <Route index element={<AdminDashboard />} />
+                  <Route path="leads" element={<CRMComingSoon title="Leads CRM — Coming Soon" message="The Leads CRM is temporarily unavailable while we complete the secure customer-management and workflow integrations. Your existing CRM implementation remains preserved for the future release." />} />
+                  <Route path="customers" element={<CRMComingSoon title="Customers 360 — Coming Soon" message="Customers 360 is being prepared for the next CRM release, including customer history, conversations, documents and relationship views." />} />
+                  <Route path="reports" element={<CRMComingSoon title="CRM Reports — Coming Soon" message="CRM reporting and analytics are being prepared for the next release. The reporting implementation remains preserved while this feature is temporarily unavailable." />} />
+                  <Route path="assets" element={<AssetManagement />} /><Route path="valuations" element={<ValuationEngine />} /><Route path="applications" element={<ApplicationManager />} /><Route path="products" element={<ProductManager />} /><Route path="contracts" element={<ContractManager />} /><Route path="settlements" element={<SettlementEngine />} /><Route path="risk" element={<RiskMatrix />} /><Route path="compliance" element={<ComplianceManager />} /><Route path="documents" element={<DocumentManager />} /><Route path="content" element={<InsightsCMS />} /><Route path="gallery" element={<GalleryManager />} /><Route path="audit" element={<AuditLog />} /><Route path="settings" element={<AdminSettings />} /><Route path="translations" element={<AdminTranslations />} />
                 </Route>
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
