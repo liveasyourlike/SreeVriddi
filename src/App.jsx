@@ -12,6 +12,8 @@ import ScrollToTop from './components/ScrollToTop'
 import ChatWidget from './components/ChatWidget'
 import AdvancedHomeExplorer from './components/AdvancedHomeExplorer'
 import LiveMarketTable from './components/LiveMarketTable'
+import MobileOtpGate from './components/MobileOtpGate'
+import EvaluationFormRoute from './pages/public/EvaluationFormRoute'
 import './styles/ux-business-journey-2.css'
 
 import Home from './pages/public/Home'
@@ -21,7 +23,6 @@ import Assets from './pages/public/Assets'
 import AssetDetail from './pages/public/AssetDetail'
 import Products from './pages/public/Products'
 import ProductDetail from './pages/public/ProductDetail'
-import EligibilityChecker from './pages/public/EligibilityChecker'
 import WhyUs from './pages/public/WhyUs'
 import Protection from './pages/public/Protection'
 import Gallery from './pages/public/Gallery'
@@ -111,7 +112,8 @@ function App() {
                 <Route path="/assets/:type" element={<AssetDetail />} />
                 <Route path="/products" element={<Products />} />
                 <Route path="/products/:slug" element={<ProductDetail />} />
-                <Route path="/eligibility" element={<EligibilityChecker />} />
+                <Route path="/eligibility" element={<MobileOtpGate />} />
+                <Route path="/eligibility/evaluation" element={<EvaluationFormRoute />} />
                 <Route path="/why-us" element={<WhyUs />} />
                 <Route path="/protection" element={<Protection />} />
                 <Route path="/gallery" element={<Gallery />} />
