@@ -13,6 +13,7 @@ import AdvancedHomeExplorer from './components/AdvancedHomeExplorer'
 import LiveMarketTable from './components/LiveMarketTable'
 import ComingSoonNotice from './components/ComingSoonNotice'
 import EligibilityFormPage from './pages/public/EligibilityFormPage'
+import FutureHome from './pages/public/FutureHome'
 import './styles/ux-business-journey-2.css'
 
 import Home from './pages/public/Home'
@@ -90,8 +91,9 @@ function App() {
           <main className="min-h-[70vh]">
             <SectionErrorBoundary>
               <Routes>
-                <Route path="/" element={<HomeExplorerLanding />} />
-                <Route path="/home-details" element={<Home />} />
+                <Route path="/" element={<FutureHome />} />
+                <Route path="/home-details" element={<HomeExplorerLanding />} />
+                <Route path="/home-original" element={<Home />} />
                 <Route path="/market-snapshot" element={<MarketSnapshot />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/how-it-works" element={<HowItWorks />} />
