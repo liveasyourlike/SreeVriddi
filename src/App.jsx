@@ -12,9 +12,11 @@ import ChatWidget from './components/ChatWidget'
 import AdvancedHomeExplorer from './components/AdvancedHomeExplorer'
 import LiveMarketTable from './components/LiveMarketTable'
 import ComingSoonNotice from './components/ComingSoonNotice'
+import WebsiteExperienceLayer from './components/WebsiteExperienceLayer'
 import EligibilityFormPage from './pages/public/EligibilityFormPage'
 import FutureHome from './pages/public/FutureHome'
 import './styles/ux-business-journey-2.css'
+import './styles/future-experience.css'
 
 import Home from './pages/public/Home'
 import About from './pages/public/About'
@@ -65,7 +67,7 @@ function MarketSnapshot() {
       <div className="mb-6">
         <span className="text-xs font-extrabold uppercase tracking-widest text-amber-400">India Market Snapshot</span>
         <h1 className="mt-2 text-3xl font-bold font-serif-brand text-white">India Market Snapshot</h1>
-        <p className="mt-2 text-sm text-slate-400">The existing market snapshot component is shown here without changing its underlying content or values.</p>
+        <p className="mt-2 text-sm text-slate-400">Live market context presented with the existing Sree Vriddhi data layer.</p>
       </div>
       <LiveMarketTable />
     </section>
@@ -86,6 +88,7 @@ function App() {
       <BrowserRouter>
         <ScrollToTop />
         <div className="compact-site min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
+          <WebsiteExperienceLayer />
           <Header />
           <Breadcrumbs />
           <main className="min-h-[70vh]">
