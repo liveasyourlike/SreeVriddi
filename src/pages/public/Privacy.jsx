@@ -1,27 +1,29 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowLeft, LockKeyhole, ShieldCheck } from 'lucide-react';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { ArrowLeft, LockKeyhole, ShieldCheck } from 'lucide-react'
 
 const items = [
-  ['What we collect', 'Information you choose to submit through enquiries, the preliminary evaluation form and support interactions.'],
-  ['Why we collect it', 'To respond to enquiries, perform preliminary evaluation, support human follow-up and improve the website experience.'],
-  ['AI boundaries', 'The website assistant is for published information and guidance. Sensitive or consequential requests may require human review.'],
-  ['Notification controls', 'Email and WhatsApp lead notifications are provider-dependent and remain disabled until the required business accounts and approvals are configured.'],
-  ['Your choices', 'You can contact Sree Vriddhi to ask questions about information submitted through the website or request appropriate assistance.'],
-];
+  ['Information we collect', 'Information you submit through enquiries, the eligibility form, customer support and related website interactions.'],
+  ['How we use it', 'To respond to you, assess preliminary eligibility, coordinate verification and human follow-up, provide support and improve the website.'],
+  ['Information sharing', 'Information may be shared with service providers or professional advisers only when required to operate the service, complete verification, communicate with you or meet legal requirements.'],
+  ['AI assistant', 'The AI assistant is designed to answer website and business-information questions. Do not submit passwords, payment credentials or other unnecessary sensitive information to the assistant.'],
+  ['Forms and third parties', 'Google Forms, WhatsApp, email, hosting and other third-party services process information under their own systems and policies.'],
+  ['Your choices', 'You may contact Sree Vriddhi about information submitted through this website, ask questions about its handling or request appropriate assistance.'],
+  ['Security and retention', 'Reasonable technical and organisational measures are used for website information. Retention depends on the purpose, operational need and applicable legal requirements.'],
+]
 
 export default function Privacy() {
   return (
-    <div className="ux2-page-shell">
-      <div className="ux2-page-card">
-        <Link to="/" className="ux2-back"><ArrowLeft size={15} /> Back to Sree Vriddhi</Link>
-        <div className="ux2-page-heading"><ShieldCheck /><div><span>Trust &amp; Scale</span><h1>Privacy &amp; Information Handling</h1></div></div>
-        <p className="ux2-page-lead">A simple explanation of how information submitted through this public website is intended to be handled. This page is informational and does not replace formal legal terms or applicable privacy notices.</p>
-        <div className="ux2-privacy-grid">
-          {items.map(([title, text]) => <section key={title}><div className="ux2-privacy-icon"><LockKeyhole size={15} /></div><h2>{title}</h2><p>{text}</p></section>)}
+    <div className="legal-page">
+      <div className="legal-card">
+        <Link to="/" className="legal-back"><ArrowLeft size={15} /> Back to Sree Vriddhi</Link>
+        <div className="legal-heading"><ShieldCheck /><div><span>DIRECT • CLEAR • PRACTICAL</span><h1>Privacy Policy</h1></div></div>
+        <p className="legal-lead">This notice explains, in plain language, what information the Sree Vriddhi website may receive and why it may be used.</p>
+        <div className="legal-list">
+          {items.map(([title, text], index) => <section key={title}><div className="legal-number">{String(index + 1).padStart(2, '0')}</div><div><h2>{title}</h2><p>{text}</p></div></section>)}
         </div>
-        <div className="ux2-disclosure">For privacy questions, contact <a href="mailto:sreevriddhiforwealth@gmail.com">sreevriddhiforwealth@gmail.com</a>.</div>
+        <div className="legal-notice"><LockKeyhole size={17} /><span>Privacy questions: <a href="mailto:sreevriddhiforwealth@gmail.com" className="underline font-semibold">sreevriddhiforwealth@gmail.com</a></span></div>
       </div>
     </div>
-  );
+  )
 }
