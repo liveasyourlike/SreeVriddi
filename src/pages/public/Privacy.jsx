@@ -1,29 +1,40 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowLeft, LockKeyhole, ShieldCheck } from 'lucide-react'
+import { ArrowLeft, LockKeyhole, ShieldCheck, Sparkles } from 'lucide-react'
 
-const items = [
-  ['Information we collect', 'Information you submit through enquiries, the eligibility form, customer support and related website interactions.'],
+const acknowledgement = [
+  ['Understand the Nature of the Opportunity', 'I understand that the opportunity presented by Sree Vriddhi involves the use of my funds under the agreed business arrangement and terms communicated to me.\n\nI understand that I should participate only after independently evaluating whether the arrangement is suitable for my financial situation and personal requirements.'],
+  ['Returns Are Subject to the Agreed Terms', 'I understand that any interest, payout, or return discussed with me is based on the specific terms of the applicable agreement.\n\nI understand that past discussions, examples, illustrations, or expected returns should not automatically be treated as a guarantee of future performance or payment unless the applicable written agreement and applicable law expressly provide otherwise.'],
+  ['Capital / Principal Risk', 'I understand that providing funds to any business arrangement involves financial risk.\n\nI understand that the amount I provide may be exposed to business, operational, liquidity, counterparty, and other risks, and that I should not commit money that I may immediately need for essential personal or family expenses.\n\nI understand that the possibility of receiving returns does not eliminate the possibility of financial loss.'],
+  ['Contract Duration and Withdrawal', 'I understand the agreed contract duration before proceeding.\n\nWhere the applicable agreement specifies a minimum or non-breakable period, I understand that I should consider the funds committed for that period and should not assume that I can withdraw them whenever I wish.\n\nAny early-exit, withdrawal, settlement, or cancellation will be governed by the applicable written agreement.'],
+  ['No Pressure to Participate', 'I confirm that I am participating voluntarily.\n\nI understand that I should not proceed merely because of promotional communication, urgency, limited availability, personal recommendations, or expected returns.\n\nI have the opportunity to ask questions and obtain clarification before making my decision.'],
+  ['Independent Decision', 'I confirm that I have had the opportunity to understand the arrangement, ask questions, and review the relevant terms before proceeding.\n\nI understand that Sree Vriddhi does not replace my own financial, legal, or tax adviser.\n\nWhere appropriate, I may seek independent professional advice before committing funds.'],
+  ['Information Provided by Me', 'I confirm that the personal, financial, banking, identification, and other information submitted by me is accurate and belongs to me.\n\nI understand that incorrect or incomplete information may affect the processing of my application or agreement.'],
+  ['Payment Details', 'I understand that payments, interest credits, settlements, or other financial transactions will be processed only according to the applicable agreed terms.\n\nI will verify the recipient/payment details before making any transfer.\n\nI will not share my OTP, PIN, CVV, password, or other confidential banking credentials with anyone claiming to represent Sree Vriddhi.'],
+  ['Regulatory Understanding', 'I understand that I should independently verify the legal and regulatory status of the particular business arrangement before committing funds.\n\nAny statement regarding registration, authorization, licensing, protection, guarantee, or regulatory supervision should be relied upon only when supported by appropriate official documentation.'],
+  ['Final Confirmation', 'I have read and understood the above acknowledgement.\n\nI understand that financial returns can involve financial risk, and I am proceeding voluntarily after considering my own circumstances.\n\nI have been given an opportunity to ask questions and seek clarification before proceeding.\n\nI understand that this acknowledgement does not remove or replace the detailed terms and conditions of the applicable written agreement.'],
+]
+
+const privacyPoints = [
+  ['Information we collect', 'Information you submit through enquiries, eligibility forms, customer support and related website interactions.'],
   ['How we use it', 'To respond to you, assess preliminary eligibility, coordinate verification and human follow-up, provide support and improve the website.'],
   ['Information sharing', 'Information may be shared with service providers or professional advisers only when required to operate the service, complete verification, communicate with you or meet legal requirements.'],
-  ['AI assistant', 'The AI assistant is designed to answer website and business-information questions. Do not submit passwords, payment credentials or other unnecessary sensitive information to the assistant.'],
-  ['Forms and third parties', 'Google Forms, WhatsApp, email, hosting and other third-party services process information under their own systems and policies.'],
-  ['Your choices', 'You may contact Sree Vriddhi about information submitted through this website, ask questions about its handling or request appropriate assistance.'],
+  ['AI assistant', 'The AI assistant provides general website guidance. Do not submit passwords, payment credentials, OTPs, PINs, CVVs or other unnecessary confidential information.'],
+  ['Third-party services', 'Google Forms, WhatsApp, email, hosting and other third-party services may process information under their own systems and policies.'],
   ['Security and retention', 'Reasonable technical and organisational measures are used for website information. Retention depends on the purpose, operational need and applicable legal requirements.'],
 ]
 
 export default function Privacy() {
-  return (
-    <div className="legal-page">
-      <div className="legal-card">
-        <Link to="/" className="legal-back"><ArrowLeft size={15} /> Back to Sree Vriddhi</Link>
-        <div className="legal-heading"><ShieldCheck /><div><span>DIRECT • CLEAR • PRACTICAL</span><h1>Privacy Policy</h1></div></div>
-        <p className="legal-lead">This notice explains, in plain language, what information the Sree Vriddhi website may receive and why it may be used.</p>
-        <div className="legal-list">
-          {items.map(([title, text], index) => <section key={title}><div className="legal-number">{String(index + 1).padStart(2, '0')}</div><div><h2>{title}</h2><p>{text}</p></div></section>)}
-        </div>
-        <div className="legal-notice"><LockKeyhole size={17} /><span>Privacy questions: <a href="mailto:sreevriddhiforwealth@gmail.com" className="underline font-semibold">sreevriddhiforwealth@gmail.com</a></span></div>
-      </div>
+  return <main className="min-h-screen bg-slate-950 px-4 py-16 text-slate-100 md:px-8">
+    <div className="mx-auto max-w-6xl">
+      <Link to="/" className="mb-8 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[.16em] text-amber-300"><ArrowLeft size={15}/> Back to Sree Vriddhi</Link>
+      <section className="relative overflow-hidden rounded-[2rem] border border-amber-300/20 bg-gradient-to-br from-slate-900 to-slate-950 p-7 shadow-2xl md:p-12">
+        <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full border border-amber-300/10 shadow-[0_0_120px_rgba(212,175,55,.12)]" />
+        <div className="relative max-w-4xl"><div className="mb-4 flex items-center gap-2 text-xs font-black uppercase tracking-[.24em] text-amber-300"><ShieldCheck size={16}/> Please read before proceeding</div><h1 className="font-serif-brand text-4xl font-black leading-tight md:text-6xl">Sree Vriddhi – Customer Risk &amp; Policy Acknowledgement</h1><p className="mt-6 text-lg leading-8 text-slate-300">Please read the business terms and acknowledge before submitting.</p><p className="mt-3 text-slate-400">At Sree Vriddhi, we believe that every financial decision should be made with <strong className="text-slate-200">clarity, awareness, and mutual understanding.</strong></p></div>
+      </section>
+      <section className="mt-10"><div className="mb-6 flex items-end justify-between gap-5"><div><span className="text-[10px] font-black uppercase tracking-[.24em] text-amber-300">3D POLICY MAP</span><h2 className="mt-2 font-serif-brand text-3xl font-bold md:text-4xl">Read each decision layer.</h2></div><Sparkles className="hidden text-amber-300 md:block" /></div><div className="grid gap-5 md:grid-cols-2">{acknowledgement.map(([title, body], index) => <article key={title} className="group relative overflow-hidden rounded-3xl border border-white/10 bg-slate-900/75 p-6 shadow-xl transition duration-300 hover:-translate-y-1 hover:rotate-[.15deg] hover:border-amber-300/40 hover:shadow-amber-950/30"><div className="absolute -right-12 -top-12 h-32 w-32 rounded-full border border-amber-300/10 transition-transform duration-500 group-hover:scale-125"/><div className="relative flex gap-4"><span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl border border-amber-300/30 bg-amber-300/10 text-sm font-black text-amber-300 shadow-[0_0_24px_rgba(212,175,55,.08)]">{String(index + 1).padStart(2, '0')}</span><div><h3 className="text-lg font-bold text-white">{title}</h3><p className="mt-3 whitespace-pre-line text-sm leading-7 text-slate-300">{body}</p></div></div></article>)}</div></section>
+      <section className="mt-12 rounded-3xl border border-white/10 bg-slate-900/70 p-7 md:p-9"><div className="mb-6 flex items-center gap-3"><LockKeyhole className="text-amber-300"/><h2 className="font-serif-brand text-2xl font-bold">Website Privacy — Direct &amp; Clear</h2></div><div className="grid gap-5 md:grid-cols-2">{privacyPoints.map(([title,text]) => <div key={title} className="rounded-2xl border border-white/10 bg-black/10 p-5"><h3 className="font-bold text-white">{title}</h3><p className="mt-2 text-sm leading-6 text-slate-400">{text}</p></div>)}</div></section>
+      <div className="mt-8 rounded-3xl border border-amber-300/30 bg-amber-300/10 p-7 text-center text-sm leading-7 text-slate-200"><strong className="text-amber-200">Final confirmation:</strong> I understand that this acknowledgement does not remove or replace the detailed terms and conditions of the applicable written agreement.</div>
     </div>
-  )
+  </main>
 }
