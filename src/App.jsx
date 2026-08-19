@@ -10,6 +10,7 @@ import ScrollToTop from './components/ScrollToTop'
 import ChatWidget from './components/ChatWidget'
 import ComingSoonNotice from './components/ComingSoonNotice'
 import WebsiteExperienceLayer from './components/WebsiteExperienceLayer'
+import PersistentExperienceDock from './components/PersistentExperienceDock'
 import EligibilityFormPage from './pages/public/EligibilityFormPage'
 import HomeHub from './pages/public/HomeHub'
 import Home from './pages/public/Home'
@@ -59,5 +60,5 @@ function SiteChrome() {
   </>
 }
 
-function App() { return <SreeVriddhiProvider><BrowserRouter><ScrollToTop /><div className="compact-site min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]"><WebsiteExperienceLayer /><SiteChrome /></div></BrowserRouter></SreeVriddhiProvider> }
+function App() { return <SreeVriddhiProvider><BrowserRouter><ScrollToTop /><div className="compact-site min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]"><WebsiteExperienceLayer /><SiteChrome /><PersistentExperienceDock /></div></BrowserRouter></SreeVriddhiProvider> }
 export default App
