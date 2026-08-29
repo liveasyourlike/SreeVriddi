@@ -1,5 +1,8 @@
 import { useEffect, useRef } from 'react'
 
+const CHAT_STORE = 'sv_ai_workspace_v4'
+const COMPACT_CHAT = { width: 390, height: 560 }
+
 export default function WebsiteExperienceLayer() {
   const canvasRef = useRef(null)
 
@@ -54,6 +57,20 @@ export default function WebsiteExperienceLayer() {
       cancelAnimationFrame(raf)
       window.removeEventListener('resize', resize)
       window.removeEventListener('pointermove', move)
+    }
+  }, [])
+
+  useEffect(() => {
+    try {
+      const raw = window.localStorage.getItem(CHAT_STORE)
+      if (!raw) return
+      const store = JSON.parse(raw)
+      const geometry = store?.geometry
+      if (geometry?.width === 440 && geometry?.height === 700) {
+        window.localStorage.setItem(CHAT_STORE, JSON.stringify({ ...store, geometry: { ...geometry, ...COMPACT_CHAT } }))
+      }
+    } catch {
+      // Chat storage is optional browser state; ignore malformed legacy data.
     }
   }, [])
 
