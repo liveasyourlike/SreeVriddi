@@ -11,6 +11,7 @@ const choices = [
 export default function EligibilityChoice3D({ value, onChange }) {
   const [rotation, setRotation] = useState(0)
   const active = choices.find((item) => item.id === value) || choices[0]
+  const ActiveIcon = active.icon
 
   useEffect(() => {
     const timer = window.setInterval(() => setRotation((current) => current + 1), 70)
@@ -23,7 +24,7 @@ export default function EligibilityChoice3D({ value, onChange }) {
         <div className="eligibility-choice-3d-ring ring-one" />
         <div className="eligibility-choice-3d-ring ring-two" />
         <div className="eligibility-choice-3d-core">
-          <active.icon className="h-7 w-7 text-amber-300" aria-hidden="true" />
+          <ActiveIcon className="h-7 w-7 text-amber-300" aria-hidden="true" />
           <span>{active.tone}</span>
           <small>Tap a category</small>
         </div>
