@@ -1,32 +1,27 @@
-import { useState } from 'react'
-import { ExternalLink, FileText, ShieldCheck } from 'lucide-react'
-import EligibilityChoice3D from '../../components/EligibilityChoice3D'
-import '../../styles/eligibility-choice-3d.css'
+import { ExternalLink, FileText } from 'lucide-react'
+import EligibilityYouTubeVideos from '../../components/EligibilityYouTubeVideos'
 
 const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdyVSKymLVij2aCDVk1ewr29_mF0Zij6hX0e6yjS3smJro_xw/viewform'
 
 export default function GoogleEvaluationForm() {
-  const [selected, setSelected] = useState('gold')
-
   return (
-    <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
-      <div className="rounded-2xl border border-amber-500/25 bg-slate-950/80 p-5 sm:p-7 shadow-xl">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-          <div className="flex items-start gap-3 min-w-0">
-            <div className="mt-0.5 rounded-xl border border-amber-400/30 bg-amber-400/10 p-2 text-amber-300 shrink-0"><FileText className="w-5 h-5" /></div>
-            <div><span className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-amber-300">10-Point Preliminary Evaluation</span><h1 className="mt-1 text-2xl sm:text-3xl font-bold font-serif-brand text-white">Complete your evaluation form</h1><p className="mt-2 text-sm leading-relaxed text-slate-300">Choose the category that best matches your requirement, then open the official Sree Vriddhi evaluation form in a separate browser tab. This website will stay open.</p></div>
+    <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-7">
+      <div className="rounded-2xl border border-amber-500/25 bg-slate-950/85 p-4 sm:p-6 shadow-xl">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="grid h-10 w-10 place-items-center rounded-xl border border-amber-400/30 bg-amber-400/10 text-amber-300 shrink-0"><FileText className="w-5 h-5" /></div>
+            <div className="min-w-0"><span className="text-[9px] font-extrabold uppercase tracking-[.18em] text-amber-300">10-Point Preliminary Evaluation</span><h1 className="mt-0.5 text-xl sm:text-2xl font-bold font-serif-brand text-white truncate">Complete your evaluation form</h1></div>
           </div>
-          <a href={GOOGLE_FORM_URL} target="_blank" rel="noopener noreferrer" className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-amber-400 to-amber-600 px-5 py-3 text-xs font-extrabold uppercase tracking-wider text-slate-950 shadow-lg shadow-amber-500/20 hover:from-amber-300 hover:to-amber-500">Open Evaluation Form <ExternalLink className="w-4 h-4" /></a>
+          <a href={GOOGLE_FORM_URL} target="_blank" rel="noopener noreferrer" className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-amber-400 to-amber-600 px-4 py-2.5 text-[11px] font-extrabold uppercase tracking-wider text-slate-950 shadow-lg shadow-amber-500/15 hover:from-amber-300 hover:to-amber-500">Open Google Form <ExternalLink className="w-4 h-4" /></a>
         </div>
 
-        <div className="mt-6 rounded-2xl border border-slate-800 bg-slate-900/50 p-4 sm:p-5">
-          <div className="mb-4 flex items-start justify-between gap-3"><div><p className="text-[10px] font-extrabold uppercase tracking-[.18em] text-amber-300">Step 1 · Choose a category</p><h2 className="mt-1 text-lg sm:text-xl font-extrabold text-white">What best matches your requirement?</h2><p className="mt-1 text-[11px] leading-5 text-slate-400">Use this selector for guidance. The official Google Form contains the questions and submission fields.</p></div><span className="hidden sm:inline-flex rounded-full border border-emerald-500/20 bg-emerald-500/5 px-2.5 py-1 text-[9px] font-bold text-emerald-300">Category guide</span></div>
-          <EligibilityChoice3D value={selected} onChange={setSelected} />
+        <div className="mt-4">
+          <EligibilityYouTubeVideos />
         </div>
 
-        <div className="mt-5 grid gap-3 sm:grid-cols-2">
-          <div className="flex items-start gap-2 rounded-xl border border-emerald-500/20 bg-emerald-500/5 px-3 py-3 text-[11px] leading-relaxed text-slate-300"><ShieldCheck className="mt-0.5 w-4 h-4 shrink-0 text-emerald-300" /><span><strong className="text-white">Your website stays open:</strong> the form uses a new browser tab, so you can return here at any time.</span></div>
-          <div className="rounded-xl border border-slate-800 bg-slate-900/60 px-3 py-3 text-[11px] leading-relaxed text-slate-400"><strong className="text-slate-200">Official form:</strong> Google Forms handles the questionnaire and submission. CRM and email verification are planned for a later phase.</div>
+        <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 rounded-xl border border-slate-800 bg-slate-900/60 px-3 py-2.5">
+          <p className="text-[10px] leading-4 text-slate-400">The official evaluation questionnaire opens in a separate tab. Your Sree Vriddhi website tab remains open.</p>
+          <a href={GOOGLE_FORM_URL} target="_blank" rel="noopener noreferrer" className="text-[10px] font-bold text-amber-300 hover:text-amber-200 whitespace-nowrap">Open form ↗</a>
         </div>
       </div>
     </section>
