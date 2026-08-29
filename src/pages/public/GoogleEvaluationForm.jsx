@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { ExternalLink, FileText, ShieldCheck } from 'lucide-react'
 import EligibilityChoice3D from '../../components/EligibilityChoice3D'
 import '../../styles/eligibility-choice-3d.css'
@@ -5,7 +6,7 @@ import '../../styles/eligibility-choice-3d.css'
 const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdyVSKymLVij2aCDVk1ewr29_mF0Zij6hX0e6yjS3smJro_xw/viewform'
 
 export default function GoogleEvaluationForm() {
-  const [selected, setSelected] = React.useState('gold')
+  const [selected, setSelected] = useState('gold')
   const openForm = () => {
     const formWindow = window.open(GOOGLE_FORM_URL, '_blank', 'noopener,noreferrer')
     if (!formWindow) window.location.href = GOOGLE_FORM_URL
@@ -16,14 +17,8 @@ export default function GoogleEvaluationForm() {
       <div className="rounded-2xl border border-amber-500/25 bg-slate-950/80 p-5 sm:p-7 shadow-xl">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
           <div className="flex items-start gap-3 min-w-0">
-            <div className="mt-0.5 rounded-xl border border-amber-400/30 bg-amber-400/10 p-2 text-amber-300 shrink-0">
-              <FileText className="w-5 h-5" />
-            </div>
-            <div>
-              <span className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-amber-300">10-Point Preliminary Evaluation</span>
-              <h1 className="mt-1 text-2xl sm:text-3xl font-bold font-serif-brand text-white">Complete your evaluation form</h1>
-              <p className="mt-2 text-sm leading-relaxed text-slate-300">Your Sree Vriddhi website will remain open. Choose the closest evaluation category below, then open the official Google Evaluation Form in a separate browser tab.</p>
-            </div>
+            <div className="mt-0.5 rounded-xl border border-amber-400/30 bg-amber-400/10 p-2 text-amber-300 shrink-0"><FileText className="w-5 h-5" /></div>
+            <div><span className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-amber-300">10-Point Preliminary Evaluation</span><h1 className="mt-1 text-2xl sm:text-3xl font-bold font-serif-brand text-white">Complete your evaluation form</h1><p className="mt-2 text-sm leading-relaxed text-slate-300">Your Sree Vriddhi website will remain open. Choose the closest evaluation category below, then open the official Google Evaluation Form in a separate browser tab.</p></div>
           </div>
           <button type="button" onClick={openForm} className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-amber-400 to-amber-600 px-5 py-3 text-xs font-extrabold uppercase tracking-wider text-slate-950 shadow-lg shadow-amber-500/20 hover:from-amber-300 hover:to-amber-500">Open Evaluation Form <ExternalLink className="w-4 h-4" /></button>
         </div>
