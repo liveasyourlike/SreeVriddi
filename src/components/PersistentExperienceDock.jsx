@@ -3,8 +3,12 @@ import { useLocation } from 'react-router-dom'
 import { useSreeVriddhi } from '../context/SreeVriddhiContext'
 import LanguageSelector from './LanguageSelector'
 
+const SUPPORT_EMAIL = 'sreevriddhiforwealth@gmail.com'
+const SUPPORT_PHONE = '+91 9640352929'
+const WHATSAPP = 'https://wa.me/919640352929'
+
 export default function PersistentExperienceDock() {
-  const { brandSettings, theme, toggleTheme } = useSreeVriddhi()
+  const { theme, toggleTheme } = useSreeVriddhi()
   const location = useLocation()
   const isHome = location.pathname === '/'
 
@@ -16,12 +20,12 @@ export default function PersistentExperienceDock() {
           <div className="relative overflow-hidden rounded-[1.6rem] border border-amber-300/25 bg-[#07101f]/95 p-3 shadow-[0_25px_80px_rgba(0,0,0,.5)] backdrop-blur-xl transition duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateX(3deg)_rotateY(-4deg)_translateY(-3px)]">
             <div className="flex items-center gap-2 border-b border-white/10 pb-2">
               <div className="grid h-9 w-9 place-items-center rounded-xl border border-amber-300/30 bg-amber-300/10 text-amber-300"><Phone size={15} /></div>
-              <div><p className="text-[8px] font-black uppercase tracking-[.2em] text-amber-300">Sree Vriddhi</p><p className="text-[10px] text-slate-500">Connect directly</p></div>
+              <div><p className="text-[8px] font-black uppercase tracking-[.2em] text-amber-300">Sree Vriddhi</p><p className="text-[10px] text-slate-500">Contact</p></div>
             </div>
             <div className="mt-2 grid gap-1.5 text-[10px]">
-              <a href={`tel:${brandSettings.phone}`} className="flex items-center gap-2 rounded-xl px-2 py-1.5 text-slate-200 hover:bg-amber-300/10 hover:text-amber-200"><Phone size={12} className="text-amber-300" />{brandSettings.phone}</a>
-              <a href={`mailto:${brandSettings.email}`} className="flex items-center gap-2 rounded-xl px-2 py-1.5 text-slate-200 hover:bg-amber-300/10 hover:text-amber-200"><Mail size={12} className="text-amber-300" />{brandSettings.email}</a>
-              <a href={brandSettings.whatsappUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-xl px-2 py-1.5 text-emerald-300 hover:bg-emerald-400/10"><MessageSquare size={12} />WhatsApp</a>
+              <a href={`tel:${SUPPORT_PHONE}`} className="flex items-center gap-2 rounded-xl px-2 py-1.5 text-slate-200 hover:bg-amber-300/10 hover:text-amber-200"><Phone size={12} className="text-amber-300" />{SUPPORT_PHONE}</a>
+              <a href={`mailto:${SUPPORT_EMAIL}`} className="flex items-center gap-2 rounded-xl px-2 py-1.5 text-slate-200 hover:bg-amber-300/10 hover:text-amber-200"><Mail size={12} className="text-amber-300" />{SUPPORT_EMAIL}</a>
+              <a href={WHATSAPP} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-xl px-2 py-1.5 text-emerald-300 hover:bg-emerald-400/10"><MessageSquare size={12} />WhatsApp</a>
             </div>
           </div>
         </div>
