@@ -3,6 +3,16 @@ import { useEffect, useRef } from 'react'
 const CHAT_STORE = 'sv_ai_workspace_v4'
 const COMPACT_CHAT = { width: 390, height: 560 }
 
+function compactLegacyChatElement(element) {
+  if (!element) return
+  const width = Number.parseFloat(element.style.width || '')
+  const height = Number.parseFloat(element.style.height || '')
+  if (width === 440 && height === 700) {
+    element.style.width = `${COMPACT_CHAT.width}px`
+    element.style.height = `${COMPACT_CHAT.height}px`
+  }
+}
+
 export default function WebsiteExperienceLayer() {
   const canvasRef = useRef(null)
 
@@ -63,15 +73,21 @@ export default function WebsiteExperienceLayer() {
   useEffect(() => {
     try {
       const raw = window.localStorage.getItem(CHAT_STORE)
-      if (!raw) return
-      const store = JSON.parse(raw)
-      const geometry = store?.geometry
-      if (geometry?.width === 440 && geometry?.height === 700) {
-        window.localStorage.setItem(CHAT_STORE, JSON.stringify({ ...store, geometry: { ...geometry, ...COMPACT_CHAT } }))
+      if (raw) {
+        const store = JSON.parse(raw)
+        const geometry = store?.geometry
+        if (geometry?.width === 440 && geometry?.height === 700) {
+          window.localStorage.setItem(CHAT_STORE, JSON.stringify({ ...store, geometry: { ...geometry, ...COMPACT_CHAT } }))
+        }
       }
     } catch {
-      // Chat storage is optional browser state; ignore malformed legacy data.
+      // Optional browser state; ignore malformed legacy data.
     }
+
+    compactLegacyChatElement(document.querySelector('.sv-chat'))
+    const observer = new MutationObserver(() => compactLegacyChatElement(document.querySelector('.sv-chat')))
+    observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['style', 'class'] })
+    return () => observer.disconnect()
   }, [])
 
   useEffect(() => {
