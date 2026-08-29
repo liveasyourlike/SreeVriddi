@@ -11,7 +11,7 @@ import ChatWidget from './components/ChatWidget'
 import ComingSoonNotice from './components/ComingSoonNotice'
 import WebsiteExperienceLayer from './components/WebsiteExperienceLayer'
 import PersistentExperienceDock from './components/PersistentExperienceDock'
-import EligibilityFormPage from './pages/public/EligibilityFormPage'
+import GoogleEvaluationForm from './pages/public/GoogleEvaluationForm'
 import HomeHub from './pages/public/HomeHub'
 import Home from './pages/public/Home'
 import About from './pages/public/About'
@@ -30,6 +30,7 @@ import Contact from './pages/public/Contact'
 import Grievances from './pages/public/Grievances'
 import Privacy from './pages/public/Privacy'
 import Terms from './pages/public/Terms'
+import './styles/preview-quality-overrides.css'
 import CustomerDashboard from './pages/portal/CustomerDashboard'
 import MyApplications from './pages/portal/MyApplications'
 import NewApplication from './pages/portal/NewApplication'
@@ -50,9 +51,10 @@ function SiteChrome() {
     {!isHome && <><Header /><Breadcrumbs /></>}
     <main className="min-h-[70vh]"><SectionErrorBoundary><Routes>
       <Route path="/" element={<HomeHub />} /><Route path="/home-details" element={<HomeHub />} /><Route path="/home-original" element={<Home />} />
-      <Route path="/market-snapshot" element={<Navigate to="/assets" replace />} /><Route path="/about" element={<About />} /><Route path="/how-it-works" element={<HowItWorks />} /><Route path="/assets" element={<Assets />} /><Route path="/assets/:type" element={<AssetDetail />} /><Route path="/products" element={<Products />} /><Route path="/products/:slug" element={<ProductDetail />} /><Route path="/eligibility" element={<EligibilityFormPage />} /><Route path="/eligibility/evaluation" element={<Navigate to="/eligibility" replace />} /><Route path="/why-us" element={<WhyUs />} /><Route path="/protection" element={<Protection />} /><Route path="/gallery" element={<Gallery />} /><Route path="/faq" element={<FAQ />} /><Route path="/insights" element={<Insights />} /><Route path="/insights/:slug" element={<ArticleDetail />} /><Route path="/contact" element={<Contact />} /><Route path="/login" element={<CRMComingSoon title="Portal & CRM Login — Coming Soon" message="Portal and CRM login are temporarily unavailable. The existing CRM implementation is preserved and will be re-enabled in a future release." />} /><Route path="/grievances" element={<Grievances />} /><Route path="/privacy" element={<Privacy />} /><Route path="/terms" element={<Terms />} />
+      <Route path="/market-snapshot" element={<Navigate to="/assets" replace />} /><Route path="/about" element={<About />} /><Route path="/how-it-works" element={<HowItWorks />} /><Route path="/assets" element={<Assets />} /><Route path="/assets/:type" element={<AssetDetail />} /><Route path="/products" element={<Products />} /><Route path="/products/:slug" element={<ProductDetail />} /><Route path="/eligibility" element={<GoogleEvaluationForm />} /><Route path="/eligibility/evaluation" element={<GoogleEvaluationForm />} /><Route path="/why-us" element={<WhyUs />} /><Route path="/protection" element={<Protection />} /><Route path="/gallery" element={<Gallery />} /><Route path="/faq" element={<FAQ />} /><Route path="/insights" element={<Insights />} /><Route path="/insights/:slug" element={<ArticleDetail />} /><Route path="/contact" element={<Contact />} /><Route path="/login" element={<CRMComingSoon title="Portal & CRM Login — Coming Soon" message="Portal and CRM login are temporarily unavailable. The existing CRM implementation is preserved and will be re-enabled in a future release." />} /><Route path="/grievances" element={<Grievances />} /><Route path="/privacy" element={<Privacy />} /><Route path="/terms" element={<Terms />} />
       <Route path="/portal" element={<CustomerPortalLayout />}><Route index element={<CustomerDashboard />} /><Route path="applications" element={<MyApplications />} /><Route path="applications/new" element={<NewApplication />} /><Route path="assets" element={<MyAssets />} /><Route path="contracts" element={<MyContracts />} /><Route path="settlements" element={<MySettlements />} /><Route path="documents" element={<DocumentsVault />} /><Route path="notifications" element={<Notifications />} /><Route path="profile" element={<Profile />} /><Route path="support" element={<SupportTickets />} /></Route>
-      <Route path="/admin" element={<CRMComingSoon title="Admin & CRM — Coming Soon" message="The Admin and CRM workspace is temporarily unavailable. Existing CRM features are preserved for a future release." />} /><Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="/admin" element={<CRMComingSoon title="Admin & CRM — Coming Soon" message="The Admin and CRM workspace is temporarily unavailable. Existing CRM features are preserved for a future release." />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes></SectionErrorBoundary></main>
     <Footer />
     <ChatWidget />
