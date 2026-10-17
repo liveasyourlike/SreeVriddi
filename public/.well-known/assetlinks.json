@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.vercel.sree_vriddi.twa",
+      "sha256_cert_fingerprints": [
+        "33:47:27:00:CD:F6:82:13:16:0C:63:4B:63:98:09:D4:4C:60:B1:F3:FC:9D:D1:5B:68:C8:5C:3C:F8:97:AF:EA"
+      ]
+    }
+  }
+]
