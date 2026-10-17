@@ -1,0 +1,26 @@
+{
+  "id": "/objectives/",
+  "name": "Sree Vriddhi — Our Objectives",
+  "short_name": "Sree Vriddhi",
+  "description": "Discover Sree Vriddhi's objectives, values and community-focused areas of interest.",
+  "start_url": "/objectives/",
+  "scope": "/objectives/",
+  "display": "standalone",
+  "background_color": "#071b3a",
+  "theme_color": "#071b3a",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/brand/logo-mark.jpeg",
+      "sizes": "96x96",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "/brand/logo-primary.jpeg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any"
+    }
+  ]
+}
