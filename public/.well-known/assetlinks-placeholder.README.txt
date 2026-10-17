@@ -1,0 +1,1 @@
+Android TWA domain association is intentionally not published yet. Add assetlinks.json only after the final Android package ID and Play App Signing SHA-256 fingerprint are known. See /docs/ANDROID_LAUNCH.md. Never publish placeholder certificate data.
