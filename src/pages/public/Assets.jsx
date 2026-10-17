@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  ArrowDown, ArrowRight, Banknote, Building2, CarFront, CheckCircle2,
-  ChevronRight, CircleDollarSign, Factory, Gem, Landmark, Leaf, Search,
+  ArrowDown, ArrowRight, Building2, CarFront, CheckCircle2,
+  ChevronRight, CircleDollarSign, Gem, Landmark, Leaf, Search,
   ShieldCheck, Sprout, Store, Users, Wrench, Fuel, BriefcaseBusiness,
   AlertTriangle, FileCheck2, HandCoins
 } from 'lucide-react';
@@ -161,13 +161,12 @@ export default function Assets() {
         </div>
         <p className="text-xs text-slate-400 mb-4" aria-live="polite">Showing {visibleSectors.length} of 10 sectors</p>
         {visibleSectors.length ? <div className="sector-grid">{visibleSectors.map((sector) => {
-          const Icon = sector.icon;
           return <article className="sector-card" key={sector.id}>
             <div className="sector-card-top"><span className="sector-number">{sector.id}</span><span className="sector-status">{sector.status}</span></div>
             <SectorArtwork sector={sector} />
             <div className="sector-card-body">
               <h3>{sector.title}</h3><p>{sector.description}</p><p className="sector-detail">{sector.detail}</p>
-              {sector.id === 2 ? <Link className="sector-card-link" to="/assets/physical-gold">Gold category guidelines <ChevronRight size={14} /></Link> : sector.id === 4 ? <Link className="sector-card-link" to="/assets/property">Property guidelines <ChevronRight size={14} /></Link> : <a className="sector-card-link" href="/eligibility">Ask about this sector <ChevronRight size={14} /></a>}
+              {sector.id === 2 ? <Link className="sector-card-link" to="/assets/physical-gold">Gold category guidelines <ChevronRight size={14} /></Link> : sector.id === 4 ? <Link className="sector-card-link" to="/assets/property">Property guidelines <ChevronRight size={14} /></Link> : <Link className="sector-card-link" to="/eligibility">Ask about this sector <ChevronRight size={14} /></Link>}
             </div>
           </article>;
         })}</div> : <div className="rounded-xl border border-white/10 p-8 text-center text-sm text-slate-300">No sectors match that search. Try a different keyword or choose “All sectors”.</div>}
