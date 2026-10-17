@@ -66,8 +66,8 @@ export default function HomeHub() {
         <div className="hub-hero-inner">
           <div className="hub-copy">
             <div className="hub-kicker"><span /> THE SREE VRIDDHI EXPERIENCE <b>2026</b></div>
-            <h1>Your value.<br /><em>Our responsibility.</em><br />Your returns.</h1>
-            <p>One focused home screen. Each destination has one clear customer objective, while the deeper page owns the detailed interaction for that subject.</p>
+            <h1>Your value.<br /><em>Our responsibility.</em><br />YOU VALUE. WE GROW. YOU EARN.</h1>
+            <p>Explore Sree Vriddhi’s purpose, all ten investment sectors, the evaluation journey, customer safeguards and support—through one clear, connected experience.</p>
             <div className="hub-actions">
               <Link to="/eligibility" className="hub-primary"><FileCheck2 size={17} /> Start evaluation <ArrowRight size={16} /></Link>
               <button type="button" className="hub-secondary" onClick={() => window.dispatchEvent(new CustomEvent('sv-open-chat'))}><Bot size={17} /> Ask Sree Vriddhi AI</button>
