@@ -20,7 +20,7 @@ const Header = () => {
     { name: language === 'hi' ? 'होम' : language === 'te' ? 'హోమ్' : 'Home', path: '/' },
     { name: language === 'hi' ? 'हमारे बारे में' : language === 'te' ? 'మా గురించి' : 'About', path: '/about' },
     { name: language === 'hi' ? 'यह कैसे काम करता है' : language === 'te' ? 'ఇది ఎలా పని చేస్తుంది' : 'How It Works', path: '/how-it-works' },
-    { name: language === 'hi' ? 'मूल्य और परिसंपत्तियाँ' : language === 'te' ? 'విలువ మరియు ఆస్తులు' : 'Investment Sectors', path: '/assets' },
+    { name: language === 'hi' ? 'निवेश क्षेत्र' : language === 'te' ? 'పెట్టుబడి రంగాలు' : 'Investment Sectors', path: '/assets' },
     { name: language === 'hi' ? 'उत्पाद' : language === 'te' ? 'ఉత్పత్తులు' : 'Products', path: '/products' },
     { name: language === 'hi' ? 'पात्रता' : language === 'te' ? 'అర్హత' : 'Eligibility', path: '/eligibility' },
     { name: language === 'hi' ? 'स्री व्रिद्धी क्यों' : language === 'te' ? 'Sree Vriddhi ఎందుకు' : 'Why Sree Vriddhi', path: '/why-us' },
