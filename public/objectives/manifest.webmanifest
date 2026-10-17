@@ -1,17 +1,17 @@
 {
   "id": "/objectives/",
-  "name": "Sree Vriddhi — Our Objectives",
+  "name": "SREE VRIDDHI — Our Objectives",
   "short_name": "Sree Vriddhi",
-  "description": "Discover Sree Vriddhi's objectives, values and community-focused areas of interest.",
+  "description": "SREE VRIDDHI — YOU VALUE. WE GROW. YOU EARN. Explore our objectives and values.",
   "start_url": "/objectives/",
   "scope": "/objectives/",
   "display": "standalone",
-  "background_color": "#071b3a",
-  "theme_color": "#071b3a",
+  "background_color": "#050b18",
+  "theme_color": "#050b18",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "/brand/logo-mark.jpeg",
+      "src": "/brand/logo-primary.jpeg",
       "sizes": "96x96",
       "type": "image/jpeg",
       "purpose": "any"
