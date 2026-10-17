@@ -11,6 +11,7 @@ import ComingSoonNotice from './components/ComingSoonNotice'
 import WebsiteExperienceLayer from './components/WebsiteExperienceLayer'
 import PersistentExperienceDock from './components/PersistentExperienceDock'
 import PolicyLaunchNotice from './components/PolicyLaunchNotice'
+import PWAInstallPrompt from './components/PWAInstallPrompt'
 import GoogleEvaluationForm from './pages/public/GoogleEvaluationForm'
 import HomeHub from './pages/public/HomeHub'
 import Home from './pages/public/Home'
@@ -76,7 +77,7 @@ function SiteChrome() {
 }
 
 function App() {
-  return <SreeVriddhiProvider><BrowserRouter><ScrollToTop /><div className="compact-site min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]"><WebsiteExperienceLayer /><PolicyLaunchNotice /><SiteChrome /><PersistentExperienceDock /></div></BrowserRouter></SreeVriddhiProvider>
+  return <SreeVriddhiProvider><BrowserRouter><ScrollToTop /><div className="compact-site min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]"><WebsiteExperienceLayer /><PolicyLaunchNotice /><SiteChrome /><PWAInstallPrompt /><PersistentExperienceDock /></div></BrowserRouter></SreeVriddhiProvider>
 }
 
 export default App
