@@ -6,7 +6,7 @@ import './home-hub.css'
 const destinations = [
   { path: '/about', label: 'About Sree Vriddhi', eyebrow: '01 / FOUNDATION', text: 'Understand the purpose, principles and responsible value-management approach behind Sree Vriddhi.', icon: Globe2, kind: 'orbit', objective: 'Understand us' },
   { path: '/how-it-works', label: 'How It Works', eyebrow: '02 / JOURNEY', text: 'Follow the seven operational stages from enquiry and verification through agreement and settlement.', icon: Sparkles, kind: 'steps', objective: 'Understand the process' },
-  { path: '/assets', label: 'Value & Assets', eyebrow: '03 / ASSETS', text: 'Discover which gold, capital, land & property and financial assets may be considered and how they are evaluated.', icon: Gem, kind: 'asset', objective: 'Check asset fit' },
+  { path: '/assets', label: 'Investment Sectors', eyebrow: '03 / SECTORS', text: 'Explore all ten poster-aligned areas: daily finance, gold, fixed deposits, rentals, oil and gas, retail, workshops, recruitment and virtual stocks.', icon: Gem, kind: 'asset', objective: 'Check asset fit' },
   { path: '/products', label: 'Products', eyebrow: '04 / STRUCTURES', text: 'Compare the available structured value-management arrangements, key terms and suitability considerations.', icon: WalletCards, kind: 'product', objective: 'Compare structures' },
   { path: '/eligibility', label: 'Eligibility', eyebrow: '05 / EVALUATION', text: 'Review the evaluation requirements and continue to the official eligibility submission when ready.', icon: FileCheck2, kind: 'form', objective: 'Start evaluation' },
   { path: '/why-us', label: 'Why Sree Vriddhi', eyebrow: '06 / DIFFERENCE', text: 'See the service principles, governance mindset and customer experience that distinguish the business.', icon: ShieldCheck, kind: 'shield', objective: 'Assess the approach' },
@@ -66,8 +66,8 @@ export default function HomeHub() {
         <div className="hub-hero-inner">
           <div className="hub-copy">
             <div className="hub-kicker"><span /> THE SREE VRIDDHI EXPERIENCE <b>2026</b></div>
-            <h1>Your value.<br /><em>Our responsibility.</em><br />Your returns.</h1>
-            <p>One focused home screen. Each destination has one clear customer objective, while the deeper page owns the detailed interaction for that subject.</p>
+            <h1>Your value.<br /><em>Our responsibility.</em><br />YOU VALUE. WE GROW. YOU EARN.</h1>
+            <p>Explore Sree Vriddhi’s purpose, all ten investment sectors, the evaluation journey, customer safeguards and support—through one clear, connected experience.</p>
             <div className="hub-actions">
               <Link to="/eligibility" className="hub-primary"><FileCheck2 size={17} /> Start evaluation <ArrowRight size={16} /></Link>
               <button type="button" className="hub-secondary" onClick={() => window.dispatchEvent(new CustomEvent('sv-open-chat'))}><Bot size={17} /> Ask Sree Vriddhi AI</button>
