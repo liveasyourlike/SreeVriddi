@@ -12,6 +12,7 @@ import WebsiteExperienceLayer from './components/WebsiteExperienceLayer'
 import PersistentExperienceDock from './components/PersistentExperienceDock'
 import PolicyLaunchNotice from './components/PolicyLaunchNotice'
 import GoogleEvaluationForm from './pages/public/GoogleEvaluationForm'
+import AgreementSystemPreview from './pages/public/AgreementSystemPreview'
 import HomeHub from './pages/public/HomeHub'
 import Home from './pages/public/Home'
 import About from './pages/public/About'
@@ -54,6 +55,7 @@ function SiteChrome() {
       <Route path="/products/:slug" element={<ProductDetail />} />
       <Route path="/eligibility" element={<GoogleEvaluationForm />} />
       <Route path="/eligibility/evaluation" element={<GoogleEvaluationForm />} />
+      <Route path="/admin/agreements-preview" element={<AgreementSystemPreview />} />
       <Route path="/why-us" element={<WhyUs />} />
       <Route path="/protection" element={<Protection />} />
       <Route path="/gallery" element={<Gallery />} />
